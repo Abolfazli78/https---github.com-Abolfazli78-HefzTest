@@ -75,10 +75,10 @@ export default function HomePage() {
                   variant="outline"
                   className="mb-6 px-4 py-1 border-indigo-200 bg-indigo-50 text-indigo-700 dark:bg-indigo-900/20 dark:text-indigo-300 dark:border-indigo-800"
                 >
-                  ✨ پلتفرم آموزشی مدرن
+                  ✨ پلتفرم آزمون آنلاین حفظ و ترجمه قرآن کریم
                 </Badge>
                 <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-6 bg-gradient-to-r from-indigo-700 via-indigo-500 to-purple-500 dark:from-indigo-300 dark:via-indigo-200 dark:to-white bg-clip-text text-transparent leading-[1.1]">
-                  آینده‌ی سنجش و ارزیابی در دستان شما
+                 سنجش محفوظات و موفقیت در آزمون های رسمی حفظ قرآن 
                 </h1>
                 <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 max-w-2xl md:ml-auto leading-relaxed">
                   ویژه دانش‌آموزان برای رشد مستمر، معلمان برای طراحی سریع و تصحیح خودکار، و موسسات برای مدیریت مقیاس‌پذیر با هویت سازمانی.
