@@ -103,13 +103,13 @@ export default function HomePage() {
                     </Button>
                   </Link>
                   <Link href="/demo">
-                    <Button
+                    {/* <Button
                       size="lg"
                       variant="outline"
                       className="text-lg px-8 h-12 rounded-full border-2 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all shadow-inner"
                     >
                       دموی سیستم
-                    </Button>
+                    </Button> */}
                   </Link>
                 </div>
                 <div className="mt-8 text-sm text-slate-500 dark:text-slate-400 flex flex-wrap items-center gap-4 md:justify-start justify-center">
