@@ -1,0 +1,111 @@
+﻿
+> hefztest@0.1.0 lint
+> eslint
+
+
+C:\Ai\hefztest\prisma.config.ts
+  3:1  warning  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+C:\Ai\hefztest\src\app\(admin)\admin\questions\import\page.tsx
+  88:14  warning  'err' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\app\(admin)\admin\tickets\[id]\page.tsx
+   5:10  warning  'useSession' is defined but never used  @typescript-eslint/no-unused-vars
+  87:14  warning  '_err' is defined but never used        @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\app\(auth)\login\page.tsx
+  54:14  warning  '_err' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\app\(auth)\register\page.tsx
+  48:24  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+C:\Ai\hefztest\src\app\(auth)\register\page.tsx:48:24
+  46 |   });
+  47 |
+> 48 |   const selectedRole = watch("role");
+     |                        ^^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  49 |
+  50 |   const onSubmit = async (data: RegisterForm) => {
+  51 |     setIsLoading(true);  react-hooks/incompatible-library
+  74:14  warning  '_err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\app\(institute)\institute\teachers\add\page.tsx
+  38:18  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\app\(teacher)\teacher\exams\page.tsx
+  6:52  warning  'Trash2' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\app\(teacher)\teacher\reports\page.tsx
+  4:40  warning  'Award' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\app\(teacher)\teacher\students\add\page.tsx
+  38:18  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\components\admin\content-form.tsx
+  63:23  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+C:\Ai\hefztest\src\components\admin\content-form.tsx:63:23
+  61 |   });
+  62 |
+> 63 |   const contentType = form.watch("type");
+     |                       ^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  64 |
+  65 |   const onSubmit = async (data: ContentFormData) => {
+  66 |     setIsLoading(true);  react-hooks/incompatible-library
+  88:14  warning  '_err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\components\admin\content-table.tsx
+  58:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\components\admin\exam-form.tsx
+   82:25  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+C:\Ai\hefztest\src\components\admin\exam-form.tsx:82:25
+  80 |   });
+  81 |
+> 82 |   const selectionMode = form.watch("selectionMode");
+     |                         ^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  83 |
+  84 |   const onSubmit = async (data: ExamFormData) => {
+  85 |     setIsLoading(true);  react-hooks/incompatible-library
+  107:14  warning  '_err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\components\admin\exams-table.tsx
+  65:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\components\admin\question-form.tsx
+  100:14  warning  '_err' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\components\admin\question-import.tsx
+  52:18  warning  '_err' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\components\admin\questions-table.tsx
+  59:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\components\admin\subscription-plans-table.tsx
+  56:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\components\admin\users-table.tsx
+  58:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\components\organization\invitation-banner.tsx
+   5:30  warning  'ChevronRight' is defined but never used  @typescript-eslint/no-unused-vars
+  59:18  warning  '_error' is defined but never used        @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\components\organization\notification-center.tsx
+  68:18  warning  '_error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\components\organization\organization-team.tsx
+  87:18  warning  '_error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Ai\hefztest\src\lib\session.ts
+  19:12  warning  '_error' is defined but never used  @typescript-eslint/no-unused-vars
+
+ظ£û 27 problems (0 errors, 27 warnings)
+

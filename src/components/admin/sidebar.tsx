@@ -1,0 +1,147 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import {
+    LayoutDashboard,
+    FileQuestion,
+    Users,
+    CreditCard,
+    MessageSquare,
+    BarChart3,
+    Settings,
+    LogOut,
+    BookOpen,
+    Tag,
+    Bell,
+    FileText
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { signOut } from "next-auth/react";
+
+const sidebarItems = [
+    {
+        title: "داشبورد",
+        href: "/admin/dashboard",
+        icon: LayoutDashboard,
+    },
+    {
+        title: "آزمون‌ها",
+        href: "/admin/exams",
+        icon: BookOpen,
+    },
+    {
+        title: "ساخت آزمون دلخواه",
+        href: "/admin/exams/custom",
+        icon: FileText,
+    },
+    {
+        title: "سوالات",
+        href: "/admin/questions",
+        icon: FileQuestion,
+    },
+    {
+        title: "کاربران",
+        href: "/admin/users",
+        icon: Users,
+    },
+    {
+        title: "اشتراک‌ها",
+        href: "/admin/subscriptions",
+        icon: CreditCard,
+    },
+    {
+        title: "کدهای تخفیف",
+        href: "/admin/discount-codes",
+        icon: Tag,
+    },
+    {
+        title: "اعلانات",
+        href: "/admin/notifications",
+        icon: Bell,
+    },
+    {
+        title: "گزارش مالی",
+        href: "/admin/finance",
+        icon: BarChart3,
+    },
+    {
+        title: "تیکت‌ها",
+        href: "/admin/tickets",
+        icon: MessageSquare,
+    },
+    {
+        title: "گزارش‌ها",
+        href: "/admin/reports",
+        icon: BarChart3,
+    },
+    {
+        title: "تنظیمات",
+        href: "/admin/settings",
+        icon: Settings,
+    },
+];
+
+export function AdminSidebar() {
+    const pathname = usePathname();
+
+    return (
+        <div className="flex h-screen w-64 flex-col border-l border-white/10 bg-sidebar/80 backdrop-blur-xl text-sidebar-foreground shadow-2xl relative overflow-hidden">
+            {/* Glassmorphism Background Effects */}
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="flex h-20 items-center border-b border-white/10 px-6 relative z-10">
+                <Link href="/" className="flex items-center gap-3 font-bold text-xl tracking-tight">
+                    <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+                        A
+                    </div>
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
+                        پنل مدیریت
+                    </span>
+                </Link>
+            </div>
+
+            <div className="flex-1 overflow-y-auto py-6 relative z-10">
+                <nav className="grid gap-2 px-3">
+                    {sidebarItems.map((item, index) => {
+                        const isActive = pathname === item.href || pathname?.startsWith(item.href + "/");
+                        return (
+                            <Link
+                                key={index}
+                                href={item.href}
+                                className={cn(
+                                    "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 group relative overflow-hidden",
+                                    isActive
+                                        ? "bg-gradient-to-r from-indigo-500/10 to-purple-500/10 text-indigo-400 shadow-sm border border-indigo-500/20"
+                                        : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
+                                )}
+                            >
+                                {isActive && (
+                                    <div className="absolute left-0 top-0 h-full w-1 bg-indigo-500 rounded-r-full" />
+                                )}
+                                <item.icon className={cn(
+                                    "h-5 w-5 transition-transform group-hover:scale-110",
+                                    isActive ? "text-indigo-500" : "text-slate-500 group-hover:text-slate-300"
+                                )} />
+                                {item.title}
+                            </Link>
+                        );
+                    })}
+                </nav>
+            </div>
+
+            <div className="border-t border-white/10 p-4 relative z-10">
+                <Button
+                    variant="ghost"
+                    className="w-full justify-start gap-2 text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors rounded-xl h-12"
+                    onClick={() => signOut({ callbackUrl: "/" })}
+                >
+                    <LogOut className="h-5 w-5" />
+                    خروج از حساب
+                </Button>
+            </div>
+        </div>
+    );
+}

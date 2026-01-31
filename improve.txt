@@ -1,0 +1,239 @@
+در پنل کاریر باید یک داشبورد پیشرفته باید داشته باشه مثل پنل ادمین اما با دسترسی های کاربر : شامل داشبورد
+آزمون‌ها
+ساخت آزمون دلخواه
+سوالات
+اشتراک‌ها
+تیکت‌ها
+تنظیمات
+
+پنل ادمین نباید ساخت آزمون دلخواه داشته باشد.
+
+ریپورت مشکل دارد
+
+
+1/1
+
+Next.js 16.0.10 (unknown)
+Webpack
+Runtime TypeError
+
+
+(0 , react__WEBPACK_IMPORTED_MODULE_1__.createContext) is not a function
+Call Stack
+38
+
+Show 35 ignore-listed frame(s)
+eval
+./src/app/(admin)/admin/reports/page.tsx
+eval
+./src/app/(admin)/admin/reports/page.tsx
+<unknown>
+rsc)/./src/app/(admin)/admin/reports/page.tsx (C:\Ai\hefztest\.next\dev\server\app\(admin)\admin\reports\page.js (104:1)
+
+باید در پنل ادمین امار دقیق تعداد آزمون ها بر اساس تفکیک بر اساس جزءو سال و سوره حفظ و مفاهیم و ازمون 150 سوال و نمره آزمون باشد.  
+در پنل ادمین باید امکانی باشد که ادمین روی هر کاربر کلیک کند امار تعداد ازمون و جزئیات و نمره ان کاربر رو ببینه. 
+سامانه باید صفحه اصلی  ش مثل یک سایت حرفه ای ui ux و front حرفه ای و جذاب داشته باشه به طوری که هر کاربر وقتی میبینه متوجه بشه سایت حرفه ای و کامل است.
+کاربر باید بتونه نمرات خودش در بخش ازمون ها ببینه و اخر هر ازمون باید نمره ببینه به همراه سوالات یعنی سوالات غلط و سوالات درست و تعداد آن ها
+
+هنگام انتخاب جزء http://localhost:3000/exams/custom باید گزینه کل قرآن و لیست کشویی از شروع جزء تا پایان جزء بزنه . مثلا شروع جزء 1 تا پایان جزء 4 .
+.
+بخش مشاهده آزمون هم مشکل داره. 
+
+
+
+Invalid `prisma.exam.findUnique()` invocation:
+
+{
+  where: {
+    id: undefined,
+?   AND?: ExamWhereInput | ExamWhereInput[],
+?   OR?: ExamWhereInput[],
+?   NOT?: ExamWhereInput | ExamWhereInput[],
+?   title?: StringFilter | String,
+?   description?: StringNullableFilter | String | Null,
+?   duration?: IntFilter | Int,
+?   questionCount?: IntFilter | Int,
+?   accessLevel?: EnumAccessLevelFilter | AccessLevel,
+?   selectionMode?: EnumSelectionModeFilter | SelectionMode,
+?   year?: IntNullableFilter | Int | Null,
+?   juz?: IntNullableFilter | Int | Null,
+?   isActive?: BoolFilter | Boolean,
+?   createdAt?: DateTimeFilter | DateTime,
+?   updatedAt?: DateTimeFilter | DateTime,
+?   questions?: QuestionListRelationFilter,
+?   examAttempts?: ExamAttemptListRelationFilter,
+?   leaderboards?: LeaderboardListRelationFilter
+  },
+  include: {
+    _count: {
+      select: {
+        questions: true,
+        examAttempts: true
+      }
+    }
+  }
+}
+
+Argument `where` of type ExamWhereUniqueInput needs at least one of `id` arguments. Available options are marked with ?.
+
+PrismaClientValidationError: 
+Invalid `prisma.exam.findUnique()` invocation:
+
+{
+  where: {
+    id: undefined,
+?   AND?: ExamWhereInput | ExamWhereInput[],
+?   OR?: ExamWhereInput[],
+?   NOT?: ExamWhereInput | ExamWhereInput[],
+?   title?: StringFilter | String,
+?   description?: StringNullableFilter | String | Null,
+?   duration?: IntFilter | Int,
+?   questionCount?: IntFilter | Int,
+?   accessLevel?: EnumAccessLevelFilter | AccessLevel,
+?   selectionMode?: EnumSelectionModeFilter | SelectionMode,
+?   year?: IntNullableFilter | Int | Null,
+?   juz?: IntNullableFilter | Int | Null,
+?   isActive?: BoolFilter | Boolean,
+?   createdAt?: DateTimeFilter | DateTime,
+?   updatedAt?: DateTimeFilter | DateTime,
+?   questions?: QuestionListRelationFilter,
+?   examAttempts?: ExamAttemptListRelationFilter,
+?   leaderboards?: LeaderboardListRelationFilter
+  },
+  include: {
+    _count: {
+      select: {
+        questions: true,
+        examAttempts: true
+      }
+    }
+  }
+}
+
+Argument `where` of type ExamWhereUniqueInput needs at least one of `id` arguments. Available options are marked with ?.
+    at  ExamDetailPage (about://React/Server/webpack-internal:///(rsc)/./src/app/(admin)/admin/exams/%5Bid%5D/page.tsx?88:31:18)
+    at resolveErrorDev (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development.js:3189:30)
+    at processFullStringRow (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development.js:4348:23)
+    at processFullBinaryRow (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development.js:4291:7)
+    at processBinaryChunk (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development.js:4504:15)
+    at progress (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development.js:4776:9)
+تلاش مجدد
+
+
+بخش شروع آزمون هم خرابه و کار نمیکنه
+Console Error
+
+
+Failed to create exam
+src\app\(user)\exams\custom\page.tsx (94:32) @ handleStartExam
+
+
+  92 |             });
+  93 |
+> 94 |             if (!res.ok) throw new Error("Failed to create exam");
+     |                                ^
+  95 |
+  96 |             const data = await res.json();
+  97 |             router.push(`/exams/${data.examId}/take`);
+Call Stack
+1
+
+handleStartExam
+
+src\app\(user)\exams\custom\page.tsx (94:32)
+
+
+
+-----
+Download the React DevTools for a better development experience: https://react.dev/link/react-devtools
+forward-logs-shared.js:28 [HMR] connected
+C:\Ai\hefztest\src\app\(user)\exams\custom\page.tsx:83  POST http://localhost:3000/api/exams/custom 500 (Internal Server Error)
+handleStartExam @ C:\Ai\hefztest\src\app\(user)\exams\custom\page.tsx:83
+executeDispatch @ react-dom-client.development.js:20542
+runWithFiberInDEV @ react-dom-client.development.js:985
+processDispatchQueue @ react-dom-client.development.js:20592
+eval @ react-dom-client.development.js:21163
+batchedUpdates$1 @ react-dom-client.development.js:3376
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:20746
+dispatchEvent @ react-dom-client.development.js:25672
+dispatchDiscreteEvent @ react-dom-client.development.js:25640
+C:\Ai\hefztest\src\app\(user)\exams\custom\page.tsx:99 Error creating exam: Error: Failed to create exam
+    
+at handleStartExam (C:\Ai\hefztest\src\app\(user)\exams\custom\page.tsx:94:32)
+
+
+
+custom	500	fetch	C:\Ai\hefztest\src\app\(user)\exams\custom\page.tsx:83	0.3 kB
+
+
+
+در http://localhost:3000/exams/cmjrq91g600011cwrg1hyyiml/take بخش کاربر، دکمه پایان پس از جواب دادن آزمون باید در جای مناسب باشد و به جای دکمه سوال بعد بیاد نه اینکه در بالای صفحه باشد.
+
+
+تولید pdf در بخش نتیجه ازمون کار نمیکنه.
+pdf?attempt=cmk5v21fv0001j8wr5dufvm8k
+main.tsx-DuyzaKII.js
+client-Da0e5-BC.js
+index-DA4uJ5Kf.js
+index-BGGeihhc.js
+index-BbV_wpce.js
+Otherfavicon.ico
+7 requests
+454 kB transferred
+470 kB resources
+Finish: 250 ms
+DOMContentLoaded: 84 ms
+Load: 216 ms
+Request URL
+http://localhost:3000/api/exams/undefined/results/pdf?attempt=cmk5v21fv0001j8wr5dufvm8k
+Request Method
+GET
+Status Code
+404 Not Found
+Remote Address
+[::1]:3000
+Referrer Policy
+
+
+strict-origin-when-cross-origin
+
+
+صفحه داشبور در بخش ادمین کار نمی کند. 
+404
+This page could not be found.
+
+
+
+
+
+
+
+
+
+
+الان فایل های اضافی رو از پروژه پاک کن بدون اینکه پروژه خراب بشه و مراقب باش فایل ها رو اشتباه پاک نکنی که برای پروژه مشکل پیش بیاد. پروژه رو سبک کن.
+
+پروژه خیلی کند هست و دیر همه چی لود میشه
+
+صفحه ویرایش و مشاهده پلن اشتراکی مشکل داره و ارور میده 
+
+
+
+ساخت ازمون دلخواه ا
+
+ازمون ها برای هر کاربر اگر جزو کلاسی هست فقط همون ازمون هایی که معلم اون طراحی کرده نمایش بده یا ازمون هایی که اون مدیر موسسه طراحی کرده نه اینکه همه آزمون ها 
+
+
+
+
+در پنل معلم عنوان مدیریت تیم تعویض شود دعوت دوستان 
+
+اعضای تیم حذف شود کار نمیکنه
+
+چک کردن عضو کردن تیم در معلم
+
+بعد از ارتقاء پلن به صفحه اشتباه دایرکت میشه
+
+
+ بخش ازمون بر اساس سال ها  و پارامترهایی که وجودداره بیاره
+

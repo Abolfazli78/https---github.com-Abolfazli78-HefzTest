@@ -1,0 +1,407 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated"
+}
+
+model TicketParticipant {
+  ticketId String
+  userId   String
+
+  ticket   SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@id([ticketId, userId])
+  @@index([userId])
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  INSTITUTE
+  TEACHER
+  STUDENT
+}
+
+enum InviteStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum AccessLevel {
+  FREE
+  SUBSCRIPTION
+}
+
+enum SelectionMode {
+  YEAR
+  JUZ
+  RANDOM
+}
+
+enum CorrectAnswer {
+  A
+  B
+  C
+  D
+}
+
+enum AttemptStatus {
+  IN_PROGRESS
+  COMPLETED
+  EXPIRED
+}
+
+enum TicketStatus {
+  NEW
+  IN_PROGRESS
+  CLOSED
+}
+
+enum ContentType {
+  SLIDER
+  BANNER
+  TEXT
+  ANNOUNCEMENT
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String?  @unique
+  phone     String   @unique
+  password  String
+  name      String
+  role      UserRole @default(STUDENT)
+  isActive  Boolean  @default(true)
+  phoneVerifiedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  examAttempts    ExamAttempt[]
+  supportTickets   SupportTicket[]
+  ticketMessages  TicketMessage[]
+  subscriptions   Subscription[]
+  leaderboards     Leaderboard[]
+  ticketParticipants TicketParticipant[]
+
+  // Hierarchy
+  parentId    String?
+  parent      User?    @relation("UserHierarchy", fields: [parentId], references: [id])
+  children    User[]   @relation("UserHierarchy")
+
+  // Legacy hierarchy (keeping for compatibility or removing if safe)
+  teacherId   String?
+  teacher     User?   @relation("TeacherStudents", fields: [teacherId], references: [id])
+  students    User[]  @relation("TeacherStudents")
+
+  instituteId String?
+  institute   User?   @relation("InstituteTeachers", fields: [instituteId], references: [id])
+  teachers    User[]  @relation("InstituteTeachers")
+
+  // Invitations
+  sentInvitations     Invitation[] @relation("SentInvitations")
+  receivedInvitations Invitation[] @relation("ReceivedInvitations")
+
+  // Discount codes created by this user (Admin)
+  discountCodes       DiscountCode[] @relation("DiscountCodes")
+
+  // Notifications for this user
+  notifications       Notification[] @relation("UserNotifications")
+
+  // Exams created by this user (Teacher/Admin)
+  createdExams Exam[] @relation("CreatedBy")
+}
+
+enum OtpPurpose {
+  REGISTER
+  LOGIN
+  RESET_PASSWORD
+}
+
+model PhoneOtp {
+  id        String     @id @default(cuid())
+  phone     String
+  codeHash  String
+  purpose   OtpPurpose
+  expiresAt DateTime
+  consumedAt DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([phone])
+  @@index([expiresAt])
+}
+
+model Exam {
+  id            String        @id @default(cuid())
+  title         String
+  description   String?
+  duration      Int           // minutes
+  questionCount Int
+  accessLevel   AccessLevel   @default(FREE)
+  selectionMode SelectionMode
+  year          Int?
+  juz           Int?
+  isActive      Boolean       @default(true)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  endAt         DateTime?
+
+  questions     Question[]
+  examAttempts  ExamAttempt[]
+  leaderboards  Leaderboard[]
+
+  createdById   String?
+  createdBy     User?         @relation("CreatedBy", fields: [createdById], references: [id])
+}
+
+model Question {
+  id            String        @id @default(cuid())
+  examId        String?
+  questionText  String        @db.Text
+  optionA       String        @db.Text
+  optionB       String        @db.Text
+  optionC       String        @db.Text
+  optionD       String        @db.Text
+  correctAnswer CorrectAnswer
+  explanation   String?       @db.Text
+  year          Int?
+  juz           Int?
+  topic         String?
+  difficultyLevel String?
+  isActive      Boolean       @default(true)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  exam          Exam?         @relation(fields: [examId], references: [id], onDelete: Cascade)
+  examAnswers   ExamAnswer[]
+}
+
+model ExamAttempt {
+  id            String        @id @default(cuid())
+  userId        String
+  examId        String
+  startedAt     DateTime      @default(now())
+  submittedAt   DateTime?
+  timeSpent     Int?          // seconds
+  score         Int?
+  totalQuestions Int
+  correctAnswers Int          @default(0)
+  wrongAnswers  Int           @default(0)
+  unanswered    Int           @default(0)
+  status        AttemptStatus @default(IN_PROGRESS)
+
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exam          Exam          @relation(fields: [examId], references: [id], onDelete: Cascade)
+  examAnswers   ExamAnswer[]
+}
+
+model ExamAnswer {
+  id            String      @id @default(cuid())
+  attemptId     String
+  questionId    String
+  selectedAnswer CorrectAnswer?
+  isCorrect     Boolean?
+  answeredAt    DateTime    @default(now())
+
+  attempt       ExamAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question      Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
+
+model SupportTicket {
+  id        String        @id @default(cuid())
+  userId    String
+  subject   String
+  category  String?
+  status    TicketStatus  @default(NEW)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  // Destination and scoping
+  recipientRole   UserRole?
+  recipientUserId String?
+  instituteId     String?
+
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages  TicketMessage[]
+  participants TicketParticipant[]
+
+  @@index([recipientUserId])
+  @@index([recipientRole])
+  @@index([instituteId])
+}
+
+model TicketMessage {
+  id        String        @id @default(cuid())
+  ticketId  String
+  userId    String?
+  message   String        @db.Text
+  isAdmin   Boolean       @default(false)
+  createdAt DateTime      @default(now())
+
+  ticket    SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  user      User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+model HomepageContent {
+  id        String      @id @default(cuid())
+  type      ContentType
+  title     String?
+  content   String?     @db.Text
+  imageUrl  String?
+  order     Int         @default(0)
+  isActive  Boolean     @default(true)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+  PENDING
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum PlanTargetRole {
+  STUDENT
+  TEACHER
+  INSTITUTE
+}
+
+model SubscriptionPlan {
+  id          String   @id @default(cuid())
+  name        String
+  description String?  @db.Text
+  price       Float
+  duration    Int      // days
+  isActive    Boolean  @default(true)
+  features    String?  @db.Text // JSON array of features
+  targetRole  PlanTargetRole @default(STUDENT)
+  // Quotas
+  maxQuestionsPerMonth Int     @default(0)
+  maxStudentsAllowed   Int     @default(0)
+  maxExamsPerMonth     Int     @default(0)
+  maxTeachersAllowed   Int     @default(0)
+  maxClassesAllowed    Int     @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  subscriptions Subscription[]
+}
+
+model Subscription {
+  id              String             @id @default(cuid())
+  userId          String
+  planId          String
+  status          SubscriptionStatus @default(PENDING)
+  startDate       DateTime
+  endDate         DateTime?
+  autoRenew       Boolean            @default(false)
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  user            User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan            SubscriptionPlan   @relation(fields: [planId], references: [id], onDelete: Restrict)
+  payments        Payment[]
+}
+
+model Payment {
+  id              String        @id @default(cuid())
+  subscriptionId String
+  amount          Float
+  status          PaymentStatus @default(PENDING)
+  paymentMethod   String?       // e.g., "credit_card", "bank_transfer"
+  transactionId   String?       // External payment gateway transaction ID
+  paidAt          DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  subscription    Subscription  @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+}
+
+model Leaderboard {
+  id            String   @id @default(cuid())
+  userId        String
+  examId        String?
+  totalScore    Int       @default(0)
+  totalExams    Int       @default(0)
+  averageScore  Float     @default(0)
+  rank          Int?
+  period        String    @default("all") // "daily", "weekly", "monthly", "all"
+  updatedAt     DateTime  @updatedAt
+
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exam          Exam?     @relation(fields: [examId], references: [id], onDelete: SetNull)
+
+  @@index([totalScore])
+  @@index([period])
+  @@index([userId, examId, period])
+}
+model DiscountCode {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  percent     Int      // percentage discount (0-100)
+  expiresAt   DateTime?
+  usageLimit  Int?     // max times it can be used
+  usedCount   Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdBy   String
+  creator     User     @relation("DiscountCodes", fields: [createdBy], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([code])
+  @@index([expiresAt])
+  @@index([isActive])
+}
+model Notification {
+  id          String   @id @default(cuid())
+  title       String
+  message     String
+  type        NotificationType @default(INFO)
+  userId      String
+  user        User     @relation("UserNotifications", fields: [userId], references: [id])
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@index([isRead])
+  @@index([createdAt])
+}
+
+enum NotificationType {
+  INFO
+  SUCCESS
+  WARNING
+  ERROR
+  DISCOUNT
+}
+model Invitation {
+  id         String       @id @default(cuid())
+  phone      String
+  role       UserRole
+  status     InviteStatus @default(PENDING)
+  senderId   String
+  sender     User         @relation("SentInvitations", fields: [senderId], references: [id])
+  receiverId String?
+  receiver   User?        @relation("ReceivedInvitations", fields: [receiverId], references: [id])
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  @@index([phone])
+  @@index([senderId])
+}
