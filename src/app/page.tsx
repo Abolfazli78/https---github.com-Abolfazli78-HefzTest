@@ -81,7 +81,7 @@ export default function HomePage() {
                   سنجش محفوظات و موفقیت در آزمون های رسمی حفظ قرآن
                 </h1>
                 <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 max-w-2xl md:ml-auto leading-relaxed">
-                  ویژه دانش‌آموزان برای رشد مستمر، معلمان برای طراحی سریع و تصحیح خودکار، و موسسات برای مدیریت مقیاس‌پذیر با هویت سازمانی.
+                  ویژه حافظان قرآن برای رشد مستمر، معلمان برای طراحی سریع و تصحیح خودکار، و موسسات برای مدیریت مقیاس‌پذیر با هویت سازمانی.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 md:justify-start justify-center">
                   <Link href={isLoggedIn ? "/dashboard" : "/register"}>
