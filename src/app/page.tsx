@@ -75,13 +75,20 @@ export default function HomePage() {
                   variant="outline"
                   className="mb-6 px-4 py-1 border-indigo-200 bg-indigo-50 text-indigo-700 dark:bg-indigo-900/20 dark:text-indigo-300 dark:border-indigo-800"
                 >
+<<<<<<< HEAD
                   ✨ پلتفرم آزمون آنلاین حفظ و ترجمه قرآن کریم
                 </Badge>
                 <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-6 bg-gradient-to-r from-indigo-700 via-indigo-500 to-purple-500 dark:from-indigo-300 dark:via-indigo-200 dark:to-white bg-clip-text text-transparent leading-[1.1]">
                  سنجش محفوظات و موفقیت در آزمون های رسمی حفظ قرآن 
+=======
+                  ✨پلتفرم آزمون آنلاین حفظ و ترجمه قرآن کریم
+                </Badge>
+                <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-6 bg-gradient-to-r from-indigo-700 via-indigo-500 to-purple-500 dark:from-indigo-300 dark:via-indigo-200 dark:to-white bg-clip-text text-transparent leading-[1.1]">
+                  سنجش محفوظات و موفقیت در آزمون های رسمی حفظ قرآن
+>>>>>>> d99e45491658a370515f8be5a787503ebcff9e9f
                 </h1>
                 <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 max-w-2xl md:ml-auto leading-relaxed">
-                  ویژه دانش‌آموزان برای رشد مستمر، معلمان برای طراحی سریع و تصحیح خودکار، و موسسات برای مدیریت مقیاس‌پذیر با هویت سازمانی.
+                  ویژه حافظان قرآن برای رشد مستمر، معلمان برای طراحی سریع و تصحیح خودکار، و موسسات برای مدیریت مقیاس‌پذیر با هویت سازمانی.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 md:justify-start justify-center">
                   <Link href={isLoggedIn ? "/dashboard" : "/register"}>
@@ -103,13 +110,13 @@ export default function HomePage() {
                     </Button>
                   </Link>
                   <Link href="/demo">
-                    <Button
+                    {/* <Button
                       size="lg"
                       variant="outline"
                       className="text-lg px-8 h-12 rounded-full border-2 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all shadow-inner"
                     >
                       دموی سیستم
-                    </Button>
+                    </Button> */}
                   </Link>
                 </div>
                 <div className="mt-8 text-sm text-slate-500 dark:text-slate-400 flex flex-wrap items-center gap-4 md:justify-start justify-center">
