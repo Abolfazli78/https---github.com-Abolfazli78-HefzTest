@@ -4,7 +4,7 @@
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
-  src: url('/fonts/Vazirmatn/Vazirmatn/Round-Dots/fonts/webfonts/Vazirmatn-RD[wght].woff2') format('woff2');
+  src: url('/fonts/Vazirmatn/Vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2');
 }
 
 @import "tailwindcss";

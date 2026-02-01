@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -37,29 +37,59 @@ export default function RegisterPage() {
   const [error, setError] = useState<string>("");
   const [info, setInfo] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
-  const [phone, setPhone] = useState("");
-  const [currentStep, setCurrentStep] = useState(1);
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [countdown, setCountdown] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
 
   const {
     register,
     handleSubmit,
     setValue,
     watch,
-    formState: { errors },
+    trigger,
+    formState: { errors, isValid },
   } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       role: "STUDENT",
-    }
+    },
+    mode: "onChange",
   });
 
   const selectedRole = watch("role");
+  const watchedPhone = watch("phone");
+
+  // Handle countdown timer with proper cleanup
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    
+    if (countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+
+    return () => {
+      if (timer) {
+        clearInterval(timer);
+      }
+    };
+  }, [countdown]);
+
+  // Update phone in form when phone input changes
+  const handlePhoneChange = (phone: string) => {
+    setValue("phone", phone);
+    trigger("phone");
+  };
 
   const onSubmit = async (data: RegisterForm) => {
-    if (!phone) {
-      setError("شماره موبایل الزامی است");
+    if (!isValid) {
+      setError("لطفاً تمام فیلدهای الزامی را correctly وارد کنید");
       return;
     }
 
@@ -73,7 +103,7 @@ export default function RegisterPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: data.name,
-          phone: phone,
+          phone: data.phone,
           email: data.email || null,
           password: data.password,
           otp: data.otp,
@@ -85,18 +115,28 @@ export default function RegisterPage() {
 
       if (!response.ok) {
         setError(result.error || "خطا در ایجاد حساب کاربری");
-        setIsLoading(false);
       } else {
         router.push("/login?registered=true");
       }
-    } catch {
+    } catch (error) {
+      console.error("Registration error:", error);
       setError("خطا در ایجاد حساب کاربری");
+    } finally {
       setIsLoading(false);
     }
   };
 
-  const onSendOtp = async (phone: string) => {
+  const onSendOtp = async () => {
+    const phone = watchedPhone;
+    
     if (!phone || phone.length < 10) {
+      setError("شماره موبایل معتبر نیست");
+      return;
+    }
+
+    // Validate phone before sending OTP
+    const isPhoneValid = await trigger("phone");
+    if (!isPhoneValid) {
       setError("شماره موبایل معتبر نیست");
       return;
     }
@@ -104,35 +144,34 @@ export default function RegisterPage() {
     setIsLoading(true);
     setError("");
     setInfo("");
+    
     try {
       const res = await fetch("/api/auth/otp/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone, purpose: "REGISTER" }),
       });
+      
       const data = await res.json();
+      
       if (!res.ok) {
         setError(data.error || "ارسال کد ناموفق بود");
       } else {
         setInfo(data.message || "کد با موفقیت ارسال شد");
         setIsOtpSent(true);
-        setCountdown(60);
-        const timer = setInterval(() => {
-          setCountdown((prev) => {
-            if (prev <= 1) {
-              clearInterval(timer);
-              return 0;
-            }
-            return prev - 1;
-          });
-        }, 1000);
+        setCountdown(120);
+        setCurrentStep(2);
       }
-    } catch {
+    } catch (error) {
+      console.error("OTP send error:", error);
       setError("خطا در ارسال کد");
     } finally {
       setIsLoading(false);
     }
   };
+
+  // Check if form is ready for submission
+  const canSubmit = isValid && watchedPhone && isOtpSent;
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100">
@@ -346,9 +385,22 @@ export default function RegisterPage() {
                       شماره موبایل
                     </Label>
                     <PhoneInputSimple
-                      value={phone}
-                      onChange={setPhone}
+                      value={watchedPhone || ""}
+                      onChange={handlePhoneChange}
                     />
+                    <input
+                      type="hidden"
+                      {...register("phone")}
+                    />
+                    {errors.phone && (
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="text-sm text-red-600"
+                      >
+                        {errors.phone.message}
+                      </motion.p>
+                    )}
                   </div>
                 </motion.div>
 
@@ -429,8 +481,8 @@ export default function RegisterPage() {
                     <Button
                       type="button"
                       variant="outline"
-                      onClick={() => onSendOtp(phone)}
-                      disabled={isLoading || countdown > 0}
+                      onClick={onSendOtp}
+                      disabled={isLoading || countdown > 0 || !watchedPhone || watchedPhone.length < 10}
                       className="bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-slate-500 transition-all duration-300"
                     >
                       {isLoading ? (
@@ -479,7 +531,7 @@ export default function RegisterPage() {
                   <Button
                     type="submit"
                     className="w-full h-12 bg-gradient-to-r from-slate-700 to-gray-800 hover:from-slate-800 hover:to-gray-900 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
-                    disabled={isLoading}
+                    disabled={isLoading || !canSubmit}
                   >
                     {isLoading ? (
                       <span className="flex items-center gap-2">
@@ -535,4 +587,3 @@ export default function RegisterPage() {
     </div>
   );
 }
-
