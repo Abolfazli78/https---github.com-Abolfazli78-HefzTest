@@ -10,12 +10,14 @@ export interface SmsSendResult {
 
 export async function sendOTP(phoneNumber: string, code?: string): Promise<SmsSendResult> {
   const apiKey = process.env.MELIPAYAMAK_API_KEY;
+  const bodyIdEnv = process.env.MELIPAYAMAK_BODY_ID;
   
   // Format phone for Melipayamak API
   const formattedPhone = formatPhoneForSMS(phoneNumber);
   
   console.log("[SMS DEBUG] API Key present:", !!apiKey);
   console.log("[SMS DEBUG] API Key length:", apiKey?.length || 0);
+  console.log("[SMS DEBUG] BODY_ID present:", !!bodyIdEnv, bodyIdEnv ? Number(bodyIdEnv) : undefined);
   console.log("[SMS DEBUG] Original phone:", phoneNumber);
   console.log("[SMS DEBUG] Formatted phone:", formattedPhone);
   console.log("[SMS DEBUG] NODE_ENV:", process.env.NODE_ENV);
@@ -34,8 +36,15 @@ export async function sendOTP(phoneNumber: string, code?: string): Promise<SmsSe
     console.warn("[SMS DEBUG] Using placeholder API key. Update MELIPAYAMAK_API_KEY in .env and restart the server.");
   }
 
-  const url = `https://console.melipayamak.com/api/send/otp/${apiKey}`;
-  const payload = { to: formattedPhone };
+  const url = `https://console.melipayamak.com/api/send/otp/${apiKey}`; // per latest docs
+  // Some accounts require a bodyId even for OTP; include it if provided in env
+  const payload: Record<string, any> = { to: formattedPhone };
+  if (bodyIdEnv) {
+    const parsed = Number(bodyIdEnv);
+    if (!Number.isNaN(parsed)) {
+      payload.bodyId = parsed;
+    }
+  }
   
   console.log("[SMS DEBUG] Request URL:", url);
   console.log("[SMS DEBUG] Request payload:", JSON.stringify(payload));
