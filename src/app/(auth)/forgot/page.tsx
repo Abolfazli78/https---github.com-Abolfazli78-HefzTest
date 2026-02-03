@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,6 +25,7 @@ export default function ForgotPasswordPage() {
   const [error, setError] = useState<string>("");
   const [info, setInfo] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
+  const [countdown, setCountdown] = useState(0);
 
   const {
     register,
@@ -49,6 +50,7 @@ export default function ForgotPasswordPage() {
         setError(data.error || "ارسال کد ناموفق بود");
       } else {
         setInfo(data.message || "کد ارسال شد");
+        setCountdown(120);
       }
     } catch {
       setError("خطا در ارسال کد");
@@ -56,6 +58,15 @@ export default function ForgotPasswordPage() {
       setIsLoading(false);
     }
   };
+
+  // countdown effect
+  useEffect(() => {
+    if (countdown <= 0) return;
+    const t = setInterval(() => {
+      setCountdown((c) => (c > 0 ? c - 1 : 0));
+    }, 1000);
+    return () => clearInterval(t);
+  }, [countdown]);
 
   const onSubmit = async (data: ForgotForm) => {
     setIsLoading(true);
@@ -135,8 +146,9 @@ export default function ForgotPasswordPage() {
                   type="button"
                   variant="outline"
                   onClick={() => onSendOtp((document.getElementById("phone") as HTMLInputElement)?.value || "")}
+                  disabled={isLoading || countdown > 0}
                 >
-                  ارسال کد
+                  {countdown > 0 ? `${countdown} ثانیه` : "ارسال کد"}
                 </Button>
               </div>
               {errors.otp && (
