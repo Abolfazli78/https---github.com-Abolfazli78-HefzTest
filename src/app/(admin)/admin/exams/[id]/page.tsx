@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
+import { parseDescription } from "@/lib/exam-utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -98,12 +99,15 @@ export default async function ExamDetailPage({
                 </Badge>
               </div>
             </div>
-            {exam.description && (
-              <div>
-                <p className="text-sm text-muted-foreground mb-2">توضیحات</p>
-                <p className="arabic-text">{exam.description}</p>
-              </div>
-            )}
+            {(() => {
+                const cleanDescription = parseDescription(exam.description);
+                return cleanDescription !== "بدون توضیحات" ? (
+                    <div>
+                        <p className="text-sm text-muted-foreground mb-2">توضیحات</p>
+                        <p className="arabic-text">{cleanDescription}</p>
+                    </div>
+                ) : null;
+            })()}
           </CardContent>
         </Card>
 

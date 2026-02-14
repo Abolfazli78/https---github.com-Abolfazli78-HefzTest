@@ -1790,8 +1790,10 @@ export const QuestionScalarFieldEnum = {
   explanation: 'explanation',
   year: 'year',
   juz: 'juz',
+  surahId: 'surahId',
   topic: 'topic',
   difficultyLevel: 'difficultyLevel',
+  questionKind: 'questionKind',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -2129,6 +2131,20 @@ export type EnumCorrectAnswerFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'CorrectAnswer[]'
  */
 export type ListEnumCorrectAnswerFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CorrectAnswer[]'>
+    
+
+
+/**
+ * Reference to a field of type 'QuestionKind'
+ */
+export type EnumQuestionKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuestionKind'>
+    
+
+
+/**
+ * Reference to a field of type 'QuestionKind[]'
+ */
+export type ListEnumQuestionKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuestionKind[]'>
     
 
 

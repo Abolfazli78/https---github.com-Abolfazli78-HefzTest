@@ -7,6 +7,14 @@
   src: url('/fonts/Vazirmatn/Vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2');
 }
 
+@font-face {
+  font-family: 'QuranFont';
+  src: url('/fonts/wm-naskh-qurani-93.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -218,16 +226,17 @@
 
   /* Persian text styling */
   .persian-text {
-    font-family: 'Vazirmatn', var(--font-persian), sans-serif;
+    font-family: var(--font-persian), sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
-  /* Quran verse styling with diacritics */
+  /* Quran verse styling */
   .quran-text {
-    font-family: var(--font-arabic), serif;
+    font-family: 'QuranFont', serif;
     font-size: 1.5rem;
     line-height: 2.5;
-    letter-spacing: 0.05em;
-    font-weight: 400;
+    direction: rtl;
   }
 
   /* Custom scrollbar styles */

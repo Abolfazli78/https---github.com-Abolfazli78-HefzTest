@@ -11,7 +11,7 @@ export async function POST(req: Request) {
         }
 
         const body = await req.json();
-        const { planId, discountCode } = body;
+        const { planId, discountCode, redirectUrl } = body;
         const userId = session.user.id;
 
         if (!planId) {
@@ -102,7 +102,7 @@ export async function POST(req: Request) {
             },
         });
 
-        const callbackUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/payment/verify?paymentId=${payment.id}`;
+        const callbackUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/payment/verify?paymentId=${payment.id}${redirectUrl ? `&redirect_url=${encodeURIComponent(redirectUrl)}` : ''}`;
 
         const response = await zarinpal.payments.create({
             amount: Math.round(finalAmount),

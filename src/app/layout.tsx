@@ -9,6 +9,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "سیستم تست حفظ - Online Memorization Test",
   description: "سیستم پیشرفته تست حفظ با پشتیبانی کامل از زبان فارسی و عربی",
+  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({

@@ -159,8 +159,10 @@ export const QuestionScalarFieldEnum = {
   explanation: 'explanation',
   year: 'year',
   juz: 'juz',
+  surahId: 'surahId',
   topic: 'topic',
   difficultyLevel: 'difficultyLevel',
+  questionKind: 'questionKind',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

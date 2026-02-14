@@ -55,6 +55,14 @@ export const CorrectAnswer = {
 export type CorrectAnswer = (typeof CorrectAnswer)[keyof typeof CorrectAnswer]
 
 
+export const QuestionKind = {
+  MEMORIZATION: 'MEMORIZATION',
+  CONCEPTS: 'CONCEPTS'
+} as const
+
+export type QuestionKind = (typeof QuestionKind)[keyof typeof QuestionKind]
+
+
 export const AttemptStatus = {
   IN_PROGRESS: 'IN_PROGRESS',
   COMPLETED: 'COMPLETED',

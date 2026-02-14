@@ -12,6 +12,7 @@ import { SubscriptionStatus } from "@/generated";
 import { PaymentStatus } from "@/components/payment/payment-status";
 import { RolePlans } from "@/components/subscription/role-plans";
 import { useSubscription } from "@/hooks/use-subscription";
+import { useSearchParams } from "next/navigation";
 
 interface SubscriptionPlan {
   id: string;
@@ -39,8 +40,10 @@ interface UserSubscription {
 export default function SubscriptionsPage() {
   const { data: session } = useSession();
   const { subscriptionInfo, upgradeSubscription, loading } = useSubscription();
+  const searchParams = useSearchParams();
   const [discountCode, setDiscountCode] = useState("");
   const [discountError, setDiscountError] = useState("");
+  const redirectUrl = searchParams.get("redirect_url");
 
   const getStatusLabel = (status: SubscriptionStatus) => {
     const labels = {
@@ -79,6 +82,7 @@ export default function SubscriptionsPage() {
         body: JSON.stringify({
           planId,
           discountCode: discountCode || undefined,
+          redirectUrl: redirectUrl || undefined,
         }),
       });
 

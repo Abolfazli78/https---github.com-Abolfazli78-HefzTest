@@ -54,6 +54,11 @@ enum CorrectAnswer {
   D
 }
 
+enum QuestionKind {
+  MEMORIZATION
+  CONCEPTS
+}
+
 enum AttemptStatus {
   IN_PROGRESS
   COMPLETED
@@ -174,14 +179,24 @@ model Question {
   explanation   String?       @db.Text
   year          Int?
   juz           Int?
+  surahId       Int?
   topic         String?
   difficultyLevel String?
+  questionKind  QuestionKind  @default(CONCEPTS)
   isActive      Boolean       @default(true)
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 
   exam          Exam?         @relation(fields: [examId], references: [id], onDelete: Cascade)
   examAnswers   ExamAnswer[]
+
+  @@index([isActive])
+  @@index([juz])
+  @@index([surahId])
+  @@index([year])
+  @@index([difficultyLevel])
+  @@index([questionKind])
+  @@index([createdAt])
 }
 
 model ExamAttempt {

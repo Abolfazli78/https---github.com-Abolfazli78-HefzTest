@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CorrectAnswer } from "@/generated";
+import { RenderText } from "@/components/RenderText";
 
 export default async function QuestionDetailPage({
   params,
@@ -56,33 +57,33 @@ export default async function QuestionDetailPage({
             <CardTitle>متن سوال</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="arabic-text text-lg mb-4">{question.questionText}</p>
+            <p className="text-lg mb-4"><RenderText text={question.questionText} /></p>
 
             <div className="space-y-3">
               <div className={`p-3 rounded-lg border ${question.correctAnswer === CorrectAnswer.A ? "bg-green-50 dark:bg-green-900/20 border-green-500" : "bg-muted"}`}>
                 <span className="font-semibold">الف) </span>
-                <span className="arabic-text">{question.optionA}</span>
+                <RenderText text={question.optionA} />
                 {question.correctAnswer === CorrectAnswer.A && (
                   <Badge className="mr-2" variant="default">صحیح</Badge>
                 )}
               </div>
               <div className={`p-3 rounded-lg border ${question.correctAnswer === CorrectAnswer.B ? "bg-green-50 dark:bg-green-900/20 border-green-500" : "bg-muted"}`}>
                 <span className="font-semibold">ب) </span>
-                <span className="arabic-text">{question.optionB}</span>
+                <RenderText text={question.optionB} />
                 {question.correctAnswer === CorrectAnswer.B && (
                   <Badge className="mr-2" variant="default">صحیح</Badge>
                 )}
               </div>
               <div className={`p-3 rounded-lg border ${question.correctAnswer === CorrectAnswer.C ? "bg-green-50 dark:bg-green-900/20 border-green-500" : "bg-muted"}`}>
                 <span className="font-semibold">ج) </span>
-                <span className="arabic-text">{question.optionC}</span>
+                <RenderText text={question.optionC} />
                 {question.correctAnswer === CorrectAnswer.C && (
                   <Badge className="mr-2" variant="default">صحیح</Badge>
                 )}
               </div>
               <div className={`p-3 rounded-lg border ${question.correctAnswer === CorrectAnswer.D ? "bg-green-50 dark:bg-green-900/20 border-green-500" : "bg-muted"}`}>
                 <span className="font-semibold">د) </span>
-                <span className="arabic-text">{question.optionD}</span>
+                <RenderText text={question.optionD} />
                 {question.correctAnswer === CorrectAnswer.D && (
                   <Badge className="mr-2" variant="default">صحیح</Badge>
                 )}

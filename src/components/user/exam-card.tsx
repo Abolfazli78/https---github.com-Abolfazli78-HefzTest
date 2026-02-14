@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { AccessLevel } from "@/generated";
 import { Clock, FileText, ArrowLeft } from "lucide-react";
+import { parseDescription } from "@/lib/exam-utils";
 
 interface Exam {
   id: string;
@@ -30,11 +31,14 @@ export function ExamCard({ exam }: ExamCardProps) {
             {exam.accessLevel === "FREE" ? "رایگان" : "اشتراکی"}
           </Badge>
         </div>
-        {exam.description && (
-          <CardDescription className="arabic-text">
-            {exam.description}
-          </CardDescription>
-        )}
+        {(() => {
+            const cleanDescription = parseDescription(exam.description || null);
+            return cleanDescription !== "بدون توضیحات" ? (
+                <CardDescription className="arabic-text">
+                    {cleanDescription}
+                </CardDescription>
+            ) : null;
+        })()}
       </CardHeader>
       <CardContent>
         <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground">

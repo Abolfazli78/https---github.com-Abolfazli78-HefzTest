@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "@/lib/session";
 import { getAccessibleExams } from "@/lib/exam-access";
 import { db } from "@/lib/db";
-import { AccessLevel, SelectionMode, UserRole } from "@/generated";
+import { AccessLevel, SelectionMode, CorrectAnswer, UserRole, QuestionKind } from "@/generated/client";
 import { checkAccess } from "@/lib/access";
 import type { Prisma } from "@/generated/client";
 
@@ -53,6 +53,9 @@ export async function POST(request: Request) {
       allowRetake,
       fromJuz,
       toJuz,
+      fromSurah,
+      toSurah,
+      topics,
     } = body;
 
     // Validate required fields
@@ -166,22 +169,70 @@ export async function POST(request: Request) {
     } else if (selectionMode === SelectionMode.JUZ) {
       if (fromJuz && toJuz) {
         // Custom range: from part to part
+        const from = parseInt(fromJuz);
+        const to = parseInt(toJuz);
+        const [start, end] = from <= to ? [from, to] : [to, from];
         whereClause.juz = {
-          gte: parseInt(fromJuz),
-          lte: parseInt(toJuz)
+          gte: start,
+          lte: end,
         };
       } else if (juz) {
         // Single juz (old format)
         whereClause.juz = parseInt(juz);
       }
+    } else if (selectionMode === SelectionMode.SURAH) {
+      if (fromSurah && toSurah) {
+        const from = Number(fromSurah);
+        const to = Number(toSurah);
+        if (Number.isFinite(from) && Number.isFinite(to)) {
+          // Import helper functions
+          const { SURAHS, normalizeText } = await import("@/lib/surahs");
+          const selectedSurahs = SURAHS.filter((s) => s.id >= start && s.id <= end);
+          const normalizedNames = selectedSurahs.map((s) => normalizeText(s.name));
+          const originalNames = selectedSurahs.map((s) => s.name);
+          
+          // Combine all possible name variations
+          const allNames = [...new Set([...normalizedNames, ...originalNames])];
+          
+          if (allNames.length > 0) {
+            // Use OR with multiple topic matches to handle variations
+            const topicConditions: Prisma.QuestionWhereInput[] = allNames.map((name) => ({
+              topic: name,
+            }));
+            
+            if (topicConditions.length === 1) {
+              whereClause.topic = topicConditions[0].topic;
+            } else {
+              whereClause.OR = topicConditions;
+            }
+          }
+        }
+      }
     }
-    // RANDOM mode doesn't filter by specific criteria
+    // RANDOM mode doesn't filter by specific criteria when no explicit selection range
+
+    // Filter by question kind (memorization/concepts)
+    if (Array.isArray(topics) && topics.length > 0) {
+      const hasMemorization = topics.includes("memorization");
+      const hasConcepts = topics.includes("concepts");
+
+      if (hasMemorization && !hasConcepts) {
+        whereClause.questionKind = { in: [QuestionKind.MEMORIZATION] };
+      } else if (hasConcepts && !hasMemorization) {
+        whereClause.questionKind = { in: [QuestionKind.CONCEPTS] };
+      } else if (hasConcepts && hasMemorization) {
+        whereClause.questionKind = { in: [QuestionKind.CONCEPTS, QuestionKind.MEMORIZATION] };
+      }
+    }
 
     // Get random questions from the question bank
     const questions = await db.question.findMany({
       where: whereClause,
       orderBy: { createdAt: 'desc' }, // Get latest questions first
     });
+
+    console.log("CustomExam (admin/institute/teacher) DEBUG - whereClause:", whereClause);
+    console.log("CustomExam (admin/institute/teacher) DEBUG - matched questions:", questions.length);
 
     if (questions.length === 0) {
       return NextResponse.json(

@@ -29,11 +29,13 @@ export type AggregateQuestion = {
 export type QuestionAvgAggregateOutputType = {
   year: number | null
   juz: number | null
+  surahId: number | null
 }
 
 export type QuestionSumAggregateOutputType = {
   year: number | null
   juz: number | null
+  surahId: number | null
 }
 
 export type QuestionMinAggregateOutputType = {
@@ -48,8 +50,10 @@ export type QuestionMinAggregateOutputType = {
   explanation: string | null
   year: number | null
   juz: number | null
+  surahId: number | null
   topic: string | null
   difficultyLevel: string | null
+  questionKind: $Enums.QuestionKind | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -67,8 +71,10 @@ export type QuestionMaxAggregateOutputType = {
   explanation: string | null
   year: number | null
   juz: number | null
+  surahId: number | null
   topic: string | null
   difficultyLevel: string | null
+  questionKind: $Enums.QuestionKind | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -86,8 +92,10 @@ export type QuestionCountAggregateOutputType = {
   explanation: number
   year: number
   juz: number
+  surahId: number
   topic: number
   difficultyLevel: number
+  questionKind: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -98,11 +106,13 @@ export type QuestionCountAggregateOutputType = {
 export type QuestionAvgAggregateInputType = {
   year?: true
   juz?: true
+  surahId?: true
 }
 
 export type QuestionSumAggregateInputType = {
   year?: true
   juz?: true
+  surahId?: true
 }
 
 export type QuestionMinAggregateInputType = {
@@ -117,8 +127,10 @@ export type QuestionMinAggregateInputType = {
   explanation?: true
   year?: true
   juz?: true
+  surahId?: true
   topic?: true
   difficultyLevel?: true
+  questionKind?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -136,8 +148,10 @@ export type QuestionMaxAggregateInputType = {
   explanation?: true
   year?: true
   juz?: true
+  surahId?: true
   topic?: true
   difficultyLevel?: true
+  questionKind?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -155,8 +169,10 @@ export type QuestionCountAggregateInputType = {
   explanation?: true
   year?: true
   juz?: true
+  surahId?: true
   topic?: true
   difficultyLevel?: true
+  questionKind?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -261,8 +277,10 @@ export type QuestionGroupByOutputType = {
   explanation: string | null
   year: number | null
   juz: number | null
+  surahId: number | null
   topic: string | null
   difficultyLevel: string | null
+  questionKind: $Enums.QuestionKind
   isActive: boolean
   createdAt: Date
   updatedAt: Date
@@ -303,8 +321,10 @@ export type QuestionWhereInput = {
   explanation?: Prisma.StringNullableFilter<"Question"> | string | null
   year?: Prisma.IntNullableFilter<"Question"> | number | null
   juz?: Prisma.IntNullableFilter<"Question"> | number | null
+  surahId?: Prisma.IntNullableFilter<"Question"> | number | null
   topic?: Prisma.StringNullableFilter<"Question"> | string | null
   difficultyLevel?: Prisma.StringNullableFilter<"Question"> | string | null
+  questionKind?: Prisma.EnumQuestionKindFilter<"Question"> | $Enums.QuestionKind
   isActive?: Prisma.BoolFilter<"Question"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Question"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Question"> | Date | string
@@ -324,8 +344,10 @@ export type QuestionOrderByWithRelationInput = {
   explanation?: Prisma.SortOrderInput | Prisma.SortOrder
   year?: Prisma.SortOrderInput | Prisma.SortOrder
   juz?: Prisma.SortOrderInput | Prisma.SortOrder
+  surahId?: Prisma.SortOrderInput | Prisma.SortOrder
   topic?: Prisma.SortOrderInput | Prisma.SortOrder
   difficultyLevel?: Prisma.SortOrderInput | Prisma.SortOrder
+  questionKind?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -348,8 +370,10 @@ export type QuestionWhereUniqueInput = Prisma.AtLeast<{
   explanation?: Prisma.StringNullableFilter<"Question"> | string | null
   year?: Prisma.IntNullableFilter<"Question"> | number | null
   juz?: Prisma.IntNullableFilter<"Question"> | number | null
+  surahId?: Prisma.IntNullableFilter<"Question"> | number | null
   topic?: Prisma.StringNullableFilter<"Question"> | string | null
   difficultyLevel?: Prisma.StringNullableFilter<"Question"> | string | null
+  questionKind?: Prisma.EnumQuestionKindFilter<"Question"> | $Enums.QuestionKind
   isActive?: Prisma.BoolFilter<"Question"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Question"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Question"> | Date | string
@@ -369,8 +393,10 @@ export type QuestionOrderByWithAggregationInput = {
   explanation?: Prisma.SortOrderInput | Prisma.SortOrder
   year?: Prisma.SortOrderInput | Prisma.SortOrder
   juz?: Prisma.SortOrderInput | Prisma.SortOrder
+  surahId?: Prisma.SortOrderInput | Prisma.SortOrder
   topic?: Prisma.SortOrderInput | Prisma.SortOrder
   difficultyLevel?: Prisma.SortOrderInput | Prisma.SortOrder
+  questionKind?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -396,8 +422,10 @@ export type QuestionScalarWhereWithAggregatesInput = {
   explanation?: Prisma.StringNullableWithAggregatesFilter<"Question"> | string | null
   year?: Prisma.IntNullableWithAggregatesFilter<"Question"> | number | null
   juz?: Prisma.IntNullableWithAggregatesFilter<"Question"> | number | null
+  surahId?: Prisma.IntNullableWithAggregatesFilter<"Question"> | number | null
   topic?: Prisma.StringNullableWithAggregatesFilter<"Question"> | string | null
   difficultyLevel?: Prisma.StringNullableWithAggregatesFilter<"Question"> | string | null
+  questionKind?: Prisma.EnumQuestionKindWithAggregatesFilter<"Question"> | $Enums.QuestionKind
   isActive?: Prisma.BoolWithAggregatesFilter<"Question"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Question"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Question"> | Date | string
@@ -414,8 +442,10 @@ export type QuestionCreateInput = {
   explanation?: string | null
   year?: number | null
   juz?: number | null
+  surahId?: number | null
   topic?: string | null
   difficultyLevel?: string | null
+  questionKind?: $Enums.QuestionKind
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -435,8 +465,10 @@ export type QuestionUncheckedCreateInput = {
   explanation?: string | null
   year?: number | null
   juz?: number | null
+  surahId?: number | null
   topic?: string | null
   difficultyLevel?: string | null
+  questionKind?: $Enums.QuestionKind
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -454,8 +486,10 @@ export type QuestionUpdateInput = {
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   juz?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  surahId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   topic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficultyLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  questionKind?: Prisma.EnumQuestionKindFieldUpdateOperationsInput | $Enums.QuestionKind
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -475,8 +509,10 @@ export type QuestionUncheckedUpdateInput = {
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   juz?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  surahId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   topic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficultyLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  questionKind?: Prisma.EnumQuestionKindFieldUpdateOperationsInput | $Enums.QuestionKind
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -495,8 +531,10 @@ export type QuestionCreateManyInput = {
   explanation?: string | null
   year?: number | null
   juz?: number | null
+  surahId?: number | null
   topic?: string | null
   difficultyLevel?: string | null
+  questionKind?: $Enums.QuestionKind
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -513,8 +551,10 @@ export type QuestionUpdateManyMutationInput = {
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   juz?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  surahId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   topic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficultyLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  questionKind?: Prisma.EnumQuestionKindFieldUpdateOperationsInput | $Enums.QuestionKind
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -532,8 +572,10 @@ export type QuestionUncheckedUpdateManyInput = {
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   juz?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  surahId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   topic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficultyLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  questionKind?: Prisma.EnumQuestionKindFieldUpdateOperationsInput | $Enums.QuestionKind
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -561,8 +603,10 @@ export type QuestionCountOrderByAggregateInput = {
   explanation?: Prisma.SortOrder
   year?: Prisma.SortOrder
   juz?: Prisma.SortOrder
+  surahId?: Prisma.SortOrder
   topic?: Prisma.SortOrder
   difficultyLevel?: Prisma.SortOrder
+  questionKind?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -571,6 +615,7 @@ export type QuestionCountOrderByAggregateInput = {
 export type QuestionAvgOrderByAggregateInput = {
   year?: Prisma.SortOrder
   juz?: Prisma.SortOrder
+  surahId?: Prisma.SortOrder
 }
 
 export type QuestionMaxOrderByAggregateInput = {
@@ -585,8 +630,10 @@ export type QuestionMaxOrderByAggregateInput = {
   explanation?: Prisma.SortOrder
   year?: Prisma.SortOrder
   juz?: Prisma.SortOrder
+  surahId?: Prisma.SortOrder
   topic?: Prisma.SortOrder
   difficultyLevel?: Prisma.SortOrder
+  questionKind?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -604,8 +651,10 @@ export type QuestionMinOrderByAggregateInput = {
   explanation?: Prisma.SortOrder
   year?: Prisma.SortOrder
   juz?: Prisma.SortOrder
+  surahId?: Prisma.SortOrder
   topic?: Prisma.SortOrder
   difficultyLevel?: Prisma.SortOrder
+  questionKind?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -614,6 +663,7 @@ export type QuestionMinOrderByAggregateInput = {
 export type QuestionSumOrderByAggregateInput = {
   year?: Prisma.SortOrder
   juz?: Prisma.SortOrder
+  surahId?: Prisma.SortOrder
 }
 
 export type QuestionScalarRelationFilter = {
@@ -667,6 +717,10 @@ export type EnumCorrectAnswerFieldUpdateOperationsInput = {
   set?: $Enums.CorrectAnswer
 }
 
+export type EnumQuestionKindFieldUpdateOperationsInput = {
+  set?: $Enums.QuestionKind
+}
+
 export type QuestionCreateNestedOneWithoutExamAnswersInput = {
   create?: Prisma.XOR<Prisma.QuestionCreateWithoutExamAnswersInput, Prisma.QuestionUncheckedCreateWithoutExamAnswersInput>
   connectOrCreate?: Prisma.QuestionCreateOrConnectWithoutExamAnswersInput
@@ -692,8 +746,10 @@ export type QuestionCreateWithoutExamInput = {
   explanation?: string | null
   year?: number | null
   juz?: number | null
+  surahId?: number | null
   topic?: string | null
   difficultyLevel?: string | null
+  questionKind?: $Enums.QuestionKind
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -711,8 +767,10 @@ export type QuestionUncheckedCreateWithoutExamInput = {
   explanation?: string | null
   year?: number | null
   juz?: number | null
+  surahId?: number | null
   topic?: string | null
   difficultyLevel?: string | null
+  questionKind?: $Enums.QuestionKind
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -760,8 +818,10 @@ export type QuestionScalarWhereInput = {
   explanation?: Prisma.StringNullableFilter<"Question"> | string | null
   year?: Prisma.IntNullableFilter<"Question"> | number | null
   juz?: Prisma.IntNullableFilter<"Question"> | number | null
+  surahId?: Prisma.IntNullableFilter<"Question"> | number | null
   topic?: Prisma.StringNullableFilter<"Question"> | string | null
   difficultyLevel?: Prisma.StringNullableFilter<"Question"> | string | null
+  questionKind?: Prisma.EnumQuestionKindFilter<"Question"> | $Enums.QuestionKind
   isActive?: Prisma.BoolFilter<"Question"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Question"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Question"> | Date | string
@@ -778,8 +838,10 @@ export type QuestionCreateWithoutExamAnswersInput = {
   explanation?: string | null
   year?: number | null
   juz?: number | null
+  surahId?: number | null
   topic?: string | null
   difficultyLevel?: string | null
+  questionKind?: $Enums.QuestionKind
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -798,8 +860,10 @@ export type QuestionUncheckedCreateWithoutExamAnswersInput = {
   explanation?: string | null
   year?: number | null
   juz?: number | null
+  surahId?: number | null
   topic?: string | null
   difficultyLevel?: string | null
+  questionKind?: $Enums.QuestionKind
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -832,8 +896,10 @@ export type QuestionUpdateWithoutExamAnswersInput = {
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   juz?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  surahId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   topic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficultyLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  questionKind?: Prisma.EnumQuestionKindFieldUpdateOperationsInput | $Enums.QuestionKind
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -852,8 +918,10 @@ export type QuestionUncheckedUpdateWithoutExamAnswersInput = {
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   juz?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  surahId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   topic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficultyLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  questionKind?: Prisma.EnumQuestionKindFieldUpdateOperationsInput | $Enums.QuestionKind
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -870,8 +938,10 @@ export type QuestionCreateManyExamInput = {
   explanation?: string | null
   year?: number | null
   juz?: number | null
+  surahId?: number | null
   topic?: string | null
   difficultyLevel?: string | null
+  questionKind?: $Enums.QuestionKind
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -888,8 +958,10 @@ export type QuestionUpdateWithoutExamInput = {
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   juz?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  surahId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   topic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficultyLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  questionKind?: Prisma.EnumQuestionKindFieldUpdateOperationsInput | $Enums.QuestionKind
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -907,8 +979,10 @@ export type QuestionUncheckedUpdateWithoutExamInput = {
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   juz?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  surahId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   topic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficultyLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  questionKind?: Prisma.EnumQuestionKindFieldUpdateOperationsInput | $Enums.QuestionKind
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -926,8 +1000,10 @@ export type QuestionUncheckedUpdateManyWithoutExamInput = {
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   juz?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  surahId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   topic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficultyLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  questionKind?: Prisma.EnumQuestionKindFieldUpdateOperationsInput | $Enums.QuestionKind
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -976,8 +1052,10 @@ export type QuestionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   explanation?: boolean
   year?: boolean
   juz?: boolean
+  surahId?: boolean
   topic?: boolean
   difficultyLevel?: boolean
+  questionKind?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -998,8 +1076,10 @@ export type QuestionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   explanation?: boolean
   year?: boolean
   juz?: boolean
+  surahId?: boolean
   topic?: boolean
   difficultyLevel?: boolean
+  questionKind?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1018,8 +1098,10 @@ export type QuestionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   explanation?: boolean
   year?: boolean
   juz?: boolean
+  surahId?: boolean
   topic?: boolean
   difficultyLevel?: boolean
+  questionKind?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1038,14 +1120,16 @@ export type QuestionSelectScalar = {
   explanation?: boolean
   year?: boolean
   juz?: boolean
+  surahId?: boolean
   topic?: boolean
   difficultyLevel?: boolean
+  questionKind?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type QuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "examId" | "questionText" | "optionA" | "optionB" | "optionC" | "optionD" | "correctAnswer" | "explanation" | "year" | "juz" | "topic" | "difficultyLevel" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["question"]>
+export type QuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "examId" | "questionText" | "optionA" | "optionB" | "optionC" | "optionD" | "correctAnswer" | "explanation" | "year" | "juz" | "surahId" | "topic" | "difficultyLevel" | "questionKind" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["question"]>
 export type QuestionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   exam?: boolean | Prisma.Question$examArgs<ExtArgs>
   examAnswers?: boolean | Prisma.Question$examAnswersArgs<ExtArgs>
@@ -1076,8 +1160,10 @@ export type $QuestionPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     explanation: string | null
     year: number | null
     juz: number | null
+    surahId: number | null
     topic: string | null
     difficultyLevel: string | null
+    questionKind: $Enums.QuestionKind
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -1517,8 +1603,10 @@ export interface QuestionFieldRefs {
   readonly explanation: Prisma.FieldRef<"Question", 'String'>
   readonly year: Prisma.FieldRef<"Question", 'Int'>
   readonly juz: Prisma.FieldRef<"Question", 'Int'>
+  readonly surahId: Prisma.FieldRef<"Question", 'Int'>
   readonly topic: Prisma.FieldRef<"Question", 'String'>
   readonly difficultyLevel: Prisma.FieldRef<"Question", 'String'>
+  readonly questionKind: Prisma.FieldRef<"Question", 'QuestionKind'>
   readonly isActive: Prisma.FieldRef<"Question", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Question", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Question", 'DateTime'>

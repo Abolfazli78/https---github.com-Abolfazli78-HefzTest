@@ -1,11 +1,10 @@
 
 
-
 Invalid `prisma.exam.findUnique()` invocation:
 
 {
-  where: {
-    id: undefined,
+  where: {
+    id: undefined,
 ?   AND?: ExamWhereInput | ExamWhereInput[],
 ?   OR?: ExamWhereInput[],
 ?   NOT?: ExamWhereInput | ExamWhereInput[],
@@ -23,25 +22,25 @@ Invalid `prisma.exam.findUnique()` invocation:
 ?   questions?: QuestionListRelationFilter,
 ?   examAttempts?: ExamAttemptListRelationFilter,
 ?   leaderboards?: LeaderboardListRelationFilter
-  },
-  include: {
-    _count: {
-      select: {
-        questions: true,
-        examAttempts: true
-      }
-    }
-  }
+  },
+  include: {
+    _count: {
+      select: {
+        questions: true,
+        examAttempts: true
+      }
+    }
+  }
 }
 
 Argument `where` of type ExamWhereUniqueInput needs at least one of `id` arguments. Available options are marked with ?.
 
-PrismaClientValidationError: 
+PrismaClientValidationError:
 Invalid `prisma.exam.findUnique()` invocation:
 
 {
-  where: {
-    id: undefined,
+  where: {
+    id: undefined,
 ?   AND?: ExamWhereInput | ExamWhereInput[],
 ?   OR?: ExamWhereInput[],
 ?   NOT?: ExamWhereInput | ExamWhereInput[],
@@ -59,24 +58,24 @@ Invalid `prisma.exam.findUnique()` invocation:
 ?   questions?: QuestionListRelationFilter,
 ?   examAttempts?: ExamAttemptListRelationFilter,
 ?   leaderboards?: LeaderboardListRelationFilter
-  },
-  include: {
-    _count: {
-      select: {
-        questions: true,
-        examAttempts: true
-      }
-    }
-  }
+  },
+  include: {
+    _count: {
+      select: {
+        questions: true,
+        examAttempts: true
+      }
+    }
+  }
 }
 
 Argument `where` of type ExamWhereUniqueInput needs at least one of `id` arguments. Available options are marked with ?.
-    at  ExamDetailPage (about://React/Server/webpack-internal:///(rsc)/./src/app/(admin)/admin/exams/%5Bid%5D/page.tsx?88:31:18)
-    at resolveErrorDev (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development.js:3189:30)
-    at processFullStringRow (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development.js:4348:23)
-    at processFullBinaryRow (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development.js:4291:7)
-    at processBinaryChunk (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development.js:4504:15)
-    at progress (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development.js:4776:9)
+    at  ExamDetailPage (about://React/Server/webpack-internal:///(rsc)/./src/app/(admin)/admin/exams/%5Bid%5D/page.tsx?88:31:18)
+    at resolveErrorDev (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development.js:3189:30)
+    at processFullStringRow (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development.js:4348:23)
+    at processFullBinaryRow (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development.js:4291:7)
+    at processBinaryChunk (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development.js:4504:15)
+    at progress (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-client.browser.development.js:4776:9)
 تلاش مجدد
 
 
@@ -88,13 +87,13 @@ Failed to create exam
 src\app\(user)\exams\custom\page.tsx (94:32) @ handleStartExam
 
 
-  92 |             });
-  93 |
+  92 |             });
+  93 |
 > 94 |             if (!res.ok) throw new Error("Failed to create exam");
-     |                                ^
-  95 |
-  96 |             const data = await res.json();
-  97 |             router.push(`/exams/${data.examId}/take`);
+     |                                ^
+  95 |
+  96 |             const data = await res.json();
+  97 |             router.push(`/exams/${data.examId}/take`);
 Call Stack
 1
 
@@ -104,7 +103,7 @@ src\app\(user)\exams\custom\page.tsx (94:32)
 
 
 
------
+---
 Download the React DevTools for a better development experience: https://react.dev/link/react-devtools
 forward-logs-shared.js:28 [HMR] connected
 C:\Ai\hefztest\src\app\(user)\exams\custom\page.tsx:83  POST http://localhost:3000/api/exams/custom 500 (Internal Server Error)
@@ -118,7 +117,7 @@ dispatchEventForPluginEventSystem @ react-dom-client.development.js:20746
 dispatchEvent @ react-dom-client.development.js:25672
 dispatchDiscreteEvent @ react-dom-client.development.js:25640
 C:\Ai\hefztest\src\app\(user)\exams\custom\page.tsx:99 Error creating exam: Error: Failed to create exam
-    
+ 
 at handleStartExam (C:\Ai\hefztest\src\app\(user)\exams\custom\page.tsx:94:32)
 
 
@@ -158,7 +157,7 @@ Referrer Policy
 strict-origin-when-cross-origin
 
 
-صفحه داشبور در بخش ادمین کار نمی کند. 
+صفحه داشبور در بخش ادمین کار نمی کند.
 404
 This page could not be found.
 
@@ -175,14 +174,14 @@ This page could not be found.
 
 پروژه خیلی کند هست و دیر همه چی لود میشه
 
-صفحه ویرایش و مشاهده پلن اشتراکی مشکل داره و ارور میده 
+صفحه ویرایش و مشاهده پلن اشتراکی مشکل داره و ارور میده
 
 
 
 
 ساخت ازمون دلخواه ا
 
-ازمون ها برای هر کاربر اگر جزو کلاسی هست فقط همون ازمون هایی که معلم اون طراحی کرده نمایش بده یا ازمون هایی که اون مدیر موسسه طراحی کرده نه اینکه همه آزمون ها 
+ازمون ها برای هر کاربر اگر جزو کلاسی هست فقط همون ازمون هایی که معلم اون طراحی کرده نمایش بده یا ازمون هایی که اون مدیر موسسه طراحی کرده نه اینکه همه آزمون ها
 
 
 
@@ -199,7 +198,15 @@ This page could not be found.
 بعد از ارتقاء پلن به صفحه اشتباه دایرکت میشه
 
 
-عنوان آزمون آنلاین - تست حفظ - 
+عنوان آزمون آنلاین - تست حفظ -
 صفحه اصلی
 
 نمودار پیشرفت در صفحه پنل مدیر موسسه
+
+سوال نمیشه بیش از 100 تا وارد کرد 
+
+ارور نمی نویسه برای ساخت ازمون دلخواه
+
+سطح اسان و سخت و متوسط
+
+کاربر نمیتونه ازمون بسازه

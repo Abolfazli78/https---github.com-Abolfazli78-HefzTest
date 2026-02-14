@@ -41,7 +41,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Create questions in database
     const createdQuestions = await db.question.createMany({
       data: validQuestions.map((q: ParsedQuestion) => ({
         questionText: q.questionText,
@@ -49,12 +48,14 @@ export async function POST(request: Request) {
         optionB: q.optionB,
         optionC: q.optionC,
         optionD: q.optionD,
-        correctAnswer: q.correctAnswer as CorrectAnswer,
+        correctAnswer: q.correctAnswer,
         explanation: q.explanation || null,
         year: q.year || null,
         juz: q.juz || null,
+        surahId: q.surahId ?? null,
         topic: q.topic || null,
         difficultyLevel: q.difficultyLevel || null,
+        questionKind: q.questionKind ?? "CONCEPTS",
         isActive: true,
       })),
     });

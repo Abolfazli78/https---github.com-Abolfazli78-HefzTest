@@ -1,6 +1,6 @@
-import { UserRole, AccessLevel, SelectionMode, CorrectAnswer, AttemptStatus, TicketStatus, ContentType } from "@/generated";
+import { UserRole, AccessLevel, SelectionMode, CorrectAnswer, AttemptStatus, TicketStatus, ContentType, QuestionKind } from "@/generated";
 
-export type { UserRole, AccessLevel, SelectionMode, CorrectAnswer, AttemptStatus, TicketStatus, ContentType };
+export type { UserRole, AccessLevel, SelectionMode, CorrectAnswer, AttemptStatus, TicketStatus, ContentType, QuestionKind };
 
 export interface User {
   id: string;
@@ -39,8 +39,10 @@ export interface Question {
   explanation?: string;
   year?: number;
   juz?: number;
+  surahId?: number;
   topic?: string;
   difficultyLevel?: string;
+  questionKind?: QuestionKind;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -111,7 +113,9 @@ export interface ParsedQuestion {
   explanation?: string;
   year?: number;
   juz?: number;
+  surahId?: number;
   topic?: string;
   difficultyLevel?: string;
+  questionKind?: QuestionKind;
 }
 

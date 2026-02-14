@@ -12,6 +12,7 @@ import { ChevronLeft, ChevronRight, BookOpen, Clock, Users, Target, Settings, Ca
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { getSurahOptions, SURAHS } from "@/lib/surahs";
 
 export default function AdminCustomExamPage() {
   const router = useRouter();
@@ -19,8 +20,8 @@ export default function AdminCustomExamPage() {
   const [quranRange, setQuranRange] = useState({
     fromJuz: "1",
     toJuz: "30",
-    fromSurah: "1",
-    toSurah: "114"
+    fromSurah: 1,
+    toSurah: 114,
   });
   const [rangeType, setRangeType] = useState<"juz" | "surah">("juz");
   const [yearRange, setYearRange] = useState({
@@ -45,15 +46,13 @@ export default function AdminCustomExamPage() {
     label: `جزء ${i + 1}`
   }));
 
-  const surahOptions = [
-    { value: "1", label: "سوره فاتحه" },
-    { value: "2", label: "سوره بقره" },
-    { value: "3", label: "سوره آل عمران" },
-    { value: "4", label: "سوره نساء" },
-    { value: "5", label: "سوره مائده" },
-    { value: "6", label: "سوره انعام" },
-    { value: "114", label: "سوره ناس" }
-  ];
+  const surahOptions = getSurahOptions();
+  const [surahSearch, setSurahSearch] = useState("");
+  const filteredSurahOptions = surahOptions.filter((s) => {
+    const q = surahSearch.trim();
+    if (!q) return true;
+    return s.label.includes(q) || s.value.includes(q);
+  });
 
   const yearOptions = Array.from({ length: 20 }, (_, i) => ({
     value: (1385 + i).toString(),
@@ -69,11 +68,16 @@ export default function AdminCustomExamPage() {
 
   const topicOptions = [
     { value: "memorization", label: "حفظ" },
-    { value: "concepts", label: "مفاهیم" },
-    { value: "tajweed", label: "تجوید" },
-    { value: "translation", label: "ترجمه" },
-    { value: "tafsir", label: "تفسیر" }
+    { value: "concepts", label: "مفاهیم" }
   ];
+
+  const fromSurahName =
+    SURAHS.find((s) => s.id === quranRange.fromSurah)?.name ??
+    String(quranRange.fromSurah);
+  const toSurahName =
+    SURAHS.find((s) => s.id === quranRange.toSurah)?.name ??
+    String(quranRange.toSurah);
+  const surahRangeLabel = `از ${fromSurahName} تا ${toSurahName}`;
 
   const handleTopicChange = (topic: string, checked: boolean) => {
     if (checked) {
@@ -92,7 +96,7 @@ export default function AdminCustomExamPage() {
           return;
         }
       } else {
-        if (parseInt(quranRange.fromSurah) > parseInt(quranRange.toSurah)) {
+        if (quranRange.fromSurah > quranRange.toSurah) {
           toast.error("سوره شروع نمی‌تواند بزرگتر از سوره پایان باشد");
           return;
         }
@@ -103,13 +107,13 @@ export default function AdminCustomExamPage() {
         toast.error("سال شروع نمی‌تواند بزرگتر از سال پایان باشد");
         return;
       }
-    } else if (currentStep === 3) {
+    } else if (currentStep === 4) {
       // Validate topics
       if (selectedTopics.length === 0) {
         toast.error("حداقل یک موضوع را انتخاب کنید");
         return;
       }
-    } else if (currentStep === 4) {
+    } else if (currentStep === 5) {
       // Validate question count and duration
       if (parseInt(examSettings.questionCount) < 1) {
         toast.error("تعداد سوالات باید حداقل 1 باشد");
@@ -146,8 +150,8 @@ export default function AdminCustomExamPage() {
         selectionMode: rangeType === "juz" ? "JUZ" : "SURAH",
         fromJuz: rangeType === "juz" ? parseInt(quranRange.fromJuz) : null,
         toJuz: rangeType === "juz" ? parseInt(quranRange.toJuz) : null,
-        fromSurah: rangeType === "surah" ? parseInt(quranRange.fromSurah) : null,
-        toSurah: rangeType === "surah" ? parseInt(quranRange.toSurah) : null,
+        fromSurah: rangeType === "surah" ? quranRange.fromSurah : null,
+        toSurah: rangeType === "surah" ? quranRange.toSurah : null,
         fromYear: parseInt(yearRange.fromYear),
         toYear: parseInt(yearRange.toYear),
         difficulty: selectedDifficulty,
@@ -372,14 +376,27 @@ export default function AdminCustomExamPage() {
                         <div>
                           <Label>از سوره</Label>
                           <Select
-                            value={quranRange.fromSurah}
-                            onValueChange={(value) => setQuranRange(prev => ({ ...prev, fromSurah: value }))}
+                            value={String(quranRange.fromSurah)}
+                            onValueChange={(value) =>
+                              setQuranRange((prev) => ({
+                                ...prev,
+                                fromSurah: Number(value),
+                              }))
+                            }
                           >
                             <SelectTrigger>
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                              {surahOptions.map((surah) => (
+                              <div className="px-2 py-1.5">
+                                <Input
+                                  placeholder="جستجوی سوره..."
+                                  value={surahSearch}
+                                  onChange={(e) => setSurahSearch(e.target.value)}
+                                  className="h-8 text-xs"
+                                />
+                              </div>
+                              {filteredSurahOptions.map((surah) => (
                                 <SelectItem key={surah.value} value={surah.value}>
                                   {surah.label}
                                 </SelectItem>
@@ -390,18 +407,31 @@ export default function AdminCustomExamPage() {
                         <div>
                           <Label>تا سوره</Label>
                           <Select
-                            value={quranRange.toSurah}
-                            onValueChange={(value) => setQuranRange(prev => ({ ...prev, toSurah: value }))}
+                            value={String(quranRange.toSurah)}
+                            onValueChange={(value) =>
+                              setQuranRange((prev) => ({
+                                ...prev,
+                                toSurah: Number(value),
+                              }))
+                            }
                           >
                             <SelectTrigger>
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                              {surahOptions.map((surah) => (
-                                <SelectItem 
-                                  key={surah.value} 
+                              <div className="px-2 py-1.5">
+                                <Input
+                                  placeholder="جستجوی سوره..."
+                                  value={surahSearch}
+                                  onChange={(e) => setSurahSearch(e.target.value)}
+                                  className="h-8 text-xs"
+                                />
+                              </div>
+                              {filteredSurahOptions.map((surah) => (
+                                <SelectItem
+                                  key={surah.value}
                                   value={surah.value}
-                                  disabled={parseInt(surah.value) < parseInt(quranRange.fromSurah)}
+                                  disabled={Number(surah.value) < quranRange.fromSurah}
                                 >
                                   {surah.label}
                                 </SelectItem>
@@ -418,7 +448,7 @@ export default function AdminCustomExamPage() {
                       <strong>محدوده انتخاب شده:</strong> 
                       {rangeType === "juz" 
                         ? ` از جزء ${quranRange.fromJuz} تا جزء ${quranRange.toJuz}`
-                        : ` از سوره ${quranRange.fromSurah} تا سوره ${quranRange.toSurah}`
+                        : ` ${surahRangeLabel}`
                       }
                     </p>
                   </div>
@@ -659,7 +689,7 @@ export default function AdminCustomExamPage() {
                           <p className="font-medium">
                             {rangeType === "juz" 
                               ? `از جزء ${quranRange.fromJuz} تا جزء ${quranRange.toJuz}`
-                              : `از سوره ${quranRange.fromSurah} تا سوره ${quranRange.toSurah}`
+                              : surahRangeLabel
                             }
                           </p>
                         </div>

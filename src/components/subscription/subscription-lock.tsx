@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Lock, Crown, Zap, ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 interface SubscriptionLockProps {
   feature: string;
@@ -23,6 +24,13 @@ export function SubscriptionLock({
   compact = false,
   className = ""
 }: SubscriptionLockProps) {
+  const [currentUrl, setCurrentUrl] = useState("");
+
+  useEffect(() => {
+    setCurrentUrl(window.location.pathname + window.location.search);
+  }, []);
+
+  const subscriptionUrl = currentUrl ? `/subscriptions?redirect_url=${encodeURIComponent(currentUrl)}` : "/subscriptions";
   // Always show the lock - parent component will handle conditional rendering
   if (compact) {
     return (
@@ -36,7 +44,7 @@ export function SubscriptionLock({
             </div>
           </div>
           <Button asChild size="sm" className="bg-orange-600 hover:bg-orange-700">
-            <Link href="/subscriptions">
+            <Link href={subscriptionUrl}>
               ارتقاء اشتراک
               <ArrowLeft className="mr-2 h-4 w-4" />
             </Link>
@@ -127,7 +135,7 @@ export function SubscriptionLock({
           {/* Upgrade CTA */}
           <div className="space-y-4">
             <Button asChild className="w-full bg-orange-600 hover:bg-orange-700">
-              <Link href="/subscriptions">
+              <Link href={subscriptionUrl}>
                 <Crown className="mr-2 h-4 w-4" />
                 مشاهده پلن‌های اشتراک
                 <ArrowLeft className="mr-2 h-4 w-4" />

@@ -51,7 +51,7 @@ function parsePlanFeatures(features: unknown): string[] {
 }
 
 function getEffectiveFeatures(planTargetRole: PlanTargetRole, planFeatures: string[]) {
-  const baseStudent = ["advanced_analytics"];
+  const baseStudent = ["advanced_analytics", "exam_creation"];
   const baseTeacher = ["ticket_support", "exam_creation", "student_management"];
   const baseInstitute = ["white_label", "advanced_reports", "teacher_management"];
 
@@ -85,6 +85,8 @@ export async function checkAccess(
     return { allowed: false, reason: "UNAUTHORIZED", message: "غیرمجاز" };
   }
 
+  console.log('Access check:', { userId, userRole: user.role, featureName });
+
   if ((user.role as UserRole) === "ADMIN") {
     return { allowed: true };
   }
@@ -99,6 +101,8 @@ export async function checkAccess(
     orderBy: { createdAt: "desc" },
   });
 
+  console.log('Subscription found:', !!subscription, subscription?.plan?.targetRole, subscription?.plan?.features);
+
   if (!subscription?.plan) {
     return {
       allowed: false,
@@ -111,7 +115,15 @@ export async function checkAccess(
   const planTargetRole = (plan.targetRole as PlanTargetRole) ?? "STUDENT";
   const userRole = user.role as UserRole;
 
+  console.log('Role comparison:', { planTargetRole, userRole });
+
   if (planTargetRole !== userRole) {
+    // Allow STUDENT users to access TEACHER-targeted plans for exam creation
+    if (userRole === "STUDENT" && planTargetRole === "TEACHER" && featureName === "exam_creation") {
+      console.log('Allowing STUDENT to use TEACHER plan for exam_creation');
+      return { allowed: true };
+    }
+    console.log('Role mismatch detected');
     return {
       allowed: false,
       reason: "PLAN_ROLE_MISMATCH",
@@ -120,8 +132,10 @@ export async function checkAccess(
   }
 
   const features = getEffectiveFeatures(planTargetRole, parsePlanFeatures(plan.features));
+  console.log('Effective features:', Array.from(features));
 
   if (featureName && !features.has(featureName)) {
+    console.log('Feature not found:', featureName);
     return {
       allowed: false,
       reason: "FEATURE_NOT_AVAILABLE",
