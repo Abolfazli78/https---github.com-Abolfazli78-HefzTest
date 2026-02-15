@@ -263,6 +263,7 @@ export type UserWhereInput = {
   discountCodes?: Prisma.DiscountCodeListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   createdExams?: Prisma.ExamListRelationFilter
+  userExams?: Prisma.UserExamListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -296,6 +297,7 @@ export type UserOrderByWithRelationInput = {
   discountCodes?: Prisma.DiscountCodeOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
   createdExams?: Prisma.ExamOrderByRelationAggregateInput
+  userExams?: Prisma.UserExamOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -332,6 +334,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   discountCodes?: Prisma.DiscountCodeListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   createdExams?: Prisma.ExamListRelationFilter
+  userExams?: Prisma.UserExamListRelationFilter
 }, "id" | "email" | "phone">
 
 export type UserOrderByWithAggregationInput = {
@@ -400,6 +403,7 @@ export type UserCreateInput = {
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -430,6 +434,7 @@ export type UserUncheckedCreateInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -460,6 +465,7 @@ export type UserUpdateInput = {
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -490,6 +496,7 @@ export type UserUncheckedUpdateInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -955,6 +962,20 @@ export type UserUpdateOneWithoutReceivedInvitationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReceivedInvitationsInput, Prisma.UserUpdateWithoutReceivedInvitationsInput>, Prisma.UserUncheckedUpdateWithoutReceivedInvitationsInput>
 }
 
+export type UserCreateNestedOneWithoutUserExamsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserExamsInput, Prisma.UserUncheckedCreateWithoutUserExamsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserExamsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutUserExamsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserExamsInput, Prisma.UserUncheckedCreateWithoutUserExamsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserExamsInput
+  upsert?: Prisma.UserUpsertWithoutUserExamsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserExamsInput, Prisma.UserUpdateWithoutUserExamsInput>, Prisma.UserUncheckedUpdateWithoutUserExamsInput>
+}
+
 export type UserCreateWithoutTicketParticipantsInput = {
   id?: string
   email?: string | null
@@ -982,6 +1003,7 @@ export type UserCreateWithoutTicketParticipantsInput = {
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTicketParticipantsInput = {
@@ -1011,6 +1033,7 @@ export type UserUncheckedCreateWithoutTicketParticipantsInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTicketParticipantsInput = {
@@ -1056,6 +1079,7 @@ export type UserUpdateWithoutTicketParticipantsInput = {
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTicketParticipantsInput = {
@@ -1085,6 +1109,7 @@ export type UserUncheckedUpdateWithoutTicketParticipantsInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutChildrenInput = {
@@ -1114,6 +1139,7 @@ export type UserCreateWithoutChildrenInput = {
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutChildrenInput = {
@@ -1143,6 +1169,7 @@ export type UserUncheckedCreateWithoutChildrenInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutChildrenInput = {
@@ -1177,6 +1204,7 @@ export type UserCreateWithoutParentInput = {
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutParentInput = {
@@ -1206,6 +1234,7 @@ export type UserUncheckedCreateWithoutParentInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutParentInput = {
@@ -1245,6 +1274,7 @@ export type UserCreateWithoutStudentsInput = {
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStudentsInput = {
@@ -1274,6 +1304,7 @@ export type UserUncheckedCreateWithoutStudentsInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStudentsInput = {
@@ -1308,6 +1339,7 @@ export type UserCreateWithoutTeacherInput = {
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTeacherInput = {
@@ -1337,6 +1369,7 @@ export type UserUncheckedCreateWithoutTeacherInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTeacherInput = {
@@ -1376,6 +1409,7 @@ export type UserCreateWithoutTeachersInput = {
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTeachersInput = {
@@ -1405,6 +1439,7 @@ export type UserUncheckedCreateWithoutTeachersInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTeachersInput = {
@@ -1439,6 +1474,7 @@ export type UserCreateWithoutInstituteInput = {
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutInstituteInput = {
@@ -1468,6 +1504,7 @@ export type UserUncheckedCreateWithoutInstituteInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutInstituteInput = {
@@ -1518,6 +1555,7 @@ export type UserUpdateWithoutChildrenInput = {
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutChildrenInput = {
@@ -1547,6 +1585,7 @@ export type UserUncheckedUpdateWithoutChildrenInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithWhereUniqueWithoutParentInput = {
@@ -1622,6 +1661,7 @@ export type UserUpdateWithoutStudentsInput = {
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStudentsInput = {
@@ -1651,6 +1691,7 @@ export type UserUncheckedUpdateWithoutStudentsInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithWhereUniqueWithoutTeacherInput = {
@@ -1707,6 +1748,7 @@ export type UserUpdateWithoutTeachersInput = {
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTeachersInput = {
@@ -1736,6 +1778,7 @@ export type UserUncheckedUpdateWithoutTeachersInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithWhereUniqueWithoutInstituteInput = {
@@ -1781,6 +1824,7 @@ export type UserCreateWithoutCreatedExamsInput = {
   receivedInvitations?: Prisma.InvitationCreateNestedManyWithoutReceiverInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedExamsInput = {
@@ -1810,6 +1854,7 @@ export type UserUncheckedCreateWithoutCreatedExamsInput = {
   receivedInvitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutReceiverInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedExamsInput = {
@@ -1855,6 +1900,7 @@ export type UserUpdateWithoutCreatedExamsInput = {
   receivedInvitations?: Prisma.InvitationUpdateManyWithoutReceiverNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedExamsInput = {
@@ -1884,6 +1930,7 @@ export type UserUncheckedUpdateWithoutCreatedExamsInput = {
   receivedInvitations?: Prisma.InvitationUncheckedUpdateManyWithoutReceiverNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutExamAttemptsInput = {
@@ -1913,6 +1960,7 @@ export type UserCreateWithoutExamAttemptsInput = {
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutExamAttemptsInput = {
@@ -1942,6 +1990,7 @@ export type UserUncheckedCreateWithoutExamAttemptsInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutExamAttemptsInput = {
@@ -1987,6 +2036,7 @@ export type UserUpdateWithoutExamAttemptsInput = {
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutExamAttemptsInput = {
@@ -2016,6 +2066,7 @@ export type UserUncheckedUpdateWithoutExamAttemptsInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSupportTicketsInput = {
@@ -2045,6 +2096,7 @@ export type UserCreateWithoutSupportTicketsInput = {
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSupportTicketsInput = {
@@ -2074,6 +2126,7 @@ export type UserUncheckedCreateWithoutSupportTicketsInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSupportTicketsInput = {
@@ -2119,6 +2172,7 @@ export type UserUpdateWithoutSupportTicketsInput = {
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSupportTicketsInput = {
@@ -2148,6 +2202,7 @@ export type UserUncheckedUpdateWithoutSupportTicketsInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTicketMessagesInput = {
@@ -2177,6 +2232,7 @@ export type UserCreateWithoutTicketMessagesInput = {
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTicketMessagesInput = {
@@ -2206,6 +2262,7 @@ export type UserUncheckedCreateWithoutTicketMessagesInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTicketMessagesInput = {
@@ -2251,6 +2308,7 @@ export type UserUpdateWithoutTicketMessagesInput = {
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTicketMessagesInput = {
@@ -2280,6 +2338,7 @@ export type UserUncheckedUpdateWithoutTicketMessagesInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSubscriptionsInput = {
@@ -2309,6 +2368,7 @@ export type UserCreateWithoutSubscriptionsInput = {
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSubscriptionsInput = {
@@ -2338,6 +2398,7 @@ export type UserUncheckedCreateWithoutSubscriptionsInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSubscriptionsInput = {
@@ -2383,6 +2444,7 @@ export type UserUpdateWithoutSubscriptionsInput = {
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubscriptionsInput = {
@@ -2412,6 +2474,7 @@ export type UserUncheckedUpdateWithoutSubscriptionsInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLeaderboardsInput = {
@@ -2441,6 +2504,7 @@ export type UserCreateWithoutLeaderboardsInput = {
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLeaderboardsInput = {
@@ -2470,6 +2534,7 @@ export type UserUncheckedCreateWithoutLeaderboardsInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLeaderboardsInput = {
@@ -2515,6 +2580,7 @@ export type UserUpdateWithoutLeaderboardsInput = {
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeaderboardsInput = {
@@ -2544,6 +2610,7 @@ export type UserUncheckedUpdateWithoutLeaderboardsInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDiscountCodesInput = {
@@ -2573,6 +2640,7 @@ export type UserCreateWithoutDiscountCodesInput = {
   receivedInvitations?: Prisma.InvitationCreateNestedManyWithoutReceiverInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDiscountCodesInput = {
@@ -2602,6 +2670,7 @@ export type UserUncheckedCreateWithoutDiscountCodesInput = {
   receivedInvitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutReceiverInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDiscountCodesInput = {
@@ -2647,6 +2716,7 @@ export type UserUpdateWithoutDiscountCodesInput = {
   receivedInvitations?: Prisma.InvitationUpdateManyWithoutReceiverNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDiscountCodesInput = {
@@ -2676,6 +2746,7 @@ export type UserUncheckedUpdateWithoutDiscountCodesInput = {
   receivedInvitations?: Prisma.InvitationUncheckedUpdateManyWithoutReceiverNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -2705,6 +2776,7 @@ export type UserCreateWithoutNotificationsInput = {
   receivedInvitations?: Prisma.InvitationCreateNestedManyWithoutReceiverInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -2734,6 +2806,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   receivedInvitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutReceiverInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -2779,6 +2852,7 @@ export type UserUpdateWithoutNotificationsInput = {
   receivedInvitations?: Prisma.InvitationUpdateManyWithoutReceiverNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -2808,6 +2882,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   receivedInvitations?: Prisma.InvitationUncheckedUpdateManyWithoutReceiverNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSentInvitationsInput = {
@@ -2837,6 +2912,7 @@ export type UserCreateWithoutSentInvitationsInput = {
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSentInvitationsInput = {
@@ -2866,6 +2942,7 @@ export type UserUncheckedCreateWithoutSentInvitationsInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSentInvitationsInput = {
@@ -2900,6 +2977,7 @@ export type UserCreateWithoutReceivedInvitationsInput = {
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReceivedInvitationsInput = {
@@ -2929,6 +3007,7 @@ export type UserUncheckedCreateWithoutReceivedInvitationsInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+  userExams?: Prisma.UserExamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReceivedInvitationsInput = {
@@ -2974,6 +3053,7 @@ export type UserUpdateWithoutSentInvitationsInput = {
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentInvitationsInput = {
@@ -3003,6 +3083,7 @@ export type UserUncheckedUpdateWithoutSentInvitationsInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutReceivedInvitationsInput = {
@@ -3043,6 +3124,7 @@ export type UserUpdateWithoutReceivedInvitationsInput = {
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReceivedInvitationsInput = {
@@ -3069,6 +3151,143 @@ export type UserUncheckedUpdateWithoutReceivedInvitationsInput = {
   students?: Prisma.UserUncheckedUpdateManyWithoutTeacherNestedInput
   teachers?: Prisma.UserUncheckedUpdateManyWithoutInstituteNestedInput
   sentInvitations?: Prisma.InvitationUncheckedUpdateManyWithoutSenderNestedInput
+  discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutUserExamsInput = {
+  id?: string
+  email?: string | null
+  phone: string
+  password: string
+  name: string
+  role?: $Enums.UserRole
+  isActive?: boolean
+  phoneVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  examAttempts?: Prisma.ExamAttemptCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageCreateNestedManyWithoutUserInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutUserInput
+  leaderboards?: Prisma.LeaderboardCreateNestedManyWithoutUserInput
+  ticketParticipants?: Prisma.TicketParticipantCreateNestedManyWithoutUserInput
+  parent?: Prisma.UserCreateNestedOneWithoutChildrenInput
+  children?: Prisma.UserCreateNestedManyWithoutParentInput
+  teacher?: Prisma.UserCreateNestedOneWithoutStudentsInput
+  students?: Prisma.UserCreateNestedManyWithoutTeacherInput
+  institute?: Prisma.UserCreateNestedOneWithoutTeachersInput
+  teachers?: Prisma.UserCreateNestedManyWithoutInstituteInput
+  sentInvitations?: Prisma.InvitationCreateNestedManyWithoutSenderInput
+  receivedInvitations?: Prisma.InvitationCreateNestedManyWithoutReceiverInput
+  discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatorInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  createdExams?: Prisma.ExamCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserUncheckedCreateWithoutUserExamsInput = {
+  id?: string
+  email?: string | null
+  phone: string
+  password: string
+  name: string
+  role?: $Enums.UserRole
+  isActive?: boolean
+  phoneVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  parentId?: string | null
+  teacherId?: string | null
+  instituteId?: string | null
+  examAttempts?: Prisma.ExamAttemptUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  ticketMessages?: Prisma.TicketMessageUncheckedCreateNestedManyWithoutUserInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutUserInput
+  leaderboards?: Prisma.LeaderboardUncheckedCreateNestedManyWithoutUserInput
+  ticketParticipants?: Prisma.TicketParticipantUncheckedCreateNestedManyWithoutUserInput
+  children?: Prisma.UserUncheckedCreateNestedManyWithoutParentInput
+  students?: Prisma.UserUncheckedCreateNestedManyWithoutTeacherInput
+  teachers?: Prisma.UserUncheckedCreateNestedManyWithoutInstituteInput
+  sentInvitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutSenderInput
+  receivedInvitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutReceiverInput
+  discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatorInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  createdExams?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserCreateOrConnectWithoutUserExamsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserExamsInput, Prisma.UserUncheckedCreateWithoutUserExamsInput>
+}
+
+export type UserUpsertWithoutUserExamsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUserExamsInput, Prisma.UserUncheckedUpdateWithoutUserExamsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserExamsInput, Prisma.UserUncheckedCreateWithoutUserExamsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUserExamsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUserExamsInput, Prisma.UserUncheckedUpdateWithoutUserExamsInput>
+}
+
+export type UserUpdateWithoutUserExamsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  examAttempts?: Prisma.ExamAttemptUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUpdateManyWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutUserNestedInput
+  leaderboards?: Prisma.LeaderboardUpdateManyWithoutUserNestedInput
+  ticketParticipants?: Prisma.TicketParticipantUpdateManyWithoutUserNestedInput
+  parent?: Prisma.UserUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.UserUpdateManyWithoutParentNestedInput
+  teacher?: Prisma.UserUpdateOneWithoutStudentsNestedInput
+  students?: Prisma.UserUpdateManyWithoutTeacherNestedInput
+  institute?: Prisma.UserUpdateOneWithoutTeachersNestedInput
+  teachers?: Prisma.UserUpdateManyWithoutInstituteNestedInput
+  sentInvitations?: Prisma.InvitationUpdateManyWithoutSenderNestedInput
+  receivedInvitations?: Prisma.InvitationUpdateManyWithoutReceiverNestedInput
+  discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUserExamsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teacherId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instituteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  examAttempts?: Prisma.ExamAttemptUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  ticketMessages?: Prisma.TicketMessageUncheckedUpdateManyWithoutUserNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  leaderboards?: Prisma.LeaderboardUncheckedUpdateManyWithoutUserNestedInput
+  ticketParticipants?: Prisma.TicketParticipantUncheckedUpdateManyWithoutUserNestedInput
+  children?: Prisma.UserUncheckedUpdateManyWithoutParentNestedInput
+  students?: Prisma.UserUncheckedUpdateManyWithoutTeacherNestedInput
+  teachers?: Prisma.UserUncheckedUpdateManyWithoutInstituteNestedInput
+  sentInvitations?: Prisma.InvitationUncheckedUpdateManyWithoutSenderNestedInput
+  receivedInvitations?: Prisma.InvitationUncheckedUpdateManyWithoutReceiverNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -3146,6 +3365,7 @@ export type UserUpdateWithoutParentInput = {
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutParentInput = {
@@ -3175,6 +3395,7 @@ export type UserUncheckedUpdateWithoutParentInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutParentInput = {
@@ -3219,6 +3440,7 @@ export type UserUpdateWithoutTeacherInput = {
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTeacherInput = {
@@ -3248,6 +3470,7 @@ export type UserUncheckedUpdateWithoutTeacherInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutTeacherInput = {
@@ -3292,6 +3515,7 @@ export type UserUpdateWithoutInstituteInput = {
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutInstituteInput = {
@@ -3321,6 +3545,7 @@ export type UserUncheckedUpdateWithoutInstituteInput = {
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   createdExams?: Prisma.ExamUncheckedUpdateManyWithoutCreatedByNestedInput
+  userExams?: Prisma.UserExamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutInstituteInput = {
@@ -3358,6 +3583,7 @@ export type UserCountOutputType = {
   discountCodes: number
   notifications: number
   createdExams: number
+  userExams: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3375,6 +3601,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   discountCodes?: boolean | UserCountOutputTypeCountDiscountCodesArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   createdExams?: boolean | UserCountOutputTypeCountCreatedExamsArgs
+  userExams?: boolean | UserCountOutputTypeCountUserExamsArgs
 }
 
 /**
@@ -3485,6 +3712,13 @@ export type UserCountOutputTypeCountCreatedExamsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.ExamWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUserExamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserExamWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -3517,6 +3751,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   discountCodes?: boolean | Prisma.User$discountCodesArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   createdExams?: boolean | Prisma.User$createdExamsArgs<ExtArgs>
+  userExams?: boolean | Prisma.User$userExamsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -3593,6 +3828,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   discountCodes?: boolean | Prisma.User$discountCodesArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   createdExams?: boolean | Prisma.User$createdExamsArgs<ExtArgs>
+  userExams?: boolean | Prisma.User$userExamsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3626,6 +3862,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     discountCodes: Prisma.$DiscountCodePayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
     createdExams: Prisma.$ExamPayload<ExtArgs>[]
+    userExams: Prisma.$UserExamPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -4052,6 +4289,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   discountCodes<T extends Prisma.User$discountCodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$discountCodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DiscountCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdExams<T extends Prisma.User$createdExamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdExamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userExams<T extends Prisma.User$userExamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userExamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserExamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4880,6 +5118,30 @@ export type User$createdExamsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.ExamScalarFieldEnum | Prisma.ExamScalarFieldEnum[]
+}
+
+/**
+ * User.userExams
+ */
+export type User$userExamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserExam
+   */
+  select?: Prisma.UserExamSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserExam
+   */
+  omit?: Prisma.UserExamOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserExamInclude<ExtArgs> | null
+  where?: Prisma.UserExamWhereInput
+  orderBy?: Prisma.UserExamOrderByWithRelationInput | Prisma.UserExamOrderByWithRelationInput[]
+  cursor?: Prisma.UserExamWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserExamScalarFieldEnum | Prisma.UserExamScalarFieldEnum[]
 }
 
 /**

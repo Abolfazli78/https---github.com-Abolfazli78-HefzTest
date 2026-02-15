@@ -92,6 +92,7 @@ export async function POST(request: Request) {
       features,
       isActive,
       targetRole,
+      examSimulatorEnabled,
       maxQuestionsPerMonth,
       maxStudentsAllowed,
       maxExamsPerMonth,
@@ -115,6 +116,7 @@ export async function POST(request: Request) {
         features: features ? JSON.stringify(features) : null,
         isActive: isActive !== false,
         targetRole: targetRole || "STUDENT",
+        examSimulatorEnabled: examSimulatorEnabled === true,
         maxQuestionsPerMonth:
           maxQuestionsPerMonth !== undefined && maxQuestionsPerMonth !== null
             ? parseInt(maxQuestionsPerMonth)

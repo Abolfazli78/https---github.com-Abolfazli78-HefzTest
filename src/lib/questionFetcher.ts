@@ -211,8 +211,11 @@ export async function fetchQuestionsBalanced(
 
 /**
  * Extracts selected Surah IDs and Juz numbers from CreateCustomExamInput.
+ * When useSurah/useJuz are false, returns empty arrays for that category.
  */
 export function extractSelectedCategories(input: {
+  useSurah?: boolean;
+  useJuz?: boolean;
   surahStart?: number | null;
   surahEnd?: number | null;
   surah?: number[] | null;
@@ -220,30 +223,37 @@ export function extractSelectedCategories(input: {
   juzEnd?: number | null;
   juz?: number[] | null;
 }): { surahIds: number[]; juzNumbers: number[] } {
+  const useSurah = input.useSurah !== false;
+  const useJuz = input.useJuz !== false;
+
   const surahIds: number[] = [];
-  if (input.surahStart != null && input.surahEnd != null) {
-    const from = Math.min(input.surahStart, input.surahEnd);
-    const to = Math.max(input.surahStart, input.surahEnd);
-    for (let i = from; i <= to; i++) surahIds.push(i);
-  } else if (Array.isArray(input.surah) && input.surah.length > 0) {
-    surahIds.push(
-      ...input.surah
-        .map((s) => Number(s))
-        .filter((s) => Number.isInteger(s) && s >= 1 && s <= 114)
-    );
+  if (useSurah) {
+    if (input.surahStart != null && input.surahEnd != null) {
+      const from = Math.min(input.surahStart, input.surahEnd);
+      const to = Math.max(input.surahStart, input.surahEnd);
+      for (let i = from; i <= to; i++) surahIds.push(i);
+    } else if (Array.isArray(input.surah) && input.surah.length > 0) {
+      surahIds.push(
+        ...input.surah
+          .map((s) => Number(s))
+          .filter((s) => Number.isInteger(s) && s >= 1 && s <= 114)
+      );
+    }
   }
 
   const juzNumbers: number[] = [];
-  if (input.juzStart != null && input.juzEnd != null) {
-    const start = Math.min(input.juzStart, input.juzEnd);
-    const end = Math.max(input.juzStart, input.juzEnd);
-    for (let j = start; j <= end; j++) juzNumbers.push(j);
-  } else if (Array.isArray(input.juz) && input.juz.length > 0) {
-    juzNumbers.push(
-      ...input.juz
-        .map((j) => Number(j))
-        .filter((j) => Number.isInteger(j) && j >= 1 && j <= 30)
-    );
+  if (useJuz) {
+    if (input.juzStart != null && input.juzEnd != null) {
+      const start = Math.min(input.juzStart, input.juzEnd);
+      const end = Math.max(input.juzStart, input.juzEnd);
+      for (let j = start; j <= end; j++) juzNumbers.push(j);
+    } else if (Array.isArray(input.juz) && input.juz.length > 0) {
+      juzNumbers.push(
+        ...input.juz
+          .map((j) => Number(j))
+          .filter((j) => Number.isInteger(j) && j >= 1 && j <= 30)
+      );
+    }
   }
 
   return {

@@ -8,12 +8,14 @@ export function getQuranSelectionSummary(state: QuranSelectionState): string {
   const surahMap = new Map(SURAHS.map((s) => [s.id, s.name]));
 
   const hasSurah =
-    (state.surahSelectionMode === "range" && state.fromSurah != null && state.toSurah != null) ||
-    (state.surahSelectionMode === "multiple" && state.selectedSurahs.length > 0);
+    state.useSurahFilter &&
+    ((state.surahSelectionMode === "range" && state.fromSurah != null && state.toSurah != null) ||
+      (state.surahSelectionMode === "multiple" && state.selectedSurahs.length > 0));
 
   const hasJuz =
-    (state.juzSelectionMode === "range" && state.fromJuz != null && state.toJuz != null) ||
-    (state.juzSelectionMode === "multiple" && state.selectedJuz.length > 0);
+    state.useJuzFilter &&
+    ((state.juzSelectionMode === "range" && state.fromJuz != null && state.toJuz != null) ||
+      (state.juzSelectionMode === "multiple" && state.selectedJuz.length > 0));
 
   if (hasSurah) {
     if (state.surahSelectionMode === "range" && state.fromSurah != null && state.toSurah != null) {
@@ -49,40 +51,45 @@ export function getQuranSelectionSummary(state: QuranSelectionState): string {
 
 /**
  * Converts QuranSelectionState to API payload fields for CreateCustomExamInput.
- * Only includes surah/juz fields that are active based on selection mode.
+ * Only includes surah/juz fields when the respective filter is enabled.
  */
 export function quranSelectionToApiPayload(
   state: QuranSelectionState
 ): Pick<
   CreateCustomExamInput,
-  "surah" | "surahStart" | "surahEnd" | "juz" | "juzStart" | "juzEnd"
+  "useSurah" | "useJuz" | "surah" | "surahStart" | "surahEnd" | "juz" | "juzStart" | "juzEnd"
 > {
-  const result: Record<string, unknown> = {};
+  const result: Record<string, unknown> = {
+    useSurah: state.useSurahFilter,
+    useJuz: state.useJuzFilter,
+  };
 
-  // Surah
-  if (state.surahSelectionMode === "range" && state.fromSurah != null && state.toSurah != null) {
-    result.surahStart = Math.min(state.fromSurah, state.toSurah);
-    result.surahEnd = Math.max(state.fromSurah, state.toSurah);
-  } else if (
-    state.surahSelectionMode === "multiple" &&
-    state.selectedSurahs.length > 0
-  ) {
-    result.surah = [...state.selectedSurahs].sort((a, b) => a - b);
+  if (state.useSurahFilter) {
+    if (state.surahSelectionMode === "range" && state.fromSurah != null && state.toSurah != null) {
+      result.surahStart = Math.min(state.fromSurah, state.toSurah);
+      result.surahEnd = Math.max(state.fromSurah, state.toSurah);
+    } else if (
+      state.surahSelectionMode === "multiple" &&
+      state.selectedSurahs.length > 0
+    ) {
+      result.surah = [...state.selectedSurahs].sort((a, b) => a - b);
+    }
   }
 
-  // Juz
-  if (state.juzSelectionMode === "range" && state.fromJuz != null && state.toJuz != null) {
-    result.juzStart = Math.min(state.fromJuz, state.toJuz);
-    result.juzEnd = Math.max(state.fromJuz, state.toJuz);
-  } else if (
-    state.juzSelectionMode === "multiple" &&
-    state.selectedJuz.length > 0
-  ) {
-    result.juz = [...state.selectedJuz].sort((a, b) => a - b);
+  if (state.useJuzFilter) {
+    if (state.juzSelectionMode === "range" && state.fromJuz != null && state.toJuz != null) {
+      result.juzStart = Math.min(state.fromJuz, state.toJuz);
+      result.juzEnd = Math.max(state.fromJuz, state.toJuz);
+    } else if (
+      state.juzSelectionMode === "multiple" &&
+      state.selectedJuz.length > 0
+    ) {
+      result.juz = [...state.selectedJuz].sort((a, b) => a - b);
+    }
   }
 
   return result as Pick<
     CreateCustomExamInput,
-    "surah" | "surahStart" | "surahEnd" | "juz" | "juzStart" | "juzEnd"
+    "useSurah" | "useJuz" | "surah" | "surahStart" | "surahEnd" | "juz" | "juzStart" | "juzEnd"
   >;
 }

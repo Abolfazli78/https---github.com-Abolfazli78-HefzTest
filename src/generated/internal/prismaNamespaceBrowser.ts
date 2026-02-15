@@ -67,7 +67,12 @@ export const ModelName = {
   Leaderboard: 'Leaderboard',
   DiscountCode: 'DiscountCode',
   Notification: 'Notification',
-  Invitation: 'Invitation'
+  Invitation: 'Invitation',
+  OfficialExam: 'OfficialExam',
+  OfficialExamQuestion: 'OfficialExamQuestion',
+  SimulatorAttempt: 'SimulatorAttempt',
+  UserExam: 'UserExam',
+  UserExamQuestion: 'UserExamQuestion'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -253,6 +258,7 @@ export const SubscriptionPlanScalarFieldEnum = {
   isActive: 'isActive',
   features: 'features',
   targetRole: 'targetRole',
+  examSimulatorEnabled: 'examSimulatorEnabled',
   maxQuestionsPerMonth: 'maxQuestionsPerMonth',
   maxStudentsAllowed: 'maxStudentsAllowed',
   maxExamsPerMonth: 'maxExamsPerMonth',
@@ -352,6 +358,75 @@ export const InvitationScalarFieldEnum = {
 } as const
 
 export type InvitationScalarFieldEnum = (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum]
+
+
+export const OfficialExamScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  year: 'year',
+  degree: 'degree',
+  juzStart: 'juzStart',
+  juzEnd: 'juzEnd',
+  durationMinutes: 'durationMinutes',
+  totalQuestions: 'totalQuestions',
+  isActive: 'isActive',
+  createdAt: 'createdAt'
+} as const
+
+export type OfficialExamScalarFieldEnum = (typeof OfficialExamScalarFieldEnum)[keyof typeof OfficialExamScalarFieldEnum]
+
+
+export const OfficialExamQuestionScalarFieldEnum = {
+  id: 'id',
+  officialExamId: 'officialExamId',
+  questionId: 'questionId',
+  order: 'order',
+  juz: 'juz',
+  questionKind: 'questionKind'
+} as const
+
+export type OfficialExamQuestionScalarFieldEnum = (typeof OfficialExamQuestionScalarFieldEnum)[keyof typeof OfficialExamQuestionScalarFieldEnum]
+
+
+export const SimulatorAttemptScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  officialExamId: 'officialExamId',
+  score: 'score',
+  totalQuestions: 'totalQuestions',
+  correctAnswers: 'correctAnswers',
+  startedAt: 'startedAt',
+  submittedAt: 'submittedAt'
+} as const
+
+export type SimulatorAttemptScalarFieldEnum = (typeof SimulatorAttemptScalarFieldEnum)[keyof typeof SimulatorAttemptScalarFieldEnum]
+
+
+export const UserExamScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  juzStart: 'juzStart',
+  juzEnd: 'juzEnd',
+  year: 'year',
+  durationMinutes: 'durationMinutes',
+  totalQuestions: 'totalQuestions',
+  createdAt: 'createdAt'
+} as const
+
+export type UserExamScalarFieldEnum = (typeof UserExamScalarFieldEnum)[keyof typeof UserExamScalarFieldEnum]
+
+
+export const UserExamQuestionScalarFieldEnum = {
+  id: 'id',
+  userExamId: 'userExamId',
+  questionId: 'questionId',
+  order: 'order',
+  juz: 'juz',
+  questionKind: 'questionKind'
+} as const
+
+export type UserExamQuestionScalarFieldEnum = (typeof UserExamQuestionScalarFieldEnum)[keyof typeof UserExamQuestionScalarFieldEnum]
 
 
 export const SortOrder = {

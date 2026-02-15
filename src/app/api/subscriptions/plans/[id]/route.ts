@@ -43,6 +43,7 @@ export async function PUT(
       features,
       isActive,
       targetRole,
+      examSimulatorEnabled,
       maxQuestionsPerMonth,
       maxStudentsAllowed,
       maxExamsPerMonth,
@@ -60,6 +61,7 @@ export async function PUT(
         features: features ? JSON.stringify(features) : null,
         isActive,
         targetRole: targetRole ?? undefined,
+        examSimulatorEnabled: examSimulatorEnabled !== undefined ? Boolean(examSimulatorEnabled) : undefined,
         maxQuestionsPerMonth:
           maxQuestionsPerMonth !== undefined && maxQuestionsPerMonth !== null
             ? parseInt(maxQuestionsPerMonth)

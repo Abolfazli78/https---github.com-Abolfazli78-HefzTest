@@ -10,6 +10,8 @@ export const CreateCustomExamSchema = z.object({
   randomizeQuestions: z.boolean().default(true),
   showResults: z.boolean().optional(),
   allowRetake: z.boolean().optional(),
+  useSurah: z.boolean().optional().default(true),
+  useJuz: z.boolean().optional().default(true),
   // Juz: range (juzStart, juzEnd) OR multiple (juz array)
   juz: z.array(z.number().int().min(1).max(30)).optional(),
   juzStart: z.number().int().min(1).max(30).optional(),
@@ -55,13 +57,26 @@ export const CreateCustomExamSchema = z.object({
   )
   .refine(
     (data) => {
+      const useSurah = data.useSurah !== false;
+      const useJuz = data.useJuz !== false;
+      return useSurah || useJuz;
+    },
+    { message: "حداقل یکی از سوره یا جزء باید انتخاب شود", path: ["useSurah"] }
+  )
+  .refine(
+    (data) => {
+      const useSurah = data.useSurah !== false;
+      const useJuz = data.useJuz !== false;
       const hasJuz =
         (data.juzStart != null && data.juzEnd != null) ||
         (Array.isArray(data.juz) && data.juz.length > 0);
       const hasSurah =
         (data.surahStart != null && data.surahEnd != null) ||
         (Array.isArray(data.surah) && data.surah.length > 0);
-      return hasJuz || hasSurah;
+      if (useSurah && !useJuz) return hasSurah;
+      if (useJuz && !useSurah) return hasJuz;
+      if (useSurah && useJuz) return hasSurah || hasJuz;
+      return true;
     },
     { message: "حداقل یکی از سوره یا جزء باید انتخاب شود", path: ["surah"] }
   );

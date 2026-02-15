@@ -17,7 +17,8 @@ import {
     ChevronRight,
     ChevronLeft,
     FileText,
-    Crown
+    Crown,
+    ClipboardCheck
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
@@ -26,6 +27,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { UsageTracker } from "@/components/subscription/usage-tracker";
 import type { QuotaUsageSummary } from "@/lib/quota-usage";
+import { useSubscription } from "@/hooks/use-subscription";
 
 const sidebarItems = [
     {
@@ -59,6 +61,11 @@ const sidebarItems = [
         icon: FileText,
     },
     {
+        title: "شبیه‌ساز آزمون",
+        href: "/teacher/simulator",
+        icon: ClipboardCheck,
+    },
+    {
         title: "گزارش عملکرد",
         href: "/teacher/reports",
         icon: BarChart3,
@@ -84,6 +91,11 @@ export function TeacherSidebar({ quotaUsage }: { quotaUsage: QuotaUsageSummary }
     const pathname = usePathname();
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
+    const { subscriptionInfo } = useSubscription();
+    const showSimulator = subscriptionInfo?.examSimulatorEnabled === true;
+    const visibleSidebarItems = sidebarItems.filter(
+        (item) => item.href !== "/teacher/simulator" || showSimulator
+    );
 
     return (
         <>
@@ -149,7 +161,7 @@ export function TeacherSidebar({ quotaUsage }: { quotaUsage: QuotaUsageSummary }
                   }
                 `}</style>
                 <nav className="grid gap-1.5 px-3">
-                    {sidebarItems.map((item, index) => {
+                    {visibleSidebarItems.map((item, index) => {
                         const isActive = pathname === item.href || pathname?.startsWith(item.href + "/");
                         return (
                             <Link
@@ -274,7 +286,7 @@ export function TeacherSidebar({ quotaUsage }: { quotaUsage: QuotaUsageSummary }
                         </div>
                         <div className="flex-1 overflow-y-auto py-4">
                             <nav className="grid gap-1.5 px-3">
-                                {sidebarItems.map((item, index) => {
+                                {visibleSidebarItems.map((item, index) => {
                                     const isActive = pathname === item.href || pathname?.startsWith(item.href + "/");
                                     return (
                                         <Link

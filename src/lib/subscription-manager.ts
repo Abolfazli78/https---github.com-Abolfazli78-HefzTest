@@ -93,6 +93,7 @@ export interface SubscriptionInfo {
   subscription?: Subscription & { plan: SubscriptionPlan };
   tier: RoleTier;
   features: string[];
+  examSimulatorEnabled: boolean;
   quotas: {
     maxExamsPerMonth: number;
     maxQuestionsPerMonth: number;
@@ -174,6 +175,7 @@ export async function getUserSubscriptionInfo(userId: string): Promise<Subscript
     features: Array.from(features),
     quotas,
     usage,
+    examSimulatorEnabled: plan?.examSimulatorEnabled ?? false,
   };
 }
 

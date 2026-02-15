@@ -15,7 +15,8 @@ import {
     ChevronLeft,
     Clock,
     Award,
-    Lock
+    Lock,
+    ClipboardCheck
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
@@ -43,6 +44,11 @@ const menuItems = [
         title: "تاریخچه آزمون‌ها",
         href: "/history",
         icon: Clock,
+    },
+    {
+        title: "شبیه‌ساز آزمون",
+        href: "/dashboard/simulator",
+        icon: ClipboardCheck,
     },
     {
         title: "برترین‌ها",
@@ -74,13 +80,11 @@ export function UserSidebar() {
 
     // Check if user has access to support (has active subscription)
     const hasSupportAccess = subscriptionInfo?.hasActiveSubscription;
-    
-    // Debug logging
-    console.log('Sidebar Debug:', {
-        subscriptionInfo,
-        hasSupportAccess,
-        loading: subscriptionInfo === null
-    });
+    // Show simulator menu only when plan has examSimulatorEnabled
+    const showSimulator = subscriptionInfo?.examSimulatorEnabled === true;
+    const visibleMenuItems = menuItems.filter(
+        (item) => item.href !== "/dashboard/simulator" || showSimulator
+    );
 
     return (
         <>
@@ -111,7 +115,7 @@ export function UserSidebar() {
                 </div>
 
                 <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-                    {menuItems.map((item) => {
+                    {visibleMenuItems.map((item) => {
                         const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
                         const isLocked = item.href === "/support" && (!hasSupportAccess && subscriptionInfo !== null);
                         return (
@@ -176,7 +180,7 @@ export function UserSidebar() {
                             </button>
                         </div>
                         <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-                            {menuItems.map((item) => {
+                            {visibleMenuItems.map((item) => {
                                 const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
                                 const isLocked = item.href === "/support" && (!hasSupportAccess && subscriptionInfo !== null);
                                 return (

@@ -18,6 +18,8 @@ const SURAH_OPTIONS = SURAHS.map((s) => ({ id: s.id, name: s.name }));
 export type SelectionMode = "range" | "multiple";
 
 export interface QuranSelectionState {
+  useSurahFilter: boolean;
+  useJuzFilter: boolean;
   surahSelectionMode: SelectionMode;
   juzSelectionMode: SelectionMode;
   fromSurah: number | null;
@@ -29,6 +31,8 @@ export interface QuranSelectionState {
 }
 
 export const initialQuranSelectionState: QuranSelectionState = {
+  useSurahFilter: true,
+  useJuzFilter: true,
   surahSelectionMode: "range",
   juzSelectionMode: "range",
   fromSurah: 1,
@@ -71,9 +75,36 @@ export function QuranSelectionStep({
 }: QuranSelectionStepProps) {
   const updateState = useCallback(
     (partial: Partial<QuranSelectionState>) => {
-      onChange({ ...state, ...partial });
+      const next = { ...state, ...partial };
+      if (partial.useSurahFilter === false) {
+        next.fromSurah = null;
+        next.toSurah = null;
+        next.selectedSurahs = [];
+      }
+      if (partial.useJuzFilter === false) {
+        next.fromJuz = null;
+        next.toJuz = null;
+        next.selectedJuz = [];
+      }
+      onChange(next);
     },
     [state, onChange]
+  );
+
+  const setUseSurahFilter = useCallback(
+    (checked: boolean) => {
+      if (!checked && !state.useJuzFilter) return;
+      updateState({ useSurahFilter: checked });
+    },
+    [state.useJuzFilter, updateState]
+  );
+
+  const setUseJuzFilter = useCallback(
+    (checked: boolean) => {
+      if (!checked && !state.useSurahFilter) return;
+      updateState({ useJuzFilter: checked });
+    },
+    [state.useSurahFilter, updateState]
   );
 
   const setSurahMode = useCallback(
@@ -168,11 +199,39 @@ export function QuranSelectionStep({
     (state.juzSelectionMode === "range" && state.fromJuz != null && state.toJuz != null) ||
     (state.juzSelectionMode === "multiple" && state.selectedJuz.length > 0);
 
-  const hasAny = hasSurah || hasJuz;
+  const hasAny = (state.useSurahFilter && hasSurah) || (state.useJuzFilter && hasJuz);
 
   return (
     <div className="space-y-6">
+      {/* Filter toggles: at least one must be selected */}
+      <div className="flex flex-wrap items-center gap-6 p-3 border rounded-lg bg-muted/50">
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="use-surah-filter"
+            checked={state.useSurahFilter}
+            onCheckedChange={(checked) => setUseSurahFilter(checked === true)}
+          />
+          <Label htmlFor="use-surah-filter" className="cursor-pointer font-medium">
+            استفاده از فیلتر سوره
+          </Label>
+        </div>
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="use-juz-filter"
+            checked={state.useJuzFilter}
+            onCheckedChange={(checked) => setUseJuzFilter(checked === true)}
+          />
+          <Label htmlFor="use-juz-filter" className="cursor-pointer font-medium">
+            استفاده از فیلتر جزء
+          </Label>
+        </div>
+        {!state.useSurahFilter && !state.useJuzFilter && (
+          <span className="text-sm text-amber-700">حداقل یکی از سوره یا جزء باید انتخاب شود</span>
+        )}
+      </div>
+
       {/* Surah Section */}
+      {state.useSurahFilter && (
       <div className="space-y-4">
         <h3 className="text-lg font-medium">انتخاب سوره</h3>
         <div className="flex gap-4">
@@ -328,8 +387,10 @@ export function QuranSelectionStep({
           </div>
         )}
       </div>
+      )}
 
       {/* Juz Section */}
+      {state.useJuzFilter && (
       <div className="space-y-4">
         <h3 className="text-lg font-medium">انتخاب جزء</h3>
         <div className="flex gap-4">
@@ -460,6 +521,7 @@ export function QuranSelectionStep({
           </div>
         )}
       </div>
+      )}
 
       {/* Summary */}
       <div className="p-3 bg-blue-50 rounded-lg">
@@ -467,9 +529,9 @@ export function QuranSelectionStep({
           <strong>خلاصه انتخاب:</strong>
           {hasAny ? (
             <span className="block mt-1">
-              {hasSurah && <span>سوره: {surahSummary}</span>}
-              {hasSurah && hasJuz && " | "}
-              {hasJuz && <span>جزء: {juzSummary}</span>}
+              {state.useSurahFilter && hasSurah && <span>سوره: {surahSummary}</span>}
+              {state.useSurahFilter && hasSurah && state.useJuzFilter && hasJuz && " | "}
+              {state.useJuzFilter && hasJuz && <span>جزء: {juzSummary}</span>}
             </span>
           ) : (
             <span className="text-amber-700">حداقل یکی از سوره یا جزء را انتخاب کنید</span>

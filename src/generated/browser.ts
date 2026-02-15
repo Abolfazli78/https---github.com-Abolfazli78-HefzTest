@@ -102,3 +102,28 @@ export type Notification = Prisma.NotificationModel
  * 
  */
 export type Invitation = Prisma.InvitationModel
+/**
+ * Model OfficialExam
+ * 
+ */
+export type OfficialExam = Prisma.OfficialExamModel
+/**
+ * Model OfficialExamQuestion
+ * 
+ */
+export type OfficialExamQuestion = Prisma.OfficialExamQuestionModel
+/**
+ * Model SimulatorAttempt
+ * 
+ */
+export type SimulatorAttempt = Prisma.SimulatorAttemptModel
+/**
+ * Model UserExam
+ * 
+ */
+export type UserExam = Prisma.UserExamModel
+/**
+ * Model UserExamQuestion
+ * 
+ */
+export type UserExamQuestion = Prisma.UserExamQuestionModel

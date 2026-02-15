@@ -55,6 +55,7 @@ export type SubscriptionPlanMinAggregateOutputType = {
   isActive: boolean | null
   features: string | null
   targetRole: $Enums.PlanTargetRole | null
+  examSimulatorEnabled: boolean | null
   maxQuestionsPerMonth: number | null
   maxStudentsAllowed: number | null
   maxExamsPerMonth: number | null
@@ -73,6 +74,7 @@ export type SubscriptionPlanMaxAggregateOutputType = {
   isActive: boolean | null
   features: string | null
   targetRole: $Enums.PlanTargetRole | null
+  examSimulatorEnabled: boolean | null
   maxQuestionsPerMonth: number | null
   maxStudentsAllowed: number | null
   maxExamsPerMonth: number | null
@@ -91,6 +93,7 @@ export type SubscriptionPlanCountAggregateOutputType = {
   isActive: number
   features: number
   targetRole: number
+  examSimulatorEnabled: number
   maxQuestionsPerMonth: number
   maxStudentsAllowed: number
   maxExamsPerMonth: number
@@ -131,6 +134,7 @@ export type SubscriptionPlanMinAggregateInputType = {
   isActive?: true
   features?: true
   targetRole?: true
+  examSimulatorEnabled?: true
   maxQuestionsPerMonth?: true
   maxStudentsAllowed?: true
   maxExamsPerMonth?: true
@@ -149,6 +153,7 @@ export type SubscriptionPlanMaxAggregateInputType = {
   isActive?: true
   features?: true
   targetRole?: true
+  examSimulatorEnabled?: true
   maxQuestionsPerMonth?: true
   maxStudentsAllowed?: true
   maxExamsPerMonth?: true
@@ -167,6 +172,7 @@ export type SubscriptionPlanCountAggregateInputType = {
   isActive?: true
   features?: true
   targetRole?: true
+  examSimulatorEnabled?: true
   maxQuestionsPerMonth?: true
   maxStudentsAllowed?: true
   maxExamsPerMonth?: true
@@ -272,6 +278,7 @@ export type SubscriptionPlanGroupByOutputType = {
   isActive: boolean
   features: string | null
   targetRole: $Enums.PlanTargetRole
+  examSimulatorEnabled: boolean
   maxQuestionsPerMonth: number
   maxStudentsAllowed: number
   maxExamsPerMonth: number
@@ -313,6 +320,7 @@ export type SubscriptionPlanWhereInput = {
   isActive?: Prisma.BoolFilter<"SubscriptionPlan"> | boolean
   features?: Prisma.StringNullableFilter<"SubscriptionPlan"> | string | null
   targetRole?: Prisma.EnumPlanTargetRoleFilter<"SubscriptionPlan"> | $Enums.PlanTargetRole
+  examSimulatorEnabled?: Prisma.BoolFilter<"SubscriptionPlan"> | boolean
   maxQuestionsPerMonth?: Prisma.IntFilter<"SubscriptionPlan"> | number
   maxStudentsAllowed?: Prisma.IntFilter<"SubscriptionPlan"> | number
   maxExamsPerMonth?: Prisma.IntFilter<"SubscriptionPlan"> | number
@@ -332,6 +340,7 @@ export type SubscriptionPlanOrderByWithRelationInput = {
   isActive?: Prisma.SortOrder
   features?: Prisma.SortOrderInput | Prisma.SortOrder
   targetRole?: Prisma.SortOrder
+  examSimulatorEnabled?: Prisma.SortOrder
   maxQuestionsPerMonth?: Prisma.SortOrder
   maxStudentsAllowed?: Prisma.SortOrder
   maxExamsPerMonth?: Prisma.SortOrder
@@ -354,6 +363,7 @@ export type SubscriptionPlanWhereUniqueInput = Prisma.AtLeast<{
   isActive?: Prisma.BoolFilter<"SubscriptionPlan"> | boolean
   features?: Prisma.StringNullableFilter<"SubscriptionPlan"> | string | null
   targetRole?: Prisma.EnumPlanTargetRoleFilter<"SubscriptionPlan"> | $Enums.PlanTargetRole
+  examSimulatorEnabled?: Prisma.BoolFilter<"SubscriptionPlan"> | boolean
   maxQuestionsPerMonth?: Prisma.IntFilter<"SubscriptionPlan"> | number
   maxStudentsAllowed?: Prisma.IntFilter<"SubscriptionPlan"> | number
   maxExamsPerMonth?: Prisma.IntFilter<"SubscriptionPlan"> | number
@@ -373,6 +383,7 @@ export type SubscriptionPlanOrderByWithAggregationInput = {
   isActive?: Prisma.SortOrder
   features?: Prisma.SortOrderInput | Prisma.SortOrder
   targetRole?: Prisma.SortOrder
+  examSimulatorEnabled?: Prisma.SortOrder
   maxQuestionsPerMonth?: Prisma.SortOrder
   maxStudentsAllowed?: Prisma.SortOrder
   maxExamsPerMonth?: Prisma.SortOrder
@@ -399,6 +410,7 @@ export type SubscriptionPlanScalarWhereWithAggregatesInput = {
   isActive?: Prisma.BoolWithAggregatesFilter<"SubscriptionPlan"> | boolean
   features?: Prisma.StringNullableWithAggregatesFilter<"SubscriptionPlan"> | string | null
   targetRole?: Prisma.EnumPlanTargetRoleWithAggregatesFilter<"SubscriptionPlan"> | $Enums.PlanTargetRole
+  examSimulatorEnabled?: Prisma.BoolWithAggregatesFilter<"SubscriptionPlan"> | boolean
   maxQuestionsPerMonth?: Prisma.IntWithAggregatesFilter<"SubscriptionPlan"> | number
   maxStudentsAllowed?: Prisma.IntWithAggregatesFilter<"SubscriptionPlan"> | number
   maxExamsPerMonth?: Prisma.IntWithAggregatesFilter<"SubscriptionPlan"> | number
@@ -417,6 +429,7 @@ export type SubscriptionPlanCreateInput = {
   isActive?: boolean
   features?: string | null
   targetRole?: $Enums.PlanTargetRole
+  examSimulatorEnabled?: boolean
   maxQuestionsPerMonth?: number
   maxStudentsAllowed?: number
   maxExamsPerMonth?: number
@@ -436,6 +449,7 @@ export type SubscriptionPlanUncheckedCreateInput = {
   isActive?: boolean
   features?: string | null
   targetRole?: $Enums.PlanTargetRole
+  examSimulatorEnabled?: boolean
   maxQuestionsPerMonth?: number
   maxStudentsAllowed?: number
   maxExamsPerMonth?: number
@@ -455,6 +469,7 @@ export type SubscriptionPlanUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   features?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetRole?: Prisma.EnumPlanTargetRoleFieldUpdateOperationsInput | $Enums.PlanTargetRole
+  examSimulatorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxQuestionsPerMonth?: Prisma.IntFieldUpdateOperationsInput | number
   maxStudentsAllowed?: Prisma.IntFieldUpdateOperationsInput | number
   maxExamsPerMonth?: Prisma.IntFieldUpdateOperationsInput | number
@@ -474,6 +489,7 @@ export type SubscriptionPlanUncheckedUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   features?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetRole?: Prisma.EnumPlanTargetRoleFieldUpdateOperationsInput | $Enums.PlanTargetRole
+  examSimulatorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxQuestionsPerMonth?: Prisma.IntFieldUpdateOperationsInput | number
   maxStudentsAllowed?: Prisma.IntFieldUpdateOperationsInput | number
   maxExamsPerMonth?: Prisma.IntFieldUpdateOperationsInput | number
@@ -493,6 +509,7 @@ export type SubscriptionPlanCreateManyInput = {
   isActive?: boolean
   features?: string | null
   targetRole?: $Enums.PlanTargetRole
+  examSimulatorEnabled?: boolean
   maxQuestionsPerMonth?: number
   maxStudentsAllowed?: number
   maxExamsPerMonth?: number
@@ -511,6 +528,7 @@ export type SubscriptionPlanUpdateManyMutationInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   features?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetRole?: Prisma.EnumPlanTargetRoleFieldUpdateOperationsInput | $Enums.PlanTargetRole
+  examSimulatorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxQuestionsPerMonth?: Prisma.IntFieldUpdateOperationsInput | number
   maxStudentsAllowed?: Prisma.IntFieldUpdateOperationsInput | number
   maxExamsPerMonth?: Prisma.IntFieldUpdateOperationsInput | number
@@ -529,6 +547,7 @@ export type SubscriptionPlanUncheckedUpdateManyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   features?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetRole?: Prisma.EnumPlanTargetRoleFieldUpdateOperationsInput | $Enums.PlanTargetRole
+  examSimulatorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxQuestionsPerMonth?: Prisma.IntFieldUpdateOperationsInput | number
   maxStudentsAllowed?: Prisma.IntFieldUpdateOperationsInput | number
   maxExamsPerMonth?: Prisma.IntFieldUpdateOperationsInput | number
@@ -547,6 +566,7 @@ export type SubscriptionPlanCountOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   features?: Prisma.SortOrder
   targetRole?: Prisma.SortOrder
+  examSimulatorEnabled?: Prisma.SortOrder
   maxQuestionsPerMonth?: Prisma.SortOrder
   maxStudentsAllowed?: Prisma.SortOrder
   maxExamsPerMonth?: Prisma.SortOrder
@@ -575,6 +595,7 @@ export type SubscriptionPlanMaxOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   features?: Prisma.SortOrder
   targetRole?: Prisma.SortOrder
+  examSimulatorEnabled?: Prisma.SortOrder
   maxQuestionsPerMonth?: Prisma.SortOrder
   maxStudentsAllowed?: Prisma.SortOrder
   maxExamsPerMonth?: Prisma.SortOrder
@@ -593,6 +614,7 @@ export type SubscriptionPlanMinOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   features?: Prisma.SortOrder
   targetRole?: Prisma.SortOrder
+  examSimulatorEnabled?: Prisma.SortOrder
   maxQuestionsPerMonth?: Prisma.SortOrder
   maxStudentsAllowed?: Prisma.SortOrder
   maxExamsPerMonth?: Prisma.SortOrder
@@ -652,6 +674,7 @@ export type SubscriptionPlanCreateWithoutSubscriptionsInput = {
   isActive?: boolean
   features?: string | null
   targetRole?: $Enums.PlanTargetRole
+  examSimulatorEnabled?: boolean
   maxQuestionsPerMonth?: number
   maxStudentsAllowed?: number
   maxExamsPerMonth?: number
@@ -670,6 +693,7 @@ export type SubscriptionPlanUncheckedCreateWithoutSubscriptionsInput = {
   isActive?: boolean
   features?: string | null
   targetRole?: $Enums.PlanTargetRole
+  examSimulatorEnabled?: boolean
   maxQuestionsPerMonth?: number
   maxStudentsAllowed?: number
   maxExamsPerMonth?: number
@@ -704,6 +728,7 @@ export type SubscriptionPlanUpdateWithoutSubscriptionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   features?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetRole?: Prisma.EnumPlanTargetRoleFieldUpdateOperationsInput | $Enums.PlanTargetRole
+  examSimulatorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxQuestionsPerMonth?: Prisma.IntFieldUpdateOperationsInput | number
   maxStudentsAllowed?: Prisma.IntFieldUpdateOperationsInput | number
   maxExamsPerMonth?: Prisma.IntFieldUpdateOperationsInput | number
@@ -722,6 +747,7 @@ export type SubscriptionPlanUncheckedUpdateWithoutSubscriptionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   features?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   targetRole?: Prisma.EnumPlanTargetRoleFieldUpdateOperationsInput | $Enums.PlanTargetRole
+  examSimulatorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxQuestionsPerMonth?: Prisma.IntFieldUpdateOperationsInput | number
   maxStudentsAllowed?: Prisma.IntFieldUpdateOperationsInput | number
   maxExamsPerMonth?: Prisma.IntFieldUpdateOperationsInput | number
@@ -771,6 +797,7 @@ export type SubscriptionPlanSelect<ExtArgs extends runtime.Types.Extensions.Inte
   isActive?: boolean
   features?: boolean
   targetRole?: boolean
+  examSimulatorEnabled?: boolean
   maxQuestionsPerMonth?: boolean
   maxStudentsAllowed?: boolean
   maxExamsPerMonth?: boolean
@@ -791,6 +818,7 @@ export type SubscriptionPlanSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   isActive?: boolean
   features?: boolean
   targetRole?: boolean
+  examSimulatorEnabled?: boolean
   maxQuestionsPerMonth?: boolean
   maxStudentsAllowed?: boolean
   maxExamsPerMonth?: boolean
@@ -809,6 +837,7 @@ export type SubscriptionPlanSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   isActive?: boolean
   features?: boolean
   targetRole?: boolean
+  examSimulatorEnabled?: boolean
   maxQuestionsPerMonth?: boolean
   maxStudentsAllowed?: boolean
   maxExamsPerMonth?: boolean
@@ -827,6 +856,7 @@ export type SubscriptionPlanSelectScalar = {
   isActive?: boolean
   features?: boolean
   targetRole?: boolean
+  examSimulatorEnabled?: boolean
   maxQuestionsPerMonth?: boolean
   maxStudentsAllowed?: boolean
   maxExamsPerMonth?: boolean
@@ -836,7 +866,7 @@ export type SubscriptionPlanSelectScalar = {
   updatedAt?: boolean
 }
 
-export type SubscriptionPlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "price" | "duration" | "isActive" | "features" | "targetRole" | "maxQuestionsPerMonth" | "maxStudentsAllowed" | "maxExamsPerMonth" | "maxTeachersAllowed" | "maxClassesAllowed" | "createdAt" | "updatedAt", ExtArgs["result"]["subscriptionPlan"]>
+export type SubscriptionPlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "price" | "duration" | "isActive" | "features" | "targetRole" | "examSimulatorEnabled" | "maxQuestionsPerMonth" | "maxStudentsAllowed" | "maxExamsPerMonth" | "maxTeachersAllowed" | "maxClassesAllowed" | "createdAt" | "updatedAt", ExtArgs["result"]["subscriptionPlan"]>
 export type SubscriptionPlanInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   subscriptions?: boolean | Prisma.SubscriptionPlan$subscriptionsArgs<ExtArgs>
   _count?: boolean | Prisma.SubscriptionPlanCountOutputTypeDefaultArgs<ExtArgs>
@@ -858,6 +888,7 @@ export type $SubscriptionPlanPayload<ExtArgs extends runtime.Types.Extensions.In
     isActive: boolean
     features: string | null
     targetRole: $Enums.PlanTargetRole
+    examSimulatorEnabled: boolean
     maxQuestionsPerMonth: number
     maxStudentsAllowed: number
     maxExamsPerMonth: number
@@ -1297,6 +1328,7 @@ export interface SubscriptionPlanFieldRefs {
   readonly isActive: Prisma.FieldRef<"SubscriptionPlan", 'Boolean'>
   readonly features: Prisma.FieldRef<"SubscriptionPlan", 'String'>
   readonly targetRole: Prisma.FieldRef<"SubscriptionPlan", 'PlanTargetRole'>
+  readonly examSimulatorEnabled: Prisma.FieldRef<"SubscriptionPlan", 'Boolean'>
   readonly maxQuestionsPerMonth: Prisma.FieldRef<"SubscriptionPlan", 'Int'>
   readonly maxStudentsAllowed: Prisma.FieldRef<"SubscriptionPlan", 'Int'>
   readonly maxExamsPerMonth: Prisma.FieldRef<"SubscriptionPlan", 'Int'>

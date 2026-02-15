@@ -16,7 +16,8 @@ import {
     BookOpen,
     Tag,
     Bell,
-    FileText
+    FileText,
+    FileCheck
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
@@ -36,6 +37,11 @@ const sidebarItems = [
         title: "ساخت آزمون دلخواه",
         href: "/admin/exams/custom",
         icon: FileText,
+    },
+    {
+        title: "آزمون‌های رسمی",
+        href: "/admin/official-exams",
+        icon: FileCheck,
     },
     {
         title: "سوالات",

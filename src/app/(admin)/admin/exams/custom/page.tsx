@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -23,6 +23,8 @@ export default function AdminCustomExamPage() {
     fromSurah: 1,
     toSurah: 114,
   });
+  const [useSurahFilter, setUseSurahFilter] = useState(true);
+  const [useJuzFilter, setUseJuzFilter] = useState(true);
   const [rangeType, setRangeType] = useState<"juz" | "surah">("juz");
   const [yearRange, setYearRange] = useState({
     fromYear: "1385",
@@ -79,6 +81,29 @@ export default function AdminCustomExamPage() {
     String(quranRange.toSurah);
   const surahRangeLabel = `از ${fromSurahName} تا ${toSurahName}`;
 
+  const minQuestionLimit = useMemo(() => {
+    let juzCount = 0;
+    if (useJuzFilter) {
+      const from = parseInt(quranRange.fromJuz, 10);
+      const to = parseInt(quranRange.toJuz, 10);
+      if (Number.isFinite(from) && Number.isFinite(to)) {
+        juzCount = Math.abs(to - from) + 1;
+      }
+    }
+    let surahCount = 0;
+    if (useSurahFilter) {
+      surahCount = Math.abs(quranRange.toSurah - quranRange.fromSurah) + 1;
+    }
+    return Math.max(1, juzCount + surahCount);
+  }, [useSurahFilter, useJuzFilter, quranRange.fromJuz, quranRange.toJuz, quranRange.fromSurah, quranRange.toSurah]);
+
+  useEffect(() => {
+    const current = parseInt(examSettings.questionCount, 10);
+    if (!Number.isFinite(current) || current < minQuestionLimit) {
+      setExamSettings((prev) => ({ ...prev, questionCount: String(minQuestionLimit) }));
+    }
+  }, [minQuestionLimit]);
+
   const handleTopicChange = (topic: string, checked: boolean) => {
     if (checked) {
       setSelectedTopics([...selectedTopics, topic]);
@@ -89,17 +114,17 @@ export default function AdminCustomExamPage() {
 
   const handleNextStep = () => {
     if (currentStep === 1) {
-      // Validate Quran range based on selected type
-      if (rangeType === "juz") {
-        if (parseInt(quranRange.fromJuz) > parseInt(quranRange.toJuz)) {
-          toast.error("جزء شروع نمی‌تواند بزرگتر از جزء پایان باشد");
-          return;
-        }
-      } else {
-        if (quranRange.fromSurah > quranRange.toSurah) {
-          toast.error("سوره شروع نمی‌تواند بزرگتر از سوره پایان باشد");
-          return;
-        }
+      if (!useSurahFilter && !useJuzFilter) {
+        toast.error("حداقل یکی از سوره یا جزء باید انتخاب شود");
+        return;
+      }
+      if (useJuzFilter && parseInt(quranRange.fromJuz) > parseInt(quranRange.toJuz)) {
+        toast.error("جزء شروع نمی‌تواند بزرگتر از جزء پایان باشد");
+        return;
+      }
+      if (useSurahFilter && quranRange.fromSurah > quranRange.toSurah) {
+        toast.error("سوره شروع نمی‌تواند بزرگتر از سوره پایان باشد");
+        return;
       }
     } else if (currentStep === 2) {
       // Validate year range
@@ -114,9 +139,9 @@ export default function AdminCustomExamPage() {
         return;
       }
     } else if (currentStep === 5) {
-      // Validate question count and duration
-      if (parseInt(examSettings.questionCount) < 1) {
-        toast.error("تعداد سوالات باید حداقل 1 باشد");
+      const qCount = parseInt(examSettings.questionCount, 10);
+      if (!Number.isFinite(qCount) || qCount < minQuestionLimit) {
+        toast.error(`تعداد سوالات باید حداقل ${minQuestionLimit} باشد`);
         return;
       }
       if (parseInt(examSettings.duration) < 5) {
@@ -137,6 +162,10 @@ export default function AdminCustomExamPage() {
   };
 
   const handleSubmitExam = async () => {
+    if (!useSurahFilter && !useJuzFilter) {
+      toast.error("حداقل یکی از سوره یا جزء باید انتخاب شود");
+      return;
+    }
     try {
       const examData = {
         title: examSettings.title,
@@ -147,11 +176,13 @@ export default function AdminCustomExamPage() {
         randomizeQuestions: examSettings.randomizeQuestions,
         showResults: examSettings.showResults,
         allowRetake: examSettings.allowRetake,
-        selectionMode: rangeType === "juz" ? "JUZ" : "SURAH",
-        fromJuz: rangeType === "juz" ? parseInt(quranRange.fromJuz) : null,
-        toJuz: rangeType === "juz" ? parseInt(quranRange.toJuz) : null,
-        fromSurah: rangeType === "surah" ? quranRange.fromSurah : null,
-        toSurah: rangeType === "surah" ? quranRange.toSurah : null,
+        selectionMode: useJuzFilter ? "JUZ" : "SURAH",
+        fromJuz: useJuzFilter ? parseInt(quranRange.fromJuz) : null,
+        toJuz: useJuzFilter ? parseInt(quranRange.toJuz) : null,
+        fromSurah: useSurahFilter ? quranRange.fromSurah : null,
+        toSurah: useSurahFilter ? quranRange.toSurah : null,
+        useSurahFilter: useSurahFilter,
+        useJuzFilter: useJuzFilter,
         fromYear: parseInt(yearRange.fromYear),
         toYear: parseInt(yearRange.toYear),
         difficulty: selectedDifficulty,
@@ -293,35 +324,41 @@ export default function AdminCustomExamPage() {
               {/* Step 1: Quran Range Selection */}
               {currentStep === 1 && (
                 <>
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-medium">نوع محدوده قرآن</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="flex items-center space-x-3 space-x-reverse p-4 border rounded-lg cursor-pointer hover:bg-gray-50"
-                           onClick={() => setRangeType("juz")}>
-                        <div className={`w-4 h-4 rounded-full border-2 ${
-                          rangeType === "juz" ? 'bg-blue-600 border-blue-600' : 'border-gray-300'
-                        }`}>
-                          {rangeType === "juz" && (
-                            <div className="w-full h-full rounded-full bg-white scale-50"></div>
-                          )}
-                        </div>
-                        <Label className="cursor-pointer">انتخاب بر اساس اجزاء</Label>
-                      </div>
-                      <div className="flex items-center space-x-3 space-x-reverse p-4 border rounded-lg cursor-pointer hover:bg-gray-50"
-                           onClick={() => setRangeType("surah")}>
-                        <div className={`w-4 h-4 rounded-full border-2 ${
-                          rangeType === "surah" ? 'bg-blue-600 border-blue-600' : 'border-gray-300'
-                        }`}>
-                          {rangeType === "surah" && (
-                            <div className="w-full h-full rounded-full bg-white scale-50"></div>
-                          )}
-                        </div>
-                        <Label className="cursor-pointer">انتخاب بر اساس سوره‌ها</Label>
-                      </div>
+                  <div className="flex flex-wrap items-center gap-6 p-3 border rounded-lg bg-muted/50">
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        id="admin-use-surah"
+                        checked={useSurahFilter}
+                        onCheckedChange={(checked) => {
+                          if (checked === false && !useJuzFilter) return;
+                          setUseSurahFilter(checked === true);
+                          if (checked === false) {
+                            setQuranRange((p) => ({ ...p, fromSurah: 1, toSurah: 114 }));
+                          }
+                        }}
+                      />
+                      <Label htmlFor="admin-use-surah" className="cursor-pointer font-medium">استفاده از فیلتر سوره</Label>
                     </div>
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        id="admin-use-juz"
+                        checked={useJuzFilter}
+                        onCheckedChange={(checked) => {
+                          if (checked === false && !useSurahFilter) return;
+                          setUseJuzFilter(checked === true);
+                          if (checked === false) {
+                            setQuranRange((p) => ({ ...p, fromJuz: "1", toJuz: "30" }));
+                          }
+                        }}
+                      />
+                      <Label htmlFor="admin-use-juz" className="cursor-pointer font-medium">استفاده از فیلتر جزء</Label>
+                    </div>
+                    {!useSurahFilter && !useJuzFilter && (
+                      <span className="text-sm text-amber-700">حداقل یکی از سوره یا جزء باید انتخاب شود</span>
+                    )}
                   </div>
 
-                  {rangeType === "juz" && (
+                  {useJuzFilter && (
                     <div className="space-y-4">
                       <h3 className="text-lg font-medium">محدوده اجزاء</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -369,7 +406,7 @@ export default function AdminCustomExamPage() {
                     </div>
                   )}
 
-                  {rangeType === "surah" && (
+                  {useSurahFilter && (
                     <div className="space-y-4">
                       <h3 className="text-lg font-medium">محدوده سوره‌ها</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -445,11 +482,10 @@ export default function AdminCustomExamPage() {
 
                   <div className="p-3 bg-blue-50 rounded-lg">
                     <p className="text-sm text-blue-800">
-                      <strong>محدوده انتخاب شده:</strong> 
-                      {rangeType === "juz" 
-                        ? ` از جزء ${quranRange.fromJuz} تا جزء ${quranRange.toJuz}`
-                        : ` ${surahRangeLabel}`
-                      }
+                      <strong>محدوده انتخاب شده:</strong>
+                      {useJuzFilter && ` از جزء ${quranRange.fromJuz} تا جزء ${quranRange.toJuz}`}
+                      {useSurahFilter && useJuzFilter && " | "}
+                      {useSurahFilter && ` ${surahRangeLabel}`}
                     </p>
                   </div>
                 </>
@@ -595,16 +631,24 @@ export default function AdminCustomExamPage() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="questionCount">تعداد سوالات</Label>
-                        <Input
-                          id="questionCount"
-                          type="number"
-                          min="1"
-                          value={examSettings.questionCount}
-                          onChange={(e) => setExamSettings(prev => ({ ...prev, questionCount: e.target.value }))}
-                        />
-                      </div>
+                        <div>
+                          <Label htmlFor="questionCount">تعداد سوالات</Label>
+                          <Input
+                            id="questionCount"
+                            type="number"
+                            min={minQuestionLimit}
+                            value={examSettings.questionCount}
+                            onChange={(e) => {
+                              const raw = e.target.value;
+                              const num = raw === "" ? minQuestionLimit : Number(e.target.value);
+                              const clamped = Math.max(minQuestionLimit, Number.isFinite(num) ? num : minQuestionLimit);
+                              setExamSettings((prev) => ({ ...prev, questionCount: String(clamped) }));
+                            }}
+                          />
+                          <p className="text-xs text-muted-foreground mt-1">
+                            تعداد سوالات بر اساس تعداد انتخاب‌های شما محاسبه شده است. حداقل مجاز: {minQuestionLimit}
+                          </p>
+                        </div>
                       <div>
                         <Label htmlFor="duration">مدت زمان (دقیقه)</Label>
                         <Input
@@ -687,10 +731,9 @@ export default function AdminCustomExamPage() {
                         <div>
                           <p className="text-sm text-gray-600">محدوده قرآن</p>
                           <p className="font-medium">
-                            {rangeType === "juz" 
-                              ? `از جزء ${quranRange.fromJuz} تا جزء ${quranRange.toJuz}`
-                              : surahRangeLabel
-                            }
+                            {useJuzFilter && `از جزء ${quranRange.fromJuz} تا جزء ${quranRange.toJuz}`}
+                            {useSurahFilter && useJuzFilter && " | "}
+                            {useSurahFilter && surahRangeLabel}
                           </p>
                         </div>
                         <div>

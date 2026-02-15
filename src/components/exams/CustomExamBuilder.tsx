@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -20,6 +20,31 @@ import {
   type QuranSelectionState,
 } from "@/components/custom-exam/quran-selection-step";
 import { quranSelectionToApiPayload, getQuranSelectionSummary } from "@/lib/quranSelectionToApi";
+
+/** Minimum questions = sum of active selections (surahs when useSurah + juz when useJuz). */
+function getMinQuestionLimit(state: QuranSelectionState): number {
+  let surahCount = 0;
+  if (state.useSurahFilter) {
+    if (state.surahSelectionMode === "range" && state.fromSurah != null && state.toSurah != null) {
+      const from = Math.min(state.fromSurah, state.toSurah);
+      const to = Math.max(state.fromSurah, state.toSurah);
+      surahCount = to - from + 1;
+    } else if (state.surahSelectionMode === "multiple" && state.selectedSurahs.length > 0) {
+      surahCount = state.selectedSurahs.length;
+    }
+  }
+  let juzCount = 0;
+  if (state.useJuzFilter) {
+    if (state.juzSelectionMode === "range" && state.fromJuz != null && state.toJuz != null) {
+      const from = Math.min(state.fromJuz, state.toJuz);
+      const to = Math.max(state.fromJuz, state.toJuz);
+      juzCount = to - from + 1;
+    } else if (state.juzSelectionMode === "multiple" && state.selectedJuz.length > 0) {
+      juzCount = state.selectedJuz.length;
+    }
+  }
+  return surahCount + juzCount || 1;
+}
 
 export type CustomExamRole = "USER" | "TEACHER" | "INSTITUTE";
 
@@ -87,6 +112,15 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
     allowRetake: false,
   });
 
+  const minQuestionLimit = useMemo(() => getMinQuestionLimit(quranSelection), [quranSelection]);
+
+  useEffect(() => {
+    const current = parseInt(examSettings.questionCount, 10);
+    if (!Number.isFinite(current) || current < minQuestionLimit) {
+      setExamSettings((prev) => ({ ...prev, questionCount: String(minQuestionLimit) }));
+    }
+  }, [minQuestionLimit]);
+
   const handleTopicChange = (topic: string, checked: boolean) => {
     if (checked) {
       setSelectedTopics((prev) => [...prev, topic]);
@@ -97,6 +131,10 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
 
   const handleNextStep = () => {
     if (currentStep === 1) {
+      if (!quranSelection.useSurahFilter && !quranSelection.useJuzFilter) {
+        toast.error("حداقل یکی از سوره یا جزء باید انتخاب شود");
+        return;
+      }
       const hasSurah =
         (quranSelection.surahSelectionMode === "range" &&
           quranSelection.fromSurah != null &&
@@ -109,9 +147,12 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
           quranSelection.toJuz != null) ||
         (quranSelection.juzSelectionMode === "multiple" &&
           quranSelection.selectedJuz.length > 0);
-
-      if (!hasSurah && !hasJuz) {
-        toast.error("حداقل یکی از سوره یا جزء باید انتخاب شود");
+      if (quranSelection.useSurahFilter && !hasSurah) {
+        toast.error("لطفاً محدوده یا سوره‌های مورد نظر را انتخاب کنید");
+        return;
+      }
+      if (quranSelection.useJuzFilter && !hasJuz) {
+        toast.error("لطفاً محدوده یا اجزای مورد نظر را انتخاب کنید");
         return;
       }
       if (
@@ -143,8 +184,9 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
         return;
       }
     } else if (currentStep === 5) {
-      if (parseInt(examSettings.questionCount) < 1) {
-        toast.error("تعداد سوالات باید حداقل 1 باشد");
+      const qCount = parseInt(examSettings.questionCount, 10);
+      if (!Number.isFinite(qCount) || qCount < minQuestionLimit) {
+        toast.error(`تعداد سوالات باید حداقل ${minQuestionLimit} باشد`);
         return;
       }
       if (parseInt(examSettings.duration) < 5) {
@@ -166,6 +208,10 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
 
   const handleSubmitExam = async () => {
     try {
+      if (!quranSelection.useSurahFilter && !quranSelection.useJuzFilter) {
+        toast.error("حداقل یکی از سوره یا جزء باید انتخاب شود");
+        return;
+      }
       if (!examSettings.title.trim()) {
         toast.error("لطفاً عنوان آزمون را وارد کنید");
         return;
@@ -174,9 +220,9 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
         toast.error("لطفاً حداقل یک موضوع را انتخاب کنید");
         return;
       }
-      const questionCount = parseInt(examSettings.questionCount);
-      if (questionCount < 1 || questionCount > 200) {
-        toast.error("تعداد سوالات باید بین 1 تا 200 باشد");
+      const questionCount = parseInt(examSettings.questionCount, 10);
+      if (!Number.isFinite(questionCount) || questionCount < minQuestionLimit || questionCount > 200) {
+        toast.error(`تعداد سوالات باید بین ${minQuestionLimit} تا 200 باشد`);
         return;
       }
       const duration = parseInt(examSettings.duration);
@@ -403,41 +449,66 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
                   </>
                 )}
 
-                {currentStep === 3 && (
-                  <>
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-medium">سطح دشواری سوالات</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {DIFFICULTY_OPTIONS.map((difficulty) => (
-                          <div
-                            key={difficulty.value}
-                            className="flex items-center space-x-3 space-x-reverse p-4 border rounded-lg cursor-pointer hover:bg-gray-50"
-                            onClick={() => setSelectedDifficulty(difficulty.value)}
-                          >
-                            <div
-                              className={`w-4 h-4 rounded-full border-2 ${
-                                selectedDifficulty === difficulty.value
-                                  ? "bg-blue-600 border-blue-600"
-                                  : "border-gray-300"
-                              }`}
-                            >
-                              {selectedDifficulty === difficulty.value && (
-                                <div className="w-full h-full rounded-full bg-white scale-50" />
-                              )}
-                            </div>
-                            <Label className="cursor-pointer">{difficulty.label}</Label>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="p-3 bg-blue-50 rounded-lg">
-                      <p className="text-sm text-blue-800">
-                        <strong>سطح انتخاب شده:</strong>{" "}
-                        {DIFFICULTY_OPTIONS.find((d) => d.value === selectedDifficulty)?.label}
-                      </p>
-                    </div>
-                  </>
+{currentStep === 3 && (
+  <>
+    <div className="space-y-4">
+      <h3 className="text-lg font-medium">سطح دشواری سوالات</h3>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {DIFFICULTY_OPTIONS.map((difficulty) => {
+          const isMedium = difficulty.value === "MEDIUM";
+          const isSelected = selectedDifficulty === "MEDIUM";
+
+          return (
+            <div
+              key={difficulty.value}
+              className={`flex items-center space-x-3 space-x-reverse p-4 border rounded-lg
+                ${
+                  isMedium
+                    ? "cursor-pointer hover:bg-gray-50 border-blue-500"
+                    : "opacity-40 cursor-not-allowed bg-gray-100"
+                }`}
+              onClick={() => {
+                if (isMedium) {
+                  setSelectedDifficulty("MEDIUM");
+                }
+              }}
+            >
+              <div
+                className={`w-4 h-4 rounded-full border-2 ${
+                  isSelected
+                    ? "bg-blue-600 border-blue-600"
+                    : "border-gray-300"
+                }`}
+              >
+                {isSelected && (
+                  <div className="w-full h-full rounded-full bg-white scale-50" />
                 )}
+              </div>
+
+              <Label className={isMedium ? "cursor-pointer" : "cursor-not-allowed"}>
+                {difficulty.label}
+              </Label>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <div className="p-3 bg-blue-50 rounded-lg">
+      <p className="text-sm text-blue-800">
+        <strong>
+          موقتا فقط سطح متوسط در دسترس است. سطح انتخاب شده:
+        </strong>{" "}
+        متوسط
+      </p>
+    </div>
+  </>
+)}
+
+
+
+
 
                 {currentStep === 4 && (
                   <>
@@ -508,12 +579,18 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
                           <Input
                             id="questionCount"
                             type="number"
-                            min={1}
+                            min={minQuestionLimit}
                             value={examSettings.questionCount}
-                            onChange={(e) =>
-                              setExamSettings((prev) => ({ ...prev, questionCount: e.target.value }))
-                            }
+                            onChange={(e) => {
+                              const raw = e.target.value;
+                              const num = raw === "" ? minQuestionLimit : Number(e.target.value);
+                              const clamped = Math.max(minQuestionLimit, Number.isFinite(num) ? num : minQuestionLimit);
+                              setExamSettings((prev) => ({ ...prev, questionCount: String(clamped) }));
+                            }}
                           />
+                          <p className="text-xs text-muted-foreground mt-1">
+                            تعداد سوالات بر اساس تعداد انتخاب‌های شما محاسبه شده است. حداقل مجاز: {minQuestionLimit}
+                          </p>
                         </div>
                         <div>
                           <Label htmlFor="duration">مدت زمان (دقیقه)</Label>

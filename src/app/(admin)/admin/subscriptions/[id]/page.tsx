@@ -24,6 +24,7 @@ export default function EditPlanPage({ params }: { params: Promise<{ id: string 
     duration: "30",
     targetRole: "STUDENT" as "STUDENT" | "TEACHER" | "INSTITUTE",
     features: [] as string[],
+    examSimulatorEnabled: false,
     isActive: true,
     maxQuestionsPerMonth: "",
     maxStudentsAllowed: "",
@@ -66,6 +67,7 @@ export default function EditPlanPage({ params }: { params: Promise<{ id: string 
             duration: plan.duration?.toString() || "30",
             targetRole: (plan.targetRole as any) || "STUDENT",
             features: parsedFeatures,
+            examSimulatorEnabled: plan.examSimulatorEnabled === true,
             isActive: plan.isActive !== false,
             maxQuestionsPerMonth: plan.maxQuestionsPerMonth?.toString?.() || "",
             maxStudentsAllowed: plan.maxStudentsAllowed?.toString?.() || "",
@@ -119,6 +121,7 @@ export default function EditPlanPage({ params }: { params: Promise<{ id: string 
           price: parseFloat(formData.price),
           duration: parseInt(formData.duration),
           features: formData.features, // Send as array, API will handle JSON.stringify
+          examSimulatorEnabled: formData.examSimulatorEnabled,
           maxExamsPerMonth: formData.maxExamsPerMonth ? parseInt(formData.maxExamsPerMonth) : 0,
           maxStudentsAllowed: formData.maxStudentsAllowed ? parseInt(formData.maxStudentsAllowed) : 0,
           maxQuestionsPerMonth: formData.maxQuestionsPerMonth ? parseInt(formData.maxQuestionsPerMonth) : 0,
@@ -355,6 +358,18 @@ export default function EditPlanPage({ params }: { params: Promise<{ id: string 
             {/* Features */}
             <div>
               <Label>ویژگی‌های پلن</Label>
+              <div className="flex items-center gap-2 mb-3">
+                <Checkbox
+                  id="examSimulatorEnabled"
+                  checked={formData.examSimulatorEnabled}
+                  onCheckedChange={(checked) =>
+                    setFormData((prev) => ({ ...prev, examSimulatorEnabled: checked === true }))
+                  }
+                />
+                <Label htmlFor="examSimulatorEnabled" className="cursor-pointer font-normal">
+                  شبیه ساز آزمون
+                </Label>
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
                 {visibleFeatures.map((feature) => (
                   <div key={feature.id} className="flex items-center space-x-2 space-x-reverse">
