@@ -17,8 +17,10 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AccessLevel, SelectionMode } from "@/generated";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { PrismaClient } from '@prisma/client';
+import { Exam, Question } from '@prisma/client';
+import { AccessLevel, SelectionMode } from '@prisma/client';
 
 const examSchema = z.object({
   title: z.string().min(1, "عنوان الزامی است"),

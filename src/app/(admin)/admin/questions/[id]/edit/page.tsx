@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
 import { QuestionForm } from "@/components/admin/question-form";
-import { QuestionKind } from "@/generated";
+import { QuestionKind } from "@prisma/client";
 
 export default async function EditQuestionPage({
   params,

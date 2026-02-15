@@ -5,7 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ParsedQuestion } from "@/types";
-import { CorrectAnswer } from "@/generated";
+import { CorrectAnswer } from "@prisma/client";
+
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { RenderText } from "@/components/RenderText";
 

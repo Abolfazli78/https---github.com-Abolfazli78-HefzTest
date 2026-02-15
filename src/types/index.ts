@@ -1,4 +1,4 @@
-import { UserRole, AccessLevel, SelectionMode, CorrectAnswer, AttemptStatus, TicketStatus, ContentType, QuestionKind } from "@/generated";
+import { UserRole, AccessLevel, SelectionMode, CorrectAnswer, AttemptStatus, TicketStatus, ContentType, QuestionKind } from "@prisma/client";
 
 export type { UserRole, AccessLevel, SelectionMode, CorrectAnswer, AttemptStatus, TicketStatus, ContentType, QuestionKind };
 

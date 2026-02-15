@@ -1,6 +1,6 @@
 import mammoth from "mammoth";
 import { ParsedQuestion } from "@/types";
-import { CorrectAnswer } from "@/generated";
+import { CorrectAnswer } from "@prisma/client";
 
 export async function parseWordFile(file: File): Promise<ParsedQuestion[]> {
   const arrayBuffer = await file.arrayBuffer();

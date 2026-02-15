@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { CorrectAnswer } from "@/generated";
+import { CorrectAnswer } from "@prisma/client";
 import { RenderText } from "@/components/RenderText";
 
 export default async function QuestionDetailPage({

@@ -13,7 +13,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { CorrectAnswer, QuestionKind } from "@/generated";
+import { CorrectAnswer, QuestionKind } from "@prisma/client";
+
 import {
   DropdownMenu,
   DropdownMenuContent,

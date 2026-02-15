@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
-import { QuestionKind } from "@/generated/client";
+import { QuestionKind } from "@prisma/client";
 
 const MEMORIZATION_PER_JUZ = 2;
 const CONCEPTS_PER_JUZ = 3;

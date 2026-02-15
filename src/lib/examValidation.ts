@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { QuestionKind } from "@/generated/client";
+import { QuestionKind } from "@prisma/client";
 
 export const CreateCustomExamSchema = z.object({
   title: z.string().optional(),

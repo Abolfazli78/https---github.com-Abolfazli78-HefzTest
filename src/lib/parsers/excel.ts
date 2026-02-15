@@ -1,6 +1,6 @@
 import * as XLSX from "xlsx";
 import { ParsedQuestion, QuestionKind } from "@/types";
-import { CorrectAnswer } from "@/generated";
+import { CorrectAnswer } from "@prisma/client";
 import { SURAHS } from "@/lib/surahs";
 
 // Normalize Persian characters (Kaf/Yeh)

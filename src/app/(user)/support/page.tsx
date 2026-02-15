@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { TicketStatus } from "@/generated";
+import { TicketStatus } from "@prisma/client";
 import { MessageSquare, Send } from "lucide-react";
 import { UpgradeModal } from "@/components/common/upgrade-modal";
 import { SubscriptionLock } from "@/components/subscription/subscription-lock";

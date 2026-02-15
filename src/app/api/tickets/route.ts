@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
-import { Prisma } from "@/generated/client";
+import { Prisma } from "@prisma/client";
 import { checkAccess } from "@/lib/access";
 
 type RecipientRole = "ADMIN" | "INSTITUTE" | "TEACHER" | "STUDENT";

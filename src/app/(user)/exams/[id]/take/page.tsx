@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { CorrectAnswer } from "@/generated";
+import { CorrectAnswer } from "@prisma/client";
 import { Skeleton } from "@/components/ui/skeleton-loader";
 import { ExamInterface } from "@/components/exam/exam-interface";
 

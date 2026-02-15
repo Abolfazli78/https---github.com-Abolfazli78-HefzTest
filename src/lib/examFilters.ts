@@ -1,4 +1,4 @@
-import { Prisma, QuestionKind } from "@/generated/client";
+import { Prisma, QuestionKind } from "@prisma/client";
 import { CreateCustomExamInput } from "@/lib/examValidation";
 
 /**

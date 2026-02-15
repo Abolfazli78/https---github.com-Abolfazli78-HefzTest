@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
-import { SelectionMode, CorrectAnswer } from "@/generated";
+import { SelectionMode, CorrectAnswer } from "@prisma/client";
 
 function parseExamFilters(description: string | null | undefined) {
   if (!description) return {};

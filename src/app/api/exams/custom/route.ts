@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db as prisma } from "@/lib/db";
 import { getServerSession } from "@/lib/session";
-import { Prisma } from "@/generated/client";
+import { Prisma } from "@prisma/client";
 import { checkAccess } from "@/lib/access";
 import { CreateCustomExamSchema, CreateCustomExamInput } from "@/lib/examValidation";
 import { buildQuestionFilters } from "@/lib/examFilters";

@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
-import { AccessLevel, SelectionMode } from "@/generated";
+import { AccessLevel, SelectionMode } from "@prisma/client";
 import { checkAccess } from "@/lib/access";
-import type { Prisma } from "@/generated/client";
+import type { Prisma } from "@prisma/client";
 
 export async function POST(request: Request) {
   try {

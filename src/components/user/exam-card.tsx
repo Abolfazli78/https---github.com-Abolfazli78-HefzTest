@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { AccessLevel } from "@/generated";
+import { AccessLevel } from "@prisma/client";
 import { Clock, FileText, ArrowLeft } from "lucide-react";
 import { parseDescription } from "@/lib/exam-utils";
 

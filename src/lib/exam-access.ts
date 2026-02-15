@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { UserRole } from "@/generated";
+import { UserRole } from "@prisma/client";
 
 export async function getAccessibleExams(userId: string, userRole: UserRole) {
   // Get user with hierarchy information

@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import type { SubscriptionPlan } from "@/generated/client";
+import type { SubscriptionPlan } from "@prisma/client";
 
 export type QuotaKey = Extract<
   keyof SubscriptionPlan,

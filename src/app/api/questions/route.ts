@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
-import { CorrectAnswer, Prisma } from "@/generated/client";
+import { CorrectAnswer, Prisma } from "@prisma/client";
 
 type SortDirection = "asc" | "desc";
 

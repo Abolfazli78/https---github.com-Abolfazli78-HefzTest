@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "@/lib/session";
 import { canUserAccessExam } from "@/lib/exam-access";
 import { db } from "@/lib/db";
-import { AccessLevel, SelectionMode } from "@/generated";
-import type { CorrectAnswer } from "@/generated";
-import type { Prisma } from "@/generated/client";
+import { AccessLevel, SelectionMode } from "@prisma/client";
+import type { CorrectAnswer } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 
 export async function GET(
   request: Request,

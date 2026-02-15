@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
-import { UserRole } from "@/generated";
-import type { Prisma } from "@/generated/client";
+import { UserRole } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 
 export async function GET(
   request: Request,

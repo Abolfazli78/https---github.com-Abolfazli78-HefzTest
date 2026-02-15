@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { SelectionMode } from "@/generated";
+import { SelectionMode } from "@prisma/client";
 
 export default async function ExamDetailPage({
   params,

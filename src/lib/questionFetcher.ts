@@ -1,4 +1,4 @@
-import { Prisma } from "@/generated/client";
+import { Prisma } from "@prisma/client";
 import { db as prisma } from "@/lib/db";
 
 type QuestionRow = {

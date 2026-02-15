@@ -5,7 +5,7 @@ import { QuestionsTable } from "@/components/admin/questions-table";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { QuestionKind } from "@/generated";
+import { QuestionKind } from "@prisma/client";
 import QuestionsPageClient from "./page-client";
 
 export default async function QuestionsPage() {

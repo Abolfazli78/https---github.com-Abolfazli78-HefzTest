@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ContentType } from "@/generated";
+import { ContentType } from "@prisma/client"
 import {
   DropdownMenu,
   DropdownMenuContent,

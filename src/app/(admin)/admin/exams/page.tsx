@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "@/lib/session";
 import { getAccessibleExams } from "@/lib/exam-access";
-import { UserRole } from "@/generated";
+import { UserRole } from "@prisma/client";
 import { ExamsTable } from "@/components/admin/exams-table";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";

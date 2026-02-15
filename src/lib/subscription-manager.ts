@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import type { User, Subscription, SubscriptionPlan } from "@/generated/client";
+import type { User, Subscription, SubscriptionPlan } from "@prisma/client";
 import { checkAccess } from "./access";
 
 export type RoleTier = "STUDENT" | "TEACHER" | "INSTITUTE";

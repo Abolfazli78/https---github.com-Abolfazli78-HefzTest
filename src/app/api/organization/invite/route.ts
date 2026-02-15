@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
-import { UserRole } from "@/generated";
+import { UserRole } from "@prisma/client";
 
 export async function POST(request: Request) {
     try {
