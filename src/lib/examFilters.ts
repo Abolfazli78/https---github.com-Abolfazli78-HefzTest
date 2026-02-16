@@ -8,9 +8,11 @@ import { CreateCustomExamInput } from "@/lib/examValidation";
  * Surah filtering uses surahId only (no string matching).
  */
 export function buildQuestionFilters(
+  
   input: CreateCustomExamInput,
   _userId?: string
 ): Prisma.QuestionWhereInput {
+  
   const conditions: Prisma.QuestionWhereInput[] = [{ isActive: true }];
 
   const useSurah = input.useSurah !== false;
@@ -32,6 +34,7 @@ export function buildQuestionFilters(
       }
     }
     if (surahCondition) conditions.push(surahCondition);
+    
   }
 
   // ---- JUZ CONDITION (only when useJuz and we have juz selection) ----
@@ -62,17 +65,25 @@ export function buildQuestionFilters(
     conditions.push({ difficultyLevel: input.difficulty });
   }
 
-  if (input.topic != null && (input.topic as string) !== "ALL") {
-    if (input.topic === "memorization") {
+  const topic = input.topic as unknown;
+  if (topic != null) {
+    if (topic === "ALL") {
+      // no-op
+    } else if (Array.isArray(topic)) {
+      const kinds = topic
+        .map((t) => (t === "memorization" ? QuestionKind.MEMORIZATION : QuestionKind.CONCEPTS));
+      conditions.push({ questionKind: { in: kinds } });
+    } else if (topic === "memorization") {
       conditions.push({ questionKind: QuestionKind.MEMORIZATION });
-    } else if (input.topic === "concepts") {
+    } else if (topic === "concepts") {
       conditions.push({ questionKind: QuestionKind.CONCEPTS });
-    } else {
-      conditions.push({ topic: input.topic });
     }
   }
 
+
   const where = conditions.length === 1 ? conditions[0]! : { AND: conditions };
+
   console.log("Where clause:", JSON.stringify(where, null, 2));
   return where;
+
 }

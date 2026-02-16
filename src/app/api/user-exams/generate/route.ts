@@ -2,12 +2,30 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
 import { getUserSubscriptionInfo } from "@/lib/subscription-manager";
+import { buildQuestionFilters } from "@/lib/examFilters";
 
 const JUZ_MIN = 1;
 const JUZ_MAX = 30;
 const QUESTIONS_PER_JUZ = 5;
 const MIN_YEAR = 1385;
 const MAX_YEAR = 1404;
+
+function resolvePerJuzTargets(year: number | null): { memTarget: number; conceptTarget: number } {
+  if (year != null && year >= 1402 && year <= 1404) {
+    return { memTarget: 2, conceptTarget: 3 };
+  }
+  if (year != null && year >= 1385 && year <= 1401) {
+    return { memTarget: 1, conceptTarget: 4 };
+  }
+  return { memTarget: 2, conceptTarget: 3 };
+}
+
+function shuffleInPlace<T>(arr: T[]): void {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
 
 /** Derive juz range, question count and duration from grade + range (premium flow). */
 function resolveFromGradeAndRange(
@@ -190,53 +208,147 @@ export async function POST(req: Request) {
 
     console.error("[user-exams/generate] pool.length:", pool.length, "required:", total);
 
-    if (pool.length === 0) {
-      return NextResponse.json(
-        {
-          error: yearFilter != null
-            ? `برای سال ${yearFilter} و بازه جزء ${finalJuzStart} تا ${finalJuzEnd} هیچ سوالی در بانک وجود ندارد. سال یا بازه جزء را تغییر دهید.`
-            : `برای بازه جزء ${finalJuzStart} تا ${finalJuzEnd} هیچ سوالی در بانک وجود ندارد. بازه جزء را تغییر دهید.`,
-        },
-        { status: 400 }
-      );
-    }
+    let selected: PoolItem[] = [];
 
-    const byJuz = new Map<number, PoolItem[]>();
-    for (const q of pool) {
-      const j = q.juz ?? 1;
-      if (!byJuz.has(j)) byJuz.set(j, []);
-      byJuz.get(j)!.push(q);
-    }
-
-    const selected: PoolItem[] = [];
-    for (let juz = finalJuzStart; juz <= finalJuzEnd; juz++) {
-      const juzQuestions = byJuz.get(juz) ?? [];
-      if (juzQuestions.length < 5) {
-        return NextResponse.json(
-          {
-            error: `برای جزء ${juz} حداقل ۵ سوال نیاز است. موجود: ${juzQuestions.length}.`,
-          },
-          { status: 400 }
-        );
+    if (gradeNum != null) {
+      // SIMULATOR LOGIC (structured per-Juz)
+      const byJuz = new Map<number, PoolItem[]>();
+      for (const q of pool) {
+        const j = q.juz ?? 1;
+        if (!byJuz.has(j)) byJuz.set(j, []);
+        byJuz.get(j)!.push(q);
       }
-      for (let i = 0; i < 5; i++) {
-        selected.push(juzQuestions[i]);
+
+      const targets = resolvePerJuzTargets(yearFilter);
+      for (let juz = finalJuzStart; juz <= finalJuzEnd; juz++) {
+        const juzQuestions = byJuz.get(juz) ?? [];
+
+        const mem: PoolItem[] = [];
+        const concept: PoolItem[] = [];
+        for (const q of juzQuestions) {
+          if (q.questionKind === "MEMORIZATION") mem.push(q);
+          else concept.push(q);
+        }
+
+        const picked: PoolItem[] = [];
+        picked.push(...mem.slice(0, targets.memTarget));
+        picked.push(...concept.slice(0, targets.conceptTarget));
+
+        if (picked.length === 0) {
+          continue;
+        }
+
+        selected.push(...picked);
+      }
+    } else {
+      // CUSTOM EXAM LOGIC
+      const bodyAny = body as Record<string, unknown>;
+
+      const memorizationPercentRaw = bodyAny.memorizationPercent;
+      const conceptsPercentRaw = bodyAny.conceptsPercent;
+      const memorizationPercent =
+        typeof memorizationPercentRaw === "number" ? memorizationPercentRaw :
+        typeof memorizationPercentRaw === "string" ? Number(memorizationPercentRaw) :
+        null;
+      const conceptsPercent =
+        typeof conceptsPercentRaw === "number" ? conceptsPercentRaw :
+        typeof conceptsPercentRaw === "string" ? Number(conceptsPercentRaw) :
+        null;
+
+      const customFilterInput = {
+        ...bodyAny,
+        useJuz: true,
+        juzStart: finalJuzStart,
+        juzEnd: finalJuzEnd,
+        year: yearFilter ?? (bodyAny.year as unknown),
+      };
+
+      const customWhere = buildQuestionFilters(customFilterInput as never);
+
+      try {
+        const { customSelected } = await db.$transaction(async (tx: typeof db) => {
+          const totalAvailableInner = await tx.question.count({ where: customWhere });
+          console.log("Custom total available:", totalAvailableInner);
+          console.log("Requested:", total);
+
+          if (totalAvailableInner < total) {
+            return { customSelected: null as PoolItem[] | null };
+          }
+
+          const usePercentages = memorizationPercent != null && conceptsPercent != null;
+          if (usePercentages) {
+            if (!Number.isFinite(memorizationPercent) || !Number.isFinite(conceptsPercent)) {
+              return { customSelected: [] as PoolItem[] };
+            }
+
+            if (memorizationPercent + conceptsPercent !== 100) {
+              throw new Error("PERCENT_SUM_INVALID");
+            }
+
+            const memCount = Math.round((total * memorizationPercent) / 100);
+            const conceptCount = total - memCount;
+
+            const memWhere = { ...(customWhere as object), questionKind: "MEMORIZATION" } as never;
+            const conceptWhere = { ...(customWhere as object), questionKind: "CONCEPTS" } as never;
+
+            const memAvailable = await tx.question.count({ where: memWhere });
+            const conceptAvailable = await tx.question.count({ where: conceptWhere });
+
+            if (memAvailable < memCount || conceptAvailable < conceptCount) {
+              throw new Error("PERCENT_NOT_ENOUGH");
+            }
+
+            const memPool = await tx.question.findMany({
+              where: memWhere,
+              select: { id: true, juz: true, questionKind: true },
+            });
+            const conceptPool = await tx.question.findMany({
+              where: conceptWhere,
+              select: { id: true, juz: true, questionKind: true },
+            });
+
+            shuffleInPlace(memPool);
+            shuffleInPlace(conceptPool);
+
+            const picked = [...memPool.slice(0, memCount), ...conceptPool.slice(0, conceptCount)];
+            shuffleInPlace(picked);
+            return { customSelected: picked };
+          }
+
+          const allPool = await tx.question.findMany({
+            where: customWhere,
+            select: { id: true, juz: true, questionKind: true },
+          });
+
+          shuffleInPlace(allPool);
+          return { customSelected: allPool.slice(0, total) };
+        });
+
+        if (customSelected == null) {
+          return NextResponse.json(
+            { error: "تعداد سوالات موجود با فیلترهای انتخاب شده کافی نیست" },
+            { status: 400 }
+          );
+        }
+
+        selected = customSelected;
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : "";
+        if (msg === "PERCENT_SUM_INVALID") {
+          return NextResponse.json(
+            { error: "درصدهای حفظ و مفاهیم باید مجموعاً 100 باشند" },
+            { status: 400 }
+          );
+        }
+        if (msg === "PERCENT_NOT_ENOUGH") {
+          return NextResponse.json(
+            { error: "تعداد سوالات کافی برای تقسیم درصدی انتخاب شده وجود ندارد" },
+            { status: 400 }
+          );
+        }
+        throw e;
       }
     }
-
-    const memIndices = selected
-      .map((q, i) => (q.questionKind === "MEMORIZATION" ? i : -1))
-      .filter((i) => i >= 0);
-    if (memIndices.length < 2) {
-      return NextResponse.json(
-        { error: "برای این بازه حداقل ۲ سوال حفظ (MEMORIZATION) در بانک لازم است." },
-        { status: 400 }
-      );
-    }
-    const firstTwo = [selected[memIndices[0]], selected[memIndices[1]]];
-    const rest = selected.filter((_, i) => i !== memIndices[0] && i !== memIndices[1]);
-    selected.length = 0;
-    selected.push(...firstTwo, ...rest);
 
     const actualTotal = selected.length;
 

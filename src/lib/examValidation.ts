@@ -24,7 +24,13 @@ export const CreateCustomExamSchema = z.object({
   yearStart: z.number().int().min(1380).max(1500).optional(),
   yearEnd: z.number().int().min(1380).max(1500).optional(),
   difficulty: z.enum(["Easy", "Medium", "Hard"]).optional(),
-  topic: z.enum(["memorization", "concepts"]).or(z.string()).optional(),
+  topic: z
+    .union([
+      z.literal("ALL"),
+      z.enum(["memorization", "concepts"]),
+      z.array(z.enum(["memorization", "concepts"])).min(1),
+    ])
+    .optional(),
   isWholeQuran: z.boolean().default(false),
   excludePreviouslyUsed: z.boolean().default(false)
 })

@@ -100,7 +100,7 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
     toYear: "1404",
   });
   const [selectedDifficulty, setSelectedDifficulty] = useState("Medium");
-  const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+  const [topic, setTopic] = useState<string[]>([]);
   const [examSettings, setExamSettings] = useState({
     title: "",
     description: "",
@@ -121,11 +121,11 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
     }
   }, [minQuestionLimit]);
 
-  const handleTopicChange = (topic: string, checked: boolean) => {
+  const handleTopicChange = (value: string, checked: boolean) => {
     if (checked) {
-      setSelectedTopics((prev) => [...prev, topic]);
+      setTopic((prev) => (prev.includes(value) ? prev : [...prev, value]));
     } else {
-      setSelectedTopics((prev) => prev.filter((t) => t !== topic));
+      setTopic((prev) => prev.filter((t) => t !== value));
     }
   };
 
@@ -178,11 +178,6 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
         toast.error("سال شروع نمی‌تواند بزرگتر از سال پایان باشد");
         return;
       }
-    } else if (currentStep === 4) {
-      if (selectedTopics.length === 0) {
-        toast.error("حداقل یک موضوع را انتخاب کنید");
-        return;
-      }
     } else if (currentStep === 5) {
       const qCount = parseInt(examSettings.questionCount, 10);
       if (!Number.isFinite(qCount) || qCount < minQuestionLimit) {
@@ -216,10 +211,6 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
         toast.error("لطفاً عنوان آزمون را وارد کنید");
         return;
       }
-      if (selectedTopics.length === 0) {
-        toast.error("لطفاً حداقل یک موضوع را انتخاب کنید");
-        return;
-      }
       const questionCount = parseInt(examSettings.questionCount, 10);
       if (!Number.isFinite(questionCount) || questionCount < minQuestionLimit || questionCount > 200) {
         toast.error(`تعداد سوالات باید بین ${minQuestionLimit} تا 200 باشد`);
@@ -232,6 +223,9 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
       }
 
       const quranPayload = quranSelectionToApiPayload(quranSelection);
+
+      const topicPayload =
+        topic.length === 0 ? "ALL" : topic.length === 1 ? topic[0] : topic;
       const examData: CreateCustomExamInput = {
         title: examSettings.title || undefined,
         description: examSettings.description || undefined,
@@ -245,7 +239,7 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
         yearStart: parseInt(yearRange.fromYear),
         yearEnd: parseInt(yearRange.toYear),
         difficulty: selectedDifficulty as "Easy" | "Medium" | "Hard",
-        topic: selectedTopics.length > 0 ? selectedTopics[0] : undefined,
+        topic: topicPayload as any,
         isWholeQuran: false,
         excludePreviouslyUsed: false,
       };
@@ -253,6 +247,8 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
       const cleanExamData = Object.fromEntries(
         Object.entries(examData).filter(([, value]) => value !== undefined)
       );
+
+      console.log("CustomExam DEBUG - payload:", cleanExamData);
 
       const response = await fetch("/api/exams/custom", {
         method: "POST",
@@ -515,20 +511,20 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
                     <div className="space-y-4">
                       <h3 className="text-lg font-medium">موضوعات آزمون</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {TOPIC_OPTIONS.map((topic) => (
+                        {TOPIC_OPTIONS.map((option) => (
                           <div
-                            key={topic.value}
+                            key={option.value}
                             className="flex items-center space-x-3 space-x-reverse p-4 border rounded-lg"
                           >
                             <Checkbox
-                              id={topic.value}
-                              checked={selectedTopics.includes(topic.value)}
+                              id={option.value}
+                              checked={topic.includes(option.value)}
                               onCheckedChange={(checked) =>
-                                handleTopicChange(topic.value, checked as boolean)
+                                handleTopicChange(option.value, checked as boolean)
                               }
                             />
-                            <Label htmlFor={topic.value} className="cursor-pointer">
-                              {topic.label}
+                            <Label htmlFor={option.value} className="cursor-pointer">
+                              {option.label}
                             </Label>
                           </div>
                         ))}
@@ -537,8 +533,8 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
                     <div className="p-3 bg-blue-50 rounded-lg">
                       <p className="text-sm text-blue-800">
                         <strong>موضوعات انتخاب شده:</strong>{" "}
-                        {selectedTopics.length > 0
-                          ? selectedTopics
+                        {topic.length > 0
+                          ? topic
                               .map((t) => TOPIC_OPTIONS.find((opt) => opt.value === t)?.label)
                               .join("، ")
                           : "هیچ موضوعی انتخاب نشده"}
@@ -708,7 +704,7 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
                           <div>
                             <p className="text-sm text-gray-600">موضوعات</p>
                             <p className="font-medium">
-                              {selectedTopics
+                              {topic
                                 .map((t) => TOPIC_OPTIONS.find((opt) => opt.value === t)?.label)
                                 .join("، ")}
                             </p>
