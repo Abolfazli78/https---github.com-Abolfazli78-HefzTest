@@ -101,6 +101,7 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
   });
   const [selectedDifficulty, setSelectedDifficulty] = useState("Medium");
   const [topic, setTopic] = useState<string[]>([]);
+  const [questionCountError, setQuestionCountError] = useState("");
   const [examSettings, setExamSettings] = useState({
     title: "",
     description: "",
@@ -115,11 +116,8 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
   const minQuestionLimit = useMemo(() => getMinQuestionLimit(quranSelection), [quranSelection]);
 
   useEffect(() => {
-    const current = parseInt(examSettings.questionCount, 10);
-    if (!Number.isFinite(current) || current < minQuestionLimit) {
-      setExamSettings((prev) => ({ ...prev, questionCount: String(minQuestionLimit) }));
-    }
-  }, [minQuestionLimit]);
+    setQuestionCountError("");
+  }, [currentStep]);
 
   const handleTopicChange = (value: string, checked: boolean) => {
     if (checked) {
@@ -181,9 +179,10 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
     } else if (currentStep === 5) {
       const qCount = parseInt(examSettings.questionCount, 10);
       if (!Number.isFinite(qCount) || qCount < minQuestionLimit) {
-        toast.error(`تعداد سوالات باید حداقل ${minQuestionLimit} باشد`);
+        setQuestionCountError(`حداقل باید ${minQuestionLimit} سوال انتخاب کنید.`);
         return;
       }
+      setQuestionCountError("");
       if (parseInt(examSettings.duration) < 5) {
         toast.error("مدت زمان آزمون باید حداقل 5 دقیقه باشد");
         return;
@@ -575,15 +574,14 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
                           <Input
                             id="questionCount"
                             type="number"
-                            min={minQuestionLimit}
                             value={examSettings.questionCount}
                             onChange={(e) => {
-                              const raw = e.target.value;
-                              const num = raw === "" ? minQuestionLimit : Number(e.target.value);
-                              const clamped = Math.max(minQuestionLimit, Number.isFinite(num) ? num : minQuestionLimit);
-                              setExamSettings((prev) => ({ ...prev, questionCount: String(clamped) }));
+                              setExamSettings((prev) => ({ ...prev, questionCount: e.target.value }));
                             }}
                           />
+                          {questionCountError && (
+                            <p className="text-xs text-red-600 mt-1">{questionCountError}</p>
+                          )}
                           <p className="text-xs text-muted-foreground mt-1">
                             تعداد سوالات بر اساس تعداد انتخاب‌های شما محاسبه شده است. حداقل مجاز: {minQuestionLimit}
                           </p>
