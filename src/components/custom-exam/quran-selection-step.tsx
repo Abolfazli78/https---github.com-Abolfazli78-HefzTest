@@ -31,7 +31,7 @@ export interface QuranSelectionState {
 }
 
 export const initialQuranSelectionState: QuranSelectionState = {
-  useSurahFilter: true,
+  useSurahFilter: false,
   useJuzFilter: true,
   surahSelectionMode: "range",
   juzSelectionMode: "range",
