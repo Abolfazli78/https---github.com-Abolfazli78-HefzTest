@@ -27,58 +27,32 @@ export async function getAccessibleExams(userId: string, userRole: UserRole) {
   // Add conditions based on user role
   switch (userRole) {
     case UserRole.STUDENT:
-      // Student can see:
-      // 1. Their own exams (already added)
-      // 2. Exams created by their teacher
-      // 3. Exams created by their institute admin
-      
-      if (user.teacher) {
-        whereConditions.push({ createdById: user.teacher.id });
+      if (user.teacherId) {
+        whereConditions.push({ createdById: user.teacherId });
       }
-      
-      if (user.institute) {
-        whereConditions.push({ createdById: user.institute.id });
+
+      if (user.instituteId) {
+        whereConditions.push({ createdById: user.instituteId });
+      }
+
+      if (user.parentId && user.parent?.role === UserRole.ADMIN) {
+        whereConditions.push({ createdById: user.parentId });
       }
       break;
 
     case UserRole.TEACHER:
-      // Teacher can see:
-      // 1. Their own exams (already added)
-      // 2. Exams created by their institute admin
-      // 3. Exams created by their students
-      
-      if (user.institute) {
-        whereConditions.push({ createdById: user.institute.id });
+      if (user.instituteId) {
+        whereConditions.push({ createdById: user.instituteId });
       }
-      
-      if (user.students && user.students.length > 0) {
-        const studentIds = user.students.map(student => student.id);
-        whereConditions.push({ createdById: { in: studentIds } });
+
+      if (user.parentId && user.parent?.role === UserRole.ADMIN) {
+        whereConditions.push({ createdById: user.parentId });
       }
       break;
 
     case UserRole.INSTITUTE:
-      // Institute admin can see:
-      // 1. Their own exams (already added)
-      // 2. Exams created by their teachers
-      // 3. Exams created by their students (through teachers)
-      
-      if (user.teachers && user.teachers.length > 0) {
-        const teacherIds = user.teachers.map(teacher => teacher.id);
-        whereConditions.push({ createdById: { in: teacherIds } });
-        
-        // Also get students of these teachers
-        const studentsOfTeachers = await db.user.findMany({
-          where: {
-            teacherId: { in: teacherIds }
-          },
-          select: { id: true }
-        });
-        
-        if (studentsOfTeachers.length > 0) {
-          const studentIds = studentsOfTeachers.map(student => student.id);
-          whereConditions.push({ createdById: { in: studentIds } });
-        }
+      if (user.parentId && user.parent?.role === UserRole.ADMIN) {
+        whereConditions.push({ createdById: user.parentId });
       }
       break;
 

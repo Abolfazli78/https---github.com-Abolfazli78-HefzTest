@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { User, LogOut, LayoutDashboard, ShieldCheck, Tag } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "./theme-toggle";
 import { Badge } from "@/components/ui/badge";
 import { NotificationsDropdown } from "./notifications-dropdown";
 
@@ -57,7 +56,6 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-3">
-            <ThemeToggle />
             {session && session.user && <NotificationsDropdown />}
             {session && session.user ? (
               <DropdownMenu>
