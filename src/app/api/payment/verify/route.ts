@@ -12,7 +12,7 @@ export async function GET(req: Request) {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
     if (status !== 'OK') {
-        const failedUrl = redirectUrl ? `${redirectUrl}?payment=failed&status=${status}` : `${baseUrl}/subscriptions?payment=failed&status=${status}`;
+        const failedUrl = redirectUrl ? `${baseUrl}${redirectUrl}?payment=failed&status=${status}` : `${baseUrl}/subscriptions?payment=failed&status=${status}`;
         return NextResponse.redirect(failedUrl);
     }
 
