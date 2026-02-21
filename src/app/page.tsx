@@ -469,7 +469,9 @@ function TestCardPreview() {
 
       <div className="px-6 pb-6 pt-4 border-t border-slate-200/70 dark:border-slate-800 flex items-center justify-between">
         <span className="text-xs text-slate-500">آماده برای شروع</span>
-        <HefzButton size="sm" className="rounded-full shadow-md hover:shadow-lg transition-all duration-300">شروع</HefzButton>
+        <Link href="/demo">
+          <HefzButton size="sm" className="rounded-full shadow-md hover:shadow-lg transition-all duration-300">شروع</HefzButton>
+        </Link>
       </div>
     </div>
   );

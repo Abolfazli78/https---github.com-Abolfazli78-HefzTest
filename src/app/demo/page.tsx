@@ -1,147 +1,70 @@
 import { db } from "@/lib/db";
+import DemoExam from "@/components/demo/DemoExam";
+import { CustomExamBuilder } from "@/components/exams/CustomExamBuilder";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { ExamCard } from "@/components/user/exam-card";
-import { InvitationsList } from "@/components/user/invitations-list";
-import { UserUsageWidget } from "@/components/subscription/user-usage-widget";
 
-export default async function DemoDashboardPage() {
-  const activeExamsData = await db.exam.findMany({
-    where: { isActive: true },
-    orderBy: { createdAt: "desc" },
-    take: 6,
-  });
+export default async function DemoUnifiedPage(props: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  const searchParams = await props.searchParams;
+  const takeParam = Array.isArray(searchParams?.take) ? searchParams.take[0] : (searchParams?.take as string | undefined);
+  const take = takeParam === "1";
 
-  const activeExams = activeExamsData.map((exam) => ({
-    id: exam.id,
-    title: exam.title,
-    description: exam.description ?? undefined,
-    duration: exam.duration,
-    questionCount: exam.questionCount,
-    accessLevel: exam.accessLevel,
-  }));
+  if (take) {
+    const yearParam = Array.isArray(searchParams.year) ? searchParams.year[0] : (searchParams.year as string | undefined);
+    const year = parseInt(yearParam || "1404", 10);
+    const countParam = Array.isArray(searchParams.count) ? searchParams.count[0] : (searchParams.count as string | undefined);
+    const count = Math.min(25, Math.max(1, parseInt(countParam || "25", 10)));
+    const juzParam = Array.isArray(searchParams.juz) ? searchParams.juz[0] : (searchParams.juz as string | undefined);
+    const topicsParam = Array.isArray(searchParams.topic) ? searchParams.topic[0] : (searchParams.topic as string | undefined);
+    const allowedJuz = (juzParam || "1,2,3,4,5")
+      .split(",")
+      .map((x: string) => parseInt(x, 10))
+      .filter((x: number) => !Number.isNaN(x));
+    const topics = (topicsParam || "")
+      .split(",")
+      .map((x: string) => x.trim())
+      .filter((x: string) => !!x);
 
-  const totalAttempts = 0;
-  const completedAttemptsCount = 0;
-  const avgScore = { _avg: { score: null as number | null } };
-  const activeSubscription: any = null;
+    const where: any = {
+      isActive: true,
+      year,
+      juz: { in: allowedJuz },
+    };
+    if (topics.length > 0) {
+      where.topic = { in: topics };
+    }
 
-  const recentAttempts: any[] = [];
+    const questions = await db.question.findMany({
+      where,
+      orderBy: { id: "asc" },
+      take: count,
+      select: {
+        id: true,
+        questionText: true,
+        optionA: true,
+        optionB: true,
+        optionC: true,
+        optionD: true,
+        correctAnswer: true,
+      },
+    });
+
+    return <DemoExam questions={questions as any} />;
+  }
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">خوش آمدید، کاربر مهمان</h1>
-        <p className="text-muted-foreground">خلاصه فعالیت‌ها و آزمون‌های شما</p>
+    <div className="container mx-auto py-8 px-4 space-y-8">
+      <div className="text-center mb-2">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">ساخت آزمون دلخواه (دمو محدود)</h1>
+        <p className="text-gray-600">برای استفاده آزمایشی می‌توانید جزء ۱ تا ۵ و سال ۱۴۰۴ را انتخاب کنید. تعداد سوال: ۲۵.</p>
       </div>
-
-      <UserUsageWidget />
-
-      <div className="grid gap-6 md:grid-cols-3">
-        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0 shadow-lg">
-          <CardHeader className="pb-2">
-            <CardDescription className="text-blue-100">کل آزمون‌ها</CardDescription>
-            <CardTitle className="text-4xl">{totalAttempts}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-blue-100">{completedAttemptsCount} آزمون تکمیل شده</p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-0 shadow-lg">
-          <CardHeader className="pb-2">
-            <CardDescription className="text-emerald-100">میانگین نمرات</CardDescription>
-            <CardTitle className="text-4xl">{avgScore._avg.score ? Math.round(avgScore._avg.score) : 0}%</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-emerald-100">عملکرد کلی شما</p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-amber-500 to-amber-600 text-white border-0 shadow-lg">
-          <CardHeader className="pb-2">
-            <CardDescription className="text-amber-100">اشتراک فعال</CardDescription>
-            <CardTitle className="text-2xl">{activeSubscription?.plan?.name ? activeSubscription.plan.name : "رایگان"}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {activeSubscription ? (
-              activeSubscription.endDate ? (
-                <p className="text-sm text-amber-100">تا {new Date(activeSubscription.endDate).toLocaleDateString("fa-IR")}</p>
-              ) : (
-                <p className="text-sm text-amber-100">بدون محدودیت</p>
-              )
-            ) : (
-              <Link href="/subscriptions" className="text-sm text-amber-100 underline">ارتقاء حساب</Link>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid gap-8 lg:grid-cols-3">
-        <div className="lg:col-span-2 space-y-6">
-          <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold">آزمون‌های پیشنهادی</h2>
-            <Link href="/exams">
-              <Button variant="ghost" size="sm">مشاهده همه</Button>
-            </Link>
-          </div>
-          <div className="grid gap-6 md:grid-cols-2">
-            {activeExams.map((exam) => (
-              <ExamCard key={exam.id} exam={exam} />
-            ))}
-          </div>
-          {activeExams.length === 0 && (
-            <Card className="bg-muted/50 border-dashed">
-              <CardContent className="py-12 text-center text-muted-foreground">
-                در حال حاضر آزمونی در دسترس نیست
-              </CardContent>
-            </Card>
-          )}
-        </div>
-
-        <div className="space-y-6">
-          <InvitationsList />
-
-          <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold">فعالیت‌های اخیر</h2>
-            <Link href="/history">
-              <Button variant="ghost" size="sm">تاریخچه</Button>
-            </Link>
-          </div>
-          <div className="space-y-4">
-            {recentAttempts.length > 0 ? (
-              recentAttempts.map((attempt) => (
-                <Card key={attempt.id} className="overflow-hidden hover:shadow-md transition-shadow">
-                  <CardContent className="p-4">
-                    <div className="flex justify-between items-center">
-                      <div className="space-y-1">
-                        <h3 className="font-semibold text-sm line-clamp-1">{attempt.exam.title}</h3>
-                        <p className="text-xs text-muted-foreground">
-                          {new Date(attempt.startedAt).toLocaleDateString("fa-IR")}
-                        </p>
-                      </div>
-                      <div className="text-left">
-                        {attempt.score !== null ? (
-                          <div className="text-lg font-bold text-primary">{attempt.score}%</div>
-                        ) : (
-                          <div className="text-xs font-medium px-2 py-1 rounded-full bg-amber-100 text-amber-700">در حال انجام</div>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))
-            ) : (
-              <Card className="bg-muted/50 border-dashed">
-                <CardContent className="py-8 text-center text-muted-foreground text-sm">
-                  هنوز آزمونی شرکت نکرده‌اید
-                </CardContent>
-              </Card>
-            )}
-          </div>
-        </div>
-      </div>
+      <CustomExamBuilder role="USER" demoMode demoConfig={{ juzRange: [1, 5], year: "1404", questionCount: 25 }} />
+      <Card>
+        <CardHeader>
+          <CardTitle>راهنما</CardTitle>
+          <CardDescription>در مرحله نهایی، با کلیک روی ایجاد آزمون، دمو آغاز می‌شود و نتیجه محاسبه می‌گردد.</CardDescription>
+        </CardHeader>
+        <CardContent />
+      </Card>
     </div>
   );
 }
