@@ -585,7 +585,6 @@ function RoleCard({ icon, title, points, className }: { icon: React.ReactNode; t
     </div>
   );
 }
-<<<<<<< HEAD
 
 function CounterItem({ label, value, suffix = "" }: { label: string; value: number; suffix?: string }) {
   return (
@@ -616,53 +615,6 @@ function AnimatedCounter({ to, duration = 1200 }: { to: number; duration?: numbe
   return <span dir="ltr">{val.toLocaleString("fa-IR")}</span>;
 }
 
-function PriceCard({ title, audience, price, features, highlight, cta }: { title: string; audience?: string; price: string; features: string[]; highlight?: boolean; cta: string }) {
-  const content = (
-    <div className="p-8 rounded-2xl bg-white/70 dark:bg-white/5 backdrop-blur-lg">
-      <h3 className="text-xl font-bold mb-1">{title}</h3>
-      {audience && (
-        <div className="mb-3">
-          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium bg-slate-100 text-slate-700 dark:bg-white/10 dark:text-slate-300">
-            {audience}
-          </span>
-        </div>
-      )}
-      <div className="text-3xl font-extrabold mb-4">{price}{price !== "تماس بگیرید" && <span className="text-sm font-normal text-slate-500"> تومان/ماه</span>}</div>
-      <ul className="space-y-2 text-slate-600 dark:text-slate-400 text-sm mb-6">
-        {features.map((f, i) => (
-          <li key={i} className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-emerald-500" />{f}</li>
-        ))}
-      </ul>
-      <Button className={`rounded-full ${highlight ? "bg-indigo-600 hover:bg-indigo-700" : "bg-slate-900 hover:bg-slate-800"} w-full shadow-inner`}>{cta}</Button>
-    </div>
-  );
-
-  if (!highlight) {
-    return (
-      <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800">
-        {content}
-      </div>
-    );
-  }
-
-  return (
-    <div className="relative rounded-2xl p-[1px] bg-gradient-to-r from-indigo-500 via-violet-500 to-indigo-500 shadow-[0_0_0_1px_rgba(99,102,241,.4),0_0_35px_8px_rgba(99,102,241,.15)] overflow-hidden">
-      <span className="absolute -top-3 right-4 px-3 py-1 text-xs rounded-full bg-indigo-600 text-white">محبوب</span>
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        initial={{ backgroundPositionX: "0%" }}
-        animate={{ backgroundPositionX: ["0%", "200%"] }}
-        transition={{ repeat: Infinity, duration: 3.5, ease: "linear" }}
-        style={{
-          background: "linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%)",
-          backgroundSize: "200% 100%",
-        }}
-      />
-      {content}
-    </div>
-  );
-}
 
 function GraphPreview() {
   const points = Array.from({ length: 24 }).map((_, i) => 30 + Math.round(20 * Math.sin(i / 2) + Math.random() * 8));
@@ -687,38 +639,3 @@ function GraphPreview() {
     </svg>
   );
 }
-
-function TestCardPreview() {
-  return (
-    <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white/80 dark:bg-white/10">
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <BookOpen className="h-5 w-5 text-indigo-600" />
-          <span className="font-semibold">آزمون تشخیصی جزء ۳۰</span>
-        </div>
-        <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20">زمان‌دار</Badge>
-      </div>
-      <div className="grid grid-cols-3 gap-3 text-sm">
-        <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 text-center">
-          <div className="text-xs text-slate-500">مدت</div>
-          <div className="font-bold">۲۰ دقیقه</div>
-        </div>
-        <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 text-center">
-          <div className="text-xs text-slate-500">تعداد سوال</div>
-          <div className="font-bold">۳۰</div>
-        </div>
-        <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 text-center">
-          <div className="text-xs text-slate-500">درجه سختی</div>
-          <div className="font-bold">متوسط</div>
-        </div>
-      </div>
-      <div className="mt-4 flex justify-end">
-        <Button asChild size="sm" className="rounded-full">
-          <Link href="/demo/take">شروع</Link>
-        </Button>
-      </div>
-    </div>
-  );
-}
-=======
->>>>>>> 7493c3eebd937f28b561be06e4a50a6961427332
