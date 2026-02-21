@@ -1,7 +1,7 @@
 import { getServerSession } from "@/lib/session";
 import { getAccessibleExams } from "@/lib/exam-access";
 import { parseDescription } from "@/lib/exam-utils";
-import { UserRole } from "@/generated";
+import { UserRole } from "@prisma/client";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";

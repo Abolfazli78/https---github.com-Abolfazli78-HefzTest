@@ -106,7 +106,7 @@ export function PhoneInputSimple({ value, onChange, disabled, label = "شمار�
             value={phoneNumber}
             onChange={handlePhoneChange}
             disabled={disabled}
-            className="pl-16"
+            className="pl-16 text-gray-900 dark:text-gray-100"
             dir="ltr"
           />
         </div>

@@ -6,6 +6,7 @@ export const FEATURES = {
   LEADERBOARD_ACCESS: "leaderboard_access",
   UNLIMITED_EXAMS: "unlimited_exams",
   ADVANCED_ANALYTICS: "advanced_analytics",
+  EXAM_SIMULATOR: "exam_simulator",
   
   // Teacher features
   EXAM_CREATION: "exam_creation",

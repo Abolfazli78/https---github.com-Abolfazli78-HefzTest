@@ -7,6 +7,7 @@ export interface SubscriptionInfo {
   hasActiveSubscription: boolean;
   tier: "STUDENT" | "TEACHER" | "INSTITUTE";
   features: string[];
+  examSimulatorEnabled?: boolean;
   quotas: {
     maxExamsPerMonth: number;
     maxQuestionsPerMonth: number;

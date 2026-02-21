@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { TicketReplySystem } from "@/components/admin/ticket-reply-system";
-import { TicketStatus } from "@/generated";
+import { TicketStatus } from "@prisma/client";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 

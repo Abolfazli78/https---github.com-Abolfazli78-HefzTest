@@ -17,7 +17,8 @@ import {
     ChevronRight,
     ChevronLeft,
     FileText,
-    Crown
+    Crown,
+    ClipboardCheck
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
@@ -26,6 +27,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { UsageTracker } from "@/components/subscription/usage-tracker";
 import type { QuotaUsageSummary } from "@/lib/quota-usage";
+import { useSubscription } from "@/hooks/use-subscription";
 
 const sidebarItems = [
     {
@@ -59,6 +61,11 @@ const sidebarItems = [
         icon: FileText,
     },
     {
+        title: "شبیه‌ساز آزمون",
+        href: "/teacher/simulator",
+        icon: ClipboardCheck,
+    },
+    {
         title: "گزارش عملکرد",
         href: "/teacher/reports",
         icon: BarChart3,
@@ -83,12 +90,32 @@ const sidebarItems = [
 export function TeacherSidebar({ quotaUsage }: { quotaUsage: QuotaUsageSummary }) {
     const pathname = usePathname();
     const [isCollapsed, setIsCollapsed] = useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
+    const { subscriptionInfo } = useSubscription();
+    const showSimulator = subscriptionInfo?.examSimulatorEnabled === true;
+    const visibleSidebarItems = sidebarItems.filter(
+        (item) => item.href !== "/teacher/simulator" || showSimulator
+    );
 
     return (
-        <motion.div
-            animate={{ width: isCollapsed ? 80 : 280 }}
-            className="flex h-screen flex-col border-l border-white/10 bg-slate-950 text-white shadow-2xl relative transition-all duration-300 ease-in-out"
-        >
+        <>
+            {/* Mobile hamburger */}
+            <button
+                type="button"
+                aria-label="open sidebar"
+                className="md:hidden fixed top-4 right-4 z-50 rounded-md border border-white/10 bg-slate-900/80 backdrop-blur px-3 py-2 shadow text-white"
+                onClick={() => setMobileOpen(true)}
+            >
+                <span className="block w-5 h-0.5 bg-white mb-1"></span>
+                <span className="block w-5 h-0.5 bg-white mb-1"></span>
+                <span className="block w-5 h-0.5 bg-white"></span>
+            </button>
+
+            {/* Desktop sidebar */}
+            <motion.div
+                animate={{ width: isCollapsed ? 80 : 280 }}
+                className="hidden md:flex h-screen flex-col border-l border-white/10 bg-slate-950 text-white shadow-2xl relative transition-all duration-300 ease-in-out"
+            >
             {/* Background Gradient Glow */}
             <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-500/10 blur-[100px] rounded-full pointer-events-none" />
 
@@ -134,7 +161,7 @@ export function TeacherSidebar({ quotaUsage }: { quotaUsage: QuotaUsageSummary }
                   }
                 `}</style>
                 <nav className="grid gap-1.5 px-3">
-                    {sidebarItems.map((item, index) => {
+                    {visibleSidebarItems.map((item, index) => {
                         const isActive = pathname === item.href || pathname?.startsWith(item.href + "/");
                         return (
                             <Link
@@ -234,6 +261,68 @@ export function TeacherSidebar({ quotaUsage }: { quotaUsage: QuotaUsageSummary }
                     {isCollapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}
                 </Button>
             </div>
-        </motion.div>
+            </motion.div>
+
+            {/* Mobile overlay sidebar */}
+            {mobileOpen && (
+                <div className="md:hidden fixed inset-0 z-40">
+                    <div className="absolute inset-0 bg-black/50" onClick={() => setMobileOpen(false)} />
+                    <div className="absolute inset-y-0 right-0 w-72 bg-slate-950 text-white border-l border-white/10 shadow-2xl flex flex-col">
+                        <div className="flex h-16 items-center justify-between border-b border-white/10 px-4">
+                            <Link href="/" className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
+                                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white">
+                                    T
+                                </div>
+                                <span className="font-bold">پنل معلم</span>
+                            </Link>
+                            <button
+                                type="button"
+                                aria-label="close sidebar"
+                                className="rounded-md p-2 hover:bg-white/10"
+                                onClick={() => setMobileOpen(false)}
+                            >
+                                ✕
+                            </button>
+                        </div>
+                        <div className="flex-1 overflow-y-auto py-4">
+                            <nav className="grid gap-1.5 px-3">
+                                {visibleSidebarItems.map((item, index) => {
+                                    const isActive = pathname === item.href || pathname?.startsWith(item.href + "/");
+                                    return (
+                                        <Link
+                                            key={index}
+                                            href={item.href}
+                                            onClick={() => setMobileOpen(false)}
+                                            className={cn(
+                                                "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-200 group relative overflow-hidden",
+                                                isActive
+                                                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                                                    : "text-slate-400 hover:text-slate-100 hover:bg-white/5"
+                                            )}
+                                        >
+                                            <item.icon className={cn(
+                                                "h-5 w-5 shrink-0",
+                                                isActive ? "text-emerald-500" : "text-slate-500 group-hover:text-slate-300"
+                                            )} />
+                                            <span>{item.title}</span>
+                                        </Link>
+                                    );
+                                })}
+                            </nav>
+                        </div>
+                        <div className="p-4 border-t border-white/10">
+                            <Button
+                                variant="ghost"
+                                className="w-full justify-start gap-3 text-red-400 hover:bg-red-500/10 hover:text-red-300 rounded-xl h-12"
+                                onClick={() => { setMobileOpen(false); signOut({ callbackUrl: "/" }); }}
+                            >
+                                <LogOut className="h-5 w-5" />
+                                <span>خروج از حساب</span>
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
     );
 }

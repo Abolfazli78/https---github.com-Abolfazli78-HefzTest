@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { AccessLevel, SelectionMode } from "@/generated";
+import { AccessLevel, SelectionMode } from "@prisma/client";
 import {
   DropdownMenu,
   DropdownMenuContent,

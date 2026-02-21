@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { User, LogOut, LayoutDashboard, ShieldCheck, Tag } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "./theme-toggle";
 import { Badge } from "@/components/ui/badge";
 import { NotificationsDropdown } from "./notifications-dropdown";
 
@@ -46,6 +45,12 @@ export function Navbar() {
               </span>
             </Link>
 
+            <div className="hidden md:flex items-center gap-8">
+              <NavLink href="/about">درباره ما</NavLink>
+              <NavLink href="/features">امکانات</NavLink>
+              <NavLink href="/pricing">قیمت‌ها</NavLink>
+            </div>
+
             {session && (
               <div className="hidden md:flex items-center gap-8">
                 <NavLink href="/dashboard">داشبورد</NavLink>
@@ -57,7 +62,6 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-3">
-            <ThemeToggle />
             {session && session.user && <NotificationsDropdown />}
             {session && session.user ? (
               <DropdownMenu>

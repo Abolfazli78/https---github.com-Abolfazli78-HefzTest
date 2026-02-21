@@ -1,6 +1,7 @@
 import * as XLSX from "xlsx";
-import { ParsedQuestion } from "@/types";
-import { CorrectAnswer } from "@/generated";
+import { ParsedQuestion, QuestionKind } from "@/types";
+import { CorrectAnswer } from "@prisma/client";
+import { SURAHS } from "@/lib/surahs";
 
 // Normalize Persian characters (Kaf/Yeh)
 function normalizePersianText(text: string): string {
@@ -22,6 +23,15 @@ interface ExcelRow {
   H?: string | number;
   I?: string | number;
   J?: string | number;
+  K?: string | number;
+}
+
+function parseQuestionKind(raw: unknown): QuestionKind {
+  const value = normalizePersianText(String(raw ?? "")).toLowerCase();
+  if (!value) return "CONCEPTS"; // Default to CONCEPTS if empty
+  if (value.includes("مفاهیم") || value.includes("مفهوم") || value.includes("concept")) return "CONCEPTS";
+  if (value.includes("حفظ") || value.includes("hefz") || value.includes("memor")) return "MEMORIZATION";
+  return "CONCEPTS"; // Default to CONCEPTS if no match
 }
 
 export async function parseExcelFile(file: File): Promise<ParsedQuestion[]> {
@@ -30,7 +40,7 @@ export async function parseExcelFile(file: File): Promise<ParsedQuestion[]> {
   const sheetName = workbook.SheetNames[0];
   const worksheet = workbook.Sheets[sheetName];
 
-  // Expecting data from Row 3+ (Index 2), utilizing A-J columns
+  // Expecting data from Row 3+ (Index 2), utilizing A-K columns
   const data = XLSX.utils.sheet_to_json<ExcelRow>(worksheet, { header: "A", range: 2 });
 
   const questions: ParsedQuestion[] = [];
@@ -86,12 +96,35 @@ export async function parseExcelFile(file: File): Promise<ParsedQuestion[]> {
       // Column B: Juz
       const juz = row["B"] ? parseInt(row["B"].toString()) : undefined;
 
-      // Column C: Topic (Surah)
-      const topic = row["C"] ? normalizePersianText(row["C"].toString()) : undefined;
+      // Column C: Topic (Surah name or ID) → surahId + topic (display)
+      const rawTopic = row["C"] ? normalizePersianText(row["C"].toString()) : undefined;
+      let topic: string | undefined = rawTopic ? rawTopic.trim() : undefined;
+      let surahId: number | undefined;
+
+      if (rawTopic) {
+        const asNumber = parseInt(rawTopic, 10);
+        if (!Number.isNaN(asNumber) && asNumber >= 1 && asNumber <= 114) {
+          const surahDef = SURAHS.find((s) => s.id === asNumber);
+          if (surahDef) {
+            surahId = surahDef.id;
+            topic = surahDef.name;
+          }
+        } else {
+          const withoutPrefix = rawTopic.replace(/^سوره\s*/i, "").trim();
+          const matched = SURAHS.find((s) => normalizePersianText(s.name) === withoutPrefix);
+          if (matched) {
+            surahId = matched.id;
+            topic = matched.name;
+          }
+        }
+      }
 
       // Column D: Ayah Number -> Explanation context
       const ayahNumber = row["D"] ? row["D"].toString() : "";
       const explanation = ayahNumber ? `شماره آیه: ${ayahNumber}` : undefined;
+
+      // Column K: Question kind (memorization/concepts/both)
+      const questionKind = parseQuestionKind(row["K"]);
 
       questions.push({
         questionText,
@@ -103,8 +136,10 @@ export async function parseExcelFile(file: File): Promise<ParsedQuestion[]> {
         explanation,
         year,
         juz,
+        surahId,
         topic,
-        difficultyLevel: "Medium", // Default
+        difficultyLevel: "Medium",
+        questionKind: questionKind || "CONCEPTS",
       });
 
     } catch (error) {

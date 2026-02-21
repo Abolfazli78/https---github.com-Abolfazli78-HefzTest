@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
 import { ParsedQuestion } from "@/types";
-import { CorrectAnswer } from "@/generated";
+import { CorrectAnswer } from "@prisma/client";
 
 export async function POST(request: Request) {
   try {
@@ -41,7 +41,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Create questions in database
     const createdQuestions = await db.question.createMany({
       data: validQuestions.map((q: ParsedQuestion) => ({
         questionText: q.questionText,
@@ -49,12 +48,14 @@ export async function POST(request: Request) {
         optionB: q.optionB,
         optionC: q.optionC,
         optionD: q.optionD,
-        correctAnswer: q.correctAnswer as CorrectAnswer,
+        correctAnswer: q.correctAnswer,
         explanation: q.explanation || null,
         year: q.year || null,
         juz: q.juz || null,
+        surahId: q.surahId ?? null,
         topic: q.topic || null,
         difficultyLevel: q.difficultyLevel || null,
+        questionKind: q.questionKind ?? "CONCEPTS",
         isActive: true,
       })),
     });

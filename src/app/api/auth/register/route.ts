@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import bcrypt from "bcryptjs";
 import { createNotification } from "@/lib/notifications";
+import { normalizePhone } from "@/lib/phone";
 
 export async function POST(request: Request) {
   try {
@@ -15,7 +16,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const normalizedPhone = String(phone).trim();
+    const normalizedPhone = normalizePhone(String(phone));
     const normalizedEmail = email ? String(email).trim().toLowerCase() : null;
 
     // Check if user already exists
@@ -25,7 +26,7 @@ export async function POST(request: Request) {
 
     if (existingPhone) {
       return NextResponse.json(
-        { error: "این شماره موبایل قبلاً استفاده شده است" },
+        { error: "این شماره تماس قبلاً ثبت شده است" },
         { status: 400 }
       );
     }

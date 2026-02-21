@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
-import { PlanTargetRole } from "@/generated";
+import { PlanTargetRole } from "@prisma/client";
 
 export async function GET(request: Request) {
   try {
@@ -92,6 +92,7 @@ export async function POST(request: Request) {
       features,
       isActive,
       targetRole,
+      examSimulatorEnabled,
       maxQuestionsPerMonth,
       maxStudentsAllowed,
       maxExamsPerMonth,
@@ -115,6 +116,7 @@ export async function POST(request: Request) {
         features: features ? JSON.stringify(features) : null,
         isActive: isActive !== false,
         targetRole: targetRole || "STUDENT",
+        examSimulatorEnabled: examSimulatorEnabled === true,
         maxQuestionsPerMonth:
           maxQuestionsPerMonth !== undefined && maxQuestionsPerMonth !== null
             ? parseInt(maxQuestionsPerMonth)

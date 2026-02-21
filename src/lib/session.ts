@@ -1,3 +1,4 @@
+import "server-only";
 import { auth } from "@/lib/auth";
 
 // Helper function to get session in server components and API routes

@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "@/lib/session";
 import { getAccessibleExams } from "@/lib/exam-access";
 import { db } from "@/lib/db";
-import { AccessLevel, SelectionMode, UserRole } from "@/generated";
+import { AccessLevel, SelectionMode, CorrectAnswer, UserRole, QuestionKind } from "@prisma/client";
 import { checkAccess } from "@/lib/access";
-import type { Prisma } from "@/generated/client";
+import type { Prisma } from "@prisma/client";
 
 export async function GET() {
   try {
@@ -53,6 +53,9 @@ export async function POST(request: Request) {
       allowRetake,
       fromJuz,
       toJuz,
+      fromSurah,
+      toSurah,
+      topics,
     } = body;
 
     // Validate required fields
@@ -114,9 +117,15 @@ export async function POST(request: Request) {
       );
     }
 
-    if (selectionMode === SelectionMode.JUZ && !juz && !fromJuz) {
+    const hasJuzRange = (fromJuz != null && toJuz != null) || juz != null;
+    const hasSurahRange = fromSurah != null && toSurah != null;
+    if (
+      (selectionMode === SelectionMode.JUZ || selectionMode === SelectionMode.SURAH) &&
+      !hasJuzRange &&
+      !hasSurahRange
+    ) {
       return NextResponse.json(
-        { error: "جزء یا محدوده اجزاء الزامی است هنگام انتخاب نوع انتخاب بر اساس جزء" },
+        { error: "حداقل یکی از محدوده جزء یا سوره باید مشخص شود" },
         { status: 400 }
       );
     }
@@ -158,30 +167,63 @@ export async function POST(request: Request) {
       endAtDate = parsed;
     }
 
-    // Generate questions from question bank based on selection mode
+    // Generate questions from question bank: dynamic filter (optional juz and/or surah, AND when both)
     const whereClause: Prisma.QuestionWhereInput = { isActive: true };
-    
+    const rangeConditions: Prisma.QuestionWhereInput[] = [];
+
     if (selectionMode === SelectionMode.YEAR && year) {
       whereClause.year = parseInt(year);
-    } else if (selectionMode === SelectionMode.JUZ) {
-      if (fromJuz && toJuz) {
-        // Custom range: from part to part
-        whereClause.juz = {
-          gte: parseInt(fromJuz),
-          lte: parseInt(toJuz)
-        };
-      } else if (juz) {
-        // Single juz (old format)
-        whereClause.juz = parseInt(juz);
+    } else {
+      if (fromJuz != null && toJuz != null) {
+        const from = parseInt(String(fromJuz));
+        const to = parseInt(String(toJuz));
+        if (Number.isFinite(from) && Number.isFinite(to)) {
+          const [start, end] = from <= to ? [from, to] : [to, from];
+          rangeConditions.push({ juz: { gte: start, lte: end } });
+        }
+      } else if (juz != null && selectionMode === SelectionMode.JUZ) {
+        rangeConditions.push({ juz: parseInt(String(juz)) });
+      }
+
+      if (fromSurah != null && toSurah != null) {
+        const from = Number(fromSurah);
+        const to = Number(toSurah);
+        if (Number.isFinite(from) && Number.isFinite(to)) {
+          const start = Math.min(from, to);
+          const end = Math.max(from, to);
+          rangeConditions.push({ surahId: { gte: start, lte: end } });
+        }
+      }
+
+      if (rangeConditions.length === 1) {
+        Object.assign(whereClause, rangeConditions[0]);
+      } else if (rangeConditions.length > 1) {
+        whereClause.AND = rangeConditions;
       }
     }
-    // RANDOM mode doesn't filter by specific criteria
+
+    // Filter by question kind (memorization/concepts)
+    if (Array.isArray(topics) && topics.length > 0) {
+      const hasMemorization = topics.includes("memorization");
+      const hasConcepts = topics.includes("concepts");
+
+      if (hasMemorization && !hasConcepts) {
+        whereClause.questionKind = { in: [QuestionKind.MEMORIZATION] };
+      } else if (hasConcepts && !hasMemorization) {
+        whereClause.questionKind = { in: [QuestionKind.CONCEPTS] };
+      } else if (hasConcepts && hasMemorization) {
+        whereClause.questionKind = { in: [QuestionKind.CONCEPTS, QuestionKind.MEMORIZATION] };
+      }
+    }
 
     // Get random questions from the question bank
     const questions = await db.question.findMany({
       where: whereClause,
       orderBy: { createdAt: 'desc' }, // Get latest questions first
     });
+
+    console.log("CustomExam (admin/institute/teacher) DEBUG - whereClause:", whereClause);
+    console.log("CustomExam (admin/institute/teacher) DEBUG - matched questions:", questions.length);
 
     if (questions.length === 0) {
       return NextResponse.json(

@@ -1,23 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { TicketStatus } from "@/generated";
-import { MessageSquare, Send } from "lucide-react";
+import { TicketStatus } from "@prisma/client";
+import { MessageSquare } from "lucide-react";
 import { UpgradeModal } from "@/components/common/upgrade-modal";
 import { TicketReplySystem } from "@/components/admin/ticket-reply-system";
+import {
+  TicketCreateFormWithReceiver,
+  type TicketCreatePayload,
+} from "@/components/support/ticket-create-form-with-receiver";
 
 interface Ticket {
   id: string;
@@ -41,15 +35,9 @@ export default function TeacherSupportPage() {
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
   const [newMessage, setNewMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showNewTicketForm, setShowNewTicketForm] = useState(false);
   const [upgradeOpen, setUpgradeOpen] = useState(false);
-  const [newTicket, setNewTicket] = useState({
-    subject: "",
-    category: "",
-    message: "",
-    recipientRole: "ADMIN" as "ADMIN" | "INSTITUTE" | "TEACHER" | "STUDENT",
-  });
+  const [isSubmittingTicket, setIsSubmittingTicket] = useState(false);
 
   useEffect(() => {
     loadTickets();
@@ -80,32 +68,36 @@ export default function TeacherSupportPage() {
     }
   };
 
-  const handleCreateTicket = async () => {
-    if (!newTicket.subject || !newTicket.message) {
-      return;
-    }
-
-    setIsSubmitting(true);
+  const handleCreateTicket = async (payload: TicketCreatePayload) => {
+    setIsSubmittingTicket(true);
     try {
       const response = await fetch("/api/tickets", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newTicket),
+        body: JSON.stringify({
+          subject: payload.subject,
+          category: payload.category || null,
+          message: payload.message,
+          recipientRole: payload.recipientRole || null,
+          recipientUserId: payload.recipientUserId || null,
+        }),
       });
 
       if (response.status === 403) {
         setUpgradeOpen(true);
         return;
       }
-      if (response.ok) {
-        setNewTicket({ subject: "", category: "", message: "", recipientRole: "ADMIN" });
-        setShowNewTicketForm(false);
-        loadTickets();
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || "خطا در ایجاد تیکت");
       }
+      setShowNewTicketForm(false);
+      loadTickets();
     } catch (error) {
       console.error("Error creating ticket:", error);
+      throw error;
     } finally {
-      setIsSubmitting(false);
+      setIsSubmittingTicket(false);
     }
   };
 
@@ -206,76 +198,13 @@ export default function TeacherSupportPage() {
           <CardHeader>
             <CardTitle>ایجاد تیکت جدید</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <Label>موضوع</Label>
-              <Input
-                value={newTicket.subject}
-                onChange={(e) => setNewTicket({ ...newTicket, subject: e.target.value })}
-                placeholder="موضوع تیکت"
-              />
-            </div>
-            <div>
-              <Label>دسته‌بندی</Label>
-              <Select
-                value={newTicket.category}
-                onValueChange={(value) => setNewTicket({ ...newTicket, category: value })}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="انتخاب دسته‌بندی" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="technical">مشکل فنی</SelectItem>
-                  <SelectItem value="account">مشکل در حساب کاربری</SelectItem>
-                  <SelectItem value="exam">مشکل در آزمون</SelectItem>
-                  <SelectItem value="other">سایر</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label>مقصد</Label>
-              <Select
-                value={newTicket.recipientRole}
-                onValueChange={(value) =>
-                  setNewTicket({
-                    ...newTicket,
-                    recipientRole: value as "ADMIN" | "INSTITUTE" | "TEACHER" | "STUDENT",
-                  })
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="انتخاب مقصد" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="ADMIN">ادمین اصلی</SelectItem>
-                  <SelectItem value="STUDENT">دانش‌آموز</SelectItem>
-                  <SelectItem value="INSTITUTE">مدیر موسسه</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label>پیام</Label>
-              <Textarea
-                value={newTicket.message}
-                onChange={(e) => setNewTicket({ ...newTicket, message: e.target.value })}
-                placeholder="پیام خود را بنویسید..."
-                rows={5}
-              />
-            </div>
-            <div className="flex gap-2">
-              <Button onClick={handleCreateTicket} disabled={isSubmitting}>
-                {isSubmitting ? "در حال ارسال..." : "ارسال"}
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setShowNewTicketForm(false);
-                  setNewTicket({ subject: "", category: "", message: "", recipientRole: "ADMIN" });
-                }}
-              >
-                لغو
-              </Button>
-            </div>
+          <CardContent>
+            <TicketCreateFormWithReceiver
+              role="TEACHER"
+              onSubmit={handleCreateTicket}
+              onCancel={() => setShowNewTicketForm(false)}
+              isSubmitting={isSubmittingTicket}
+            />
           </CardContent>
         </Card>
       )}

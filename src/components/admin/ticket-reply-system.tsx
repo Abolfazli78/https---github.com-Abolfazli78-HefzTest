@@ -27,7 +27,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { TicketStatus } from "@/generated";
+import { TicketStatus } from "@prisma/client";
 
 interface TicketMessage {
   id: string;
