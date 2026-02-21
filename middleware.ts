@@ -11,6 +11,8 @@ const publicRoutes = [
   "/demo",
   // Preserve current behavior for the landing page
   "/",
+  "/rahnama-samane-test-hefz",
+  "/faq",
 ];
 
 // Auth-related pages that must remain accessible to avoid redirect loops

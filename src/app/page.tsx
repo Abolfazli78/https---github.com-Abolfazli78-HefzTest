@@ -236,7 +236,7 @@ export default function HomePage() {
       </section>
 
       {/* Iconic Feature Grid (Detailed Boxes) */}
-      <section className="py-16 md:py-20">
+      <section id="faq" className="py-16 md:py-20">
         <div className="container mx-auto max-w-7xl px-4">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl font-bold mb-4 tracking-tight">امکانات کلیدی پلتفرم</h2>

@@ -46,9 +46,18 @@ export function Navbar() {
             </Link>
 
             <div className="hidden md:flex items-center gap-8">
+              <NavLink href="/">صفحه اصلی</NavLink>
               <NavLink href="/about">درباره ما</NavLink>
-              <NavLink href="/features">امکانات</NavLink>
-              <NavLink href="/pricing">قیمت‌ها</NavLink>
+              <NavLink href="/faq">سوالات متداول</NavLink>
+              <NavLink href="/rahnama-samane-test-hefz">راهنمای سامانه</NavLink>
+              <a
+                href="https://wa.me/989393615821"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-medium transition-colors hover:text-primary relative py-1 text-muted-foreground"
+              >
+                تماس با ما
+              </a>
             </div>
 
             {session && (

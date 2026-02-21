@@ -20,6 +20,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tahlil-amalkard-kelas-quran",
     "/tahrir-va-sabt-khata-azmoon-hifz",
     "/rahنمای-azmoon-hifz-quran",
+    "/rahnama-samane-test-hefz",
+    "/faq",
     "/abzar-moalem-quran",
     "/faq-moalem-quran",
     "/demo",
