@@ -661,7 +661,9 @@ function TestCardPreview() {
         </div>
       </div>
       <div className="mt-4 flex justify-end">
-        <Button size="sm" className="rounded-full">شروع</Button>
+        <Button asChild size="sm" className="rounded-full">
+          <Link href="/demo/take">شروع</Link>
+        </Button>
       </div>
     </div>
   );

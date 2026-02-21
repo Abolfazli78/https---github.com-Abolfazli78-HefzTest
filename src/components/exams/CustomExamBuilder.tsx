@@ -57,6 +57,7 @@ export interface AssignableStudent {
 export interface CustomExamBuilderProps {
   role: CustomExamRole;
   assignableStudents?: AssignableStudent[];
+  demoMode?: boolean;
 }
 
 const YEAR_OPTIONS = Array.from({ length: 20 }, (_, i) => ({
@@ -86,7 +87,7 @@ function getSuccessRedirect(role: CustomExamRole): string {
   }
 }
 
-export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilderProps) {
+export function CustomExamBuilder({ role, assignableStudents, demoMode = false }: CustomExamBuilderProps) {
   const router = useRouter();
   const [subscriptionInfo, setSubscriptionInfo] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -118,6 +119,28 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
   useEffect(() => {
     setQuestionCountError("");
   }, [currentStep]);
+
+  // Demo mode: set defaults and jump to final step
+  useEffect(() => {
+    if (!demoMode) return;
+    setQuranSelection({
+      ...initialQuranSelectionState,
+      useSurahFilter: false,
+      useJuzFilter: true,
+      surahSelectionMode: "range",
+      juzSelectionMode: "multiple",
+      selectedJuz: [1, 2, 3, 4, 5, 6],
+    });
+    setYearRange({ fromYear: "1404", toYear: "1404" });
+    setSelectedDifficulty("Medium");
+    setExamSettings((prev) => ({
+      ...prev,
+      title: prev.title || "آزمون دمو جزء ۱ تا ۶",
+      duration: "20",
+      questionCount: "30",
+    }));
+    setCurrentStep(6);
+  }, [demoMode]);
 
   const handleTopicChange = (value: string, checked: boolean) => {
     if (checked) {
@@ -295,7 +318,7 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
     }
   }, []);
 
-  const showLock = loading || !subscriptionInfo?.hasActiveSubscription;
+  const showLock = demoMode ? false : (loading || !subscriptionInfo?.hasActiveSubscription);
 
   return (
     <div className="space-y-8">
@@ -735,15 +758,22 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
                   <Button
                     variant="outline"
                     onClick={handlePreviousStep}
-                    disabled={currentStep === 1}
+                    disabled={currentStep === 1 || demoMode}
                   >
                     <ChevronRight className="ml-2 h-4 w-4" />
                     مرحله قبل
                   </Button>
-                  <Button onClick={currentStep === 6 ? handleSubmitExam : handleNextStep}>
-                    {currentStep === 6 ? "ایجاد آزمون" : "مرحله بعد"}
-                    <ChevronLeft className="mr-2 h-4 w-4" />
-                  </Button>
+                  {demoMode ? (
+                    <Button onClick={() => router.push("/demo/take")}> 
+                      شروع دمو
+                      <ChevronLeft className="mr-2 h-4 w-4" />
+                    </Button>
+                  ) : (
+                    <Button onClick={currentStep === 6 ? handleSubmitExam : handleNextStep}>
+                      {currentStep === 6 ? "ایجاد آزمون" : "مرحله بعد"}
+                      <ChevronLeft className="mr-2 h-4 w-4" />
+                    </Button>
+                  )}
                 </div>
               </CardContent>
             </Card>

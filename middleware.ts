@@ -7,6 +7,8 @@ const publicRoutes = [
   "/about",
   "/legal/terms",
   "/legal/privacy",
+  // Demo pages should be publicly accessible
+  "/demo",
   // Preserve current behavior for the landing page
   "/",
 ];
