@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { CheckCircle2, XCircle, Circle, Trophy } from "lucide-react";
+import { RenderText } from "@/components/RenderText";
 
 export default async function ResultsPage({
   params,
@@ -178,33 +179,33 @@ export default async function ResultsPage({
                     <Badge variant="destructive">غلط</Badge>
                   )}
                 </div>
-                <p className="arabic-text mb-3">{answer.question.questionText}</p>
+                <p className="mb-3"><RenderText text={answer.question.questionText} /></p>
                 <div className="space-y-1 text-sm">
                   <p>
                     <span className="font-semibold">پاسخ شما: </span>
-                    <span className="arabic-text">
-                      {answer.selectedAnswer === "A" && "أ) " + answer.question.optionA}
-                      {answer.selectedAnswer === "B" && "ب) " + answer.question.optionB}
-                      {answer.selectedAnswer === "C" && "ج) " + answer.question.optionC}
-                      {answer.selectedAnswer === "D" && "د) " + answer.question.optionD}
+                    <span>
+                      {answer.selectedAnswer === "A" && <><span>أ) </span><RenderText text={answer.question.optionA} /></>}
+                      {answer.selectedAnswer === "B" && <><span>ب) </span><RenderText text={answer.question.optionB} /></>}
+                      {answer.selectedAnswer === "C" && <><span>ج) </span><RenderText text={answer.question.optionC} /></>}
+                      {answer.selectedAnswer === "D" && <><span>د) </span><RenderText text={answer.question.optionD} /></>}
                       {!answer.selectedAnswer && "پاسخ نداده‌اید"}
                     </span>
                   </p>
                   {!answer.isCorrect && (
                     <p>
                       <span className="font-semibold">پاسخ صحیح: </span>
-                      <span className="arabic-text">
-                        {answer.question.correctAnswer === "A" && "أ) " + answer.question.optionA}
-                        {answer.question.correctAnswer === "B" && "ب) " + answer.question.optionB}
-                        {answer.question.correctAnswer === "C" && "ج) " + answer.question.optionC}
-                        {answer.question.correctAnswer === "D" && "د) " + answer.question.optionD}
+                      <span>
+                        {answer.question.correctAnswer === "A" && <><span>أ) </span><RenderText text={answer.question.optionA} /></>}
+                        {answer.question.correctAnswer === "B" && <><span>ب) </span><RenderText text={answer.question.optionB} /></>}
+                        {answer.question.correctAnswer === "C" && <><span>ج) </span><RenderText text={answer.question.optionC} /></>}
+                        {answer.question.correctAnswer === "D" && <><span>د) </span><RenderText text={answer.question.optionD} /></>}
                       </span>
                     </p>
                   )}
                   {answer.question.explanation && (
-                    <p className="mt-2 text-muted-foreground arabic-text">
+                    <p className="mt-2 text-muted-foreground">
                       <span className="font-semibold">توضیح: </span>
-                      {answer.question.explanation}
+                      <RenderText text={answer.question.explanation} />
                     </p>
                   )}
                 </div>

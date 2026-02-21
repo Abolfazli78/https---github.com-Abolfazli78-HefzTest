@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { SubscriptionStatus } from "@/generated";
+import { SubscriptionStatus } from "@prisma/client";
 
 interface Subscription {
   id: string;

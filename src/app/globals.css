@@ -4,7 +4,15 @@
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
-  src: url('/fonts/Vazirmatn/Vazirmatn/Round-Dots/fonts/webfonts/Vazirmatn-RD[wght].woff2') format('woff2');
+  src: url('/fonts/Vazirmatn/Vazirmatn/fonts/webfonts/Vazirmatn[wght].woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'QuranFont';
+  src: url('/fonts/wm-naskh-qurani-93.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @import "tailwindcss";
@@ -218,16 +226,17 @@
 
   /* Persian text styling */
   .persian-text {
-    font-family: 'Vazirmatn', var(--font-persian), sans-serif;
+    font-family: var(--font-persian), sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
-  /* Quran verse styling with diacritics */
+  /* Quran verse styling */
   .quran-text {
-    font-family: var(--font-arabic), serif;
+    font-family: 'QuranFont', serif;
     font-size: 1.5rem;
     line-height: 2.5;
-    letter-spacing: 0.05em;
-    font-weight: 400;
+    direction: rtl;
   }
 
   /* Custom scrollbar styles */
@@ -258,5 +267,54 @@
   
   .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #64748b;
+  }
+  /* Drop cap (RTL-friendly) */
+  .drop-cap:first-letter {
+    float: right;
+    font-size: 3.25rem;
+    line-height: 1;
+    padding-left: 0.15rem;
+    font-weight: 800;
+  }
+
+  /* Vertical accent line */
+  .accent-line {
+    position: relative;
+  }
+  .accent-line::before {
+    content: "";
+    position: absolute;
+    right: -1.25rem;
+    top: 0.25rem;
+    bottom: 0.25rem;
+    width: 3px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #10b981, #f59e0b);
+    opacity: 0.6;
+  }
+
+  /* Underline animation */
+  @keyframes underline {
+    from { transform: scaleX(0); opacity: 0.4; }
+    to { transform: scaleX(1); opacity: 1; }
+  }
+
+  /* Soft float particles */
+  @keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0.2; }
+    50% { transform: translateY(-8px) translateX(4px); opacity: 0.35; }
+    100% { transform: translateY(0) translateX(0); opacity: 0.2; }
+  }
+
+  /* Accordion smooth open */
+  .accordion-content {
+    overflow: hidden;
+    max-height: 0px;
+    opacity: 0;
+    transition: max-height 350ms cubic-bezier(0.22, 1, 0.36, 1), opacity 300ms ease;
+  }
+  details[open] .accordion-content {
+    max-height: 800px; /* sufficiently large */
+    opacity: 1;
   }
 }

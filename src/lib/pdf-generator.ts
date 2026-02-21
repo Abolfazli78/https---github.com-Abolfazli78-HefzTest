@@ -1,5 +1,5 @@
 import jsPDF from "jspdf";
-import type { ExamAttempt, ExamAnswer, Question } from "@/generated/browser";
+import type { ExamAttempt, ExamAnswer, Question } from "@prisma/client/browser";
 
 interface ExamAttemptWithDetails extends ExamAttempt {
   exam: {

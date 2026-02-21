@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Check, Crown, CreditCard, Sparkles } from "lucide-react";
-import { SubscriptionStatus } from "@/generated";
+import { SubscriptionStatus } from "@prisma/client";
 import { PaymentStatus } from "@/components/payment/payment-status";
 
 type PlanTargetRole = "STUDENT" | "TEACHER" | "INSTITUTE";

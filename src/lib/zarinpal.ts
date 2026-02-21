@@ -1,3 +1,4 @@
+import 'server-only';
 import ZarinPal from 'zarinpal-node-sdk';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

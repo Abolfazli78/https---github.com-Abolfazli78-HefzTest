@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
-import { CorrectAnswer } from "@/generated";
+import { CorrectAnswer } from "@prisma/client";
 
 export async function GET(
   request: Request,
@@ -58,6 +58,7 @@ export async function PUT(
       juz,
       topic,
       difficultyLevel,
+      questionKind,
       isActive,
     } = body;
 
@@ -75,6 +76,7 @@ export async function PUT(
         juz: juz ? parseInt(juz) : null,
         topic: topic || null,
         difficultyLevel: difficultyLevel || null,
+        questionKind: questionKind ?? "CONCEPTS",
         isActive,
       },
     });

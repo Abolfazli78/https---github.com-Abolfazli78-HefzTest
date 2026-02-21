@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
-import { CorrectAnswer } from "@/generated";
+import { CorrectAnswer } from "@prisma/client";
 import { updateLeaderboard } from "@/lib/leaderboard";
 
 export async function POST(

@@ -17,8 +17,10 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CorrectAnswer } from "@/generated";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { PrismaClient } from '@prisma/client';
+import { Question, Exam } from '@prisma/client';
+import { QuestionType } from '@prisma/client';
 
 const questionSchema = z.object({
   questionText: z.string().min(1, "متن سوال الزامی است"),
@@ -32,6 +34,7 @@ const questionSchema = z.object({
   juz: z.number().min(1).max(30).optional(),
   topic: z.string().optional(),
   difficultyLevel: z.string().optional(),
+  questionKind: z.nativeEnum(QuestionKind).optional(),
   isActive: z.boolean(),
 });
 
@@ -51,6 +54,7 @@ interface QuestionFormProps {
     juz?: number;
     topic?: string;
     difficultyLevel?: string;
+    questionKind?: QuestionKind;
     isActive: boolean;
   };
 }
@@ -68,8 +72,13 @@ export function QuestionForm({ question }: QuestionFormProps) {
       optionB: "",
       optionC: "",
       optionD: "",
-      correctAnswer: CorrectAnswer.A,
+      correctAnswer: undefined,
       explanation: "",
+      year: undefined,
+      juz: undefined,
+      topic: "",
+      difficultyLevel: "Medium",
+      questionKind: QuestionKind.CONCEPTS,
       isActive: true,
     },
   });
@@ -330,6 +339,28 @@ export function QuestionForm({ question }: QuestionFormProps) {
                         placeholder="مثال: آسان، متوسط، سخت"
                       />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="questionKind"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>نوع سوال</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value || QuestionKind.CONCEPTS}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value={QuestionKind.MEMORIZATION}>حفظ</SelectItem>
+                        <SelectItem value={QuestionKind.CONCEPTS}>مفاهیم</SelectItem>
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}

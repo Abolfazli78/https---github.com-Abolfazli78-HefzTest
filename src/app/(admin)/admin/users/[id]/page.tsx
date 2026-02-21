@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { UserPerformanceChart } from "../../../../../components/admin/user-performance-chart";
-import { SubscriptionStatus } from "@/generated";
+import { SubscriptionStatus } from "@prisma/client";
 
 export default async function UserDetailPage({
   params,

@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
 import { QuestionForm } from "@/components/admin/question-form";
+import { QuestionKind } from "@prisma/client";
 
 export default async function EditQuestionPage({
   params,
@@ -37,6 +38,7 @@ export default async function EditQuestionPage({
     juz: questionData.juz ?? undefined,
     topic: questionData.topic ?? undefined,
     difficultyLevel: questionData.difficultyLevel ?? undefined,
+    questionKind: questionData.questionKind ?? undefined,
     isActive: questionData.isActive,
   };
 

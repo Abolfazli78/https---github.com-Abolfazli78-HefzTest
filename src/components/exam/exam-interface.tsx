@@ -13,7 +13,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { ParsedQuestion } from "@/types"; // Assuming this type exists or will be compatible
+import { ParsedQuestion } from "@/types";
+import { RenderText } from "@/components/RenderText";
+import { ExamNavigation } from "./exam-navigation";
+import { Sidebar } from "@/components/sidebar";
+import { useExamSidebar } from "@/app/(user)/layout";
 
 interface ExamInterfaceProps {
     questions: ParsedQuestion[];
@@ -25,10 +29,9 @@ interface ExamInterfaceProps {
 
 export function ExamInterface({ questions, durationMinutes, answers, onAnswerChange, onSubmit }: ExamInterfaceProps) {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    // answers state lifted up
     const [flagged, setFlagged] = useState<Set<number>>(new Set());
     const [timeLeft, setTimeLeft] = useState(durationMinutes * 60);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const { isSidebarOpen, setIsSidebarOpen } = useExamSidebar();
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -47,14 +50,10 @@ export function ExamInterface({ questions, durationMinutes, answers, onAnswerCha
     const formatTime = (seconds: number) => {
         const m = Math.floor(seconds / 60);
         const s = seconds % 60;
-        return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+        return `${m}:${s.toString().padStart(2, "0")}`;
     };
 
-    const isTimeCritical = timeLeft < 60; // Less than 1 minute
-
-    const handleAnswer = (option: string) => {
-        onAnswerChange(currentQuestionIndex, option);
-    };
+    const isTimeCritical = timeLeft <= 300; // 5 minutes
 
     const toggleFlag = () => {
         setFlagged((prev) => {
@@ -68,81 +67,34 @@ export function ExamInterface({ questions, durationMinutes, answers, onAnswerCha
     const currentQuestion = questions[currentQuestionIndex];
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col md:flex-row overflow-hidden theme-exam">
-            {/* Sticky Sidebar / Navigator */}
-            <aside
-                className={cn(
-                    "fixed inset-y-0 right-0 z-50 w-72 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-l border-slate-200 dark:border-slate-800 transform transition-transform duration-300 md:relative md:translate-x-0",
-                    isSidebarOpen ? "translate-x-0" : "translate-x-full"
-                )}
-            >
-                <div className="h-full flex flex-col p-6">
-                    <div className="flex items-center justify-between mb-8">
-                        <h2 className="font-bold text-lg text-slate-800 dark:text-slate-100">سوالات آزمون</h2>
-                        <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsSidebarOpen(false)}>
-                            <ChevronRight />
-                        </Button>
-                    </div>
-
-                    <div className="grid grid-cols-5 gap-2 overflow-y-auto pb-4">
-                        {questions.map((_, idx) => {
-                            const isAnswered = answers[idx] !== undefined;
-                            const isFlagged = flagged.has(idx);
-                            const isCurrent = currentQuestionIndex === idx;
-
-                            return (
-                                <button
-                                    key={idx}
-                                    onClick={() => {
-                                        setCurrentQuestionIndex(idx);
-                                        setIsSidebarOpen(false);
-                                    }}
-                                    className={cn(
-                                        "w-10 h-10 rounded-lg text-sm font-medium transition-all relative",
-                                        isCurrent
-                                            ? "bg-teal-500 text-white shadow-lg shadow-teal-500/30 scale-110 z-10"
-                                            : isAnswered
-                                                ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
-                                                : "bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700",
-                                        isFlagged && "ring-2 ring-amber-400 ring-offset-1 dark:ring-offset-slate-900"
-                                    )}
-                                >
-                                    {idx + 1}
-                                    {isFlagged && (
-                                        <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-amber-400 rounded-full border border-white dark:border-slate-900" />
-                                    )}
-                                </button>
-                            );
-                        })}
-                    </div>
-
-                    <div className="mt-auto pt-6 border-t border-slate-200 dark:border-slate-800">
-                        <div className="flex items-center justify-between text-sm text-slate-500 mb-2">
-                            <div className="flex items-center gap-1">
-                                <div className="w-3 h-3 rounded-full bg-emerald-100 dark:bg-emerald-900/30 border border-emerald-500" />
-                                <span>پاسخ داده</span>
-                            </div>
-                            <span>{Object.keys(answers).length}</span>
-                        </div>
-                        <div className="flex items-center justify-between text-sm text-slate-500">
-                            <div className="flex items-center gap-1">
-                                <div className="w-3 h-3 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-300" />
-                                <span>باقی‌مانده</span>
-                            </div>
-                            <span>{questions.length - Object.keys(answers).length}</span>
-                        </div>
-                    </div>
-                </div>
-            </aside>
+        <div className="h-full bg-slate-50 dark:bg-slate-950 flex flex-col lg:flex-row theme-exam">
+            {/* Exam Navigation Sidebar */}
+            <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)}>
+                <ExamNavigation
+                    questions={questions}
+                    answers={answers}
+                    flagged={flagged}
+                    currentQuestionIndex={currentQuestionIndex}
+                    onQuestionSelect={(index) => {
+                        setCurrentQuestionIndex(index);
+                        setIsSidebarOpen(false);
+                    }}
+                />
+            </Sidebar>
 
             {/* Main Content */}
-            <main className="flex-1 flex flex-col h-screen relative">
+            <div className="flex-1 flex flex-col">
                 {/* Header */}
-                <header className="h-20 px-6 flex items-center justify-between bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
-                    <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsSidebarOpen(true)}>
-                        <Menu />
+                <header className="h-20 px-4 sm:px-6 lg:px-8 flex items-center justify-between bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800 flex-shrink-0">
+                    <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="lg:hidden"
+                        onClick={() => setIsSidebarOpen(true)}
+                    >
+                        <Menu className="h-5 w-5" />
                     </Button>
-
+                    
                     <div className="flex items-center gap-4 mr-auto">
                         {/* Circular Timer */}
                         <div className={cn(
@@ -159,17 +111,18 @@ export function ExamInterface({ questions, durationMinutes, answers, onAnswerCha
                     </div>
                 </header>
 
-                {/* Question Area */}
-                <div className="flex-1 overflow-y-auto p-6 md:p-12 flex items-center justify-center">
+            {/* Question Area */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 xl:p-12 flex items-start justify-center">
+                <div className="w-full max-w-4xl xl:max-w-5xl">
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={currentQuestionIndex}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
-                            className="w-full max-w-3xl"
+                            className="w-full"
                         >
-                            <Card className="p-8 md:p-10 shadow-xl border-0 bg-white dark:bg-slate-900 rounded-3xl relative overflow-hidden">
+                            <Card className="p-6 sm:p-8 lg:p-10 shadow-xl border-0 bg-white dark:bg-slate-900 rounded-2xl lg:rounded-3xl relative overflow-hidden">
                                 {/* Decorative background blob */}
                                 <div className="absolute -top-20 -left-20 w-64 h-64 bg-teal-500/5 rounded-full blur-3xl" />
 
@@ -192,35 +145,38 @@ export function ExamInterface({ questions, durationMinutes, answers, onAnswerCha
                                         </Button>
                                     </div>
 
-                                    <h3 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-100 leading-relaxed mb-10 text-right font-arabic">
-                                        {currentQuestion.questionText}
+                                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-800 dark:text-slate-100 leading-relaxed mb-6 sm:mb-8 lg:mb-10 text-right break-words">
+                                        <RenderText text={currentQuestion.questionText} />
                                     </h3>
 
-                                    <div className="grid grid-cols-1 gap-4">
-                                        {["A", "B", "C", "D"].map((optKey) => {
+                                    <div className="grid grid-cols-1 gap-3 sm:gap-4">
+                                        {["الف", "ب", "ج", "د"].map((optDisplay, index) => {
+                                            const optKey = String.fromCharCode(65 + index); // Convert index to A, B, C, D
                                             const optionText = currentQuestion[`option${optKey}` as keyof ParsedQuestion] as string;
                                             const isSelected = answers[currentQuestionIndex] === optKey;
 
                                             return (
                                                 <div
                                                     key={optKey}
-                                                    onClick={() => handleAnswer(optKey)}
+                                                    onClick={() => onAnswerChange(currentQuestionIndex, optKey)}
                                                     className={cn(
-                                                        "group relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 flex items-center gap-4",
+                                                        "group relative p-3 sm:p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 flex items-center gap-3 sm:gap-4 w-full",
                                                         isSelected
                                                             ? "border-teal-500 bg-teal-50 dark:bg-teal-900/20"
                                                             : "border-slate-100 dark:border-slate-800 hover:border-teal-200 dark:hover:border-teal-800 bg-white dark:bg-slate-800"
                                                     )}
                                                 >
                                                     <div className={cn(
-                                                        "w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-bold transition-colors",
+                                                        "w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 flex items-center justify-center text-sm font-bold transition-colors flex-shrink-0",
                                                         isSelected
                                                             ? "border-teal-500 bg-teal-500 text-white"
                                                             : "border-slate-300 text-slate-400 group-hover:border-teal-300"
                                                     )}>
-                                                        {optKey}
+                                                        {optDisplay}
                                                     </div>
-                                                    <span className="text-lg text-slate-700 dark:text-slate-200">{optionText}</span>
+                                                    <span className="text-base sm:text-lg text-slate-700 dark:text-slate-200 break-words flex-1">
+                                                        <RenderText text={optionText} />
+                                                    </span>
 
                                                     {isSelected && (
                                                         <motion.div
@@ -239,13 +195,13 @@ export function ExamInterface({ questions, durationMinutes, answers, onAnswerCha
                             </Card>
 
                             {/* Navigation Buttons */}
-                            <div className="flex justify-between mt-8">
+                            <div className="flex flex-col sm:flex-row justify-between gap-4 mt-6 sm:mt-8">
                                 <Button
                                     variant="outline"
                                     size="lg"
                                     onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
                                     disabled={currentQuestionIndex === 0}
-                                    className="text-slate-500"
+                                    className="text-slate-500 w-full sm:w-auto"
                                 >
                                     <ChevronRight className="w-5 h-5 ml-2" />
                                     سوال قبلی
@@ -255,7 +211,7 @@ export function ExamInterface({ questions, durationMinutes, answers, onAnswerCha
                                     <Button
                                         size="lg"
                                         onClick={() => onSubmit(answers)}
-                                        className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 shadow-lg shadow-emerald-500/30"
+                                        className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 shadow-lg shadow-emerald-500/30 w-full sm:w-auto"
                                     >
                                         پایان آزمون
                                         <CheckCircle2 className="w-5 h-5 mr-2" />
@@ -264,7 +220,7 @@ export function ExamInterface({ questions, durationMinutes, answers, onAnswerCha
                                     <Button
                                         size="lg"
                                         onClick={() => setCurrentQuestionIndex(prev => Math.min(questions.length - 1, prev + 1))}
-                                        className="bg-teal-600 hover:bg-teal-700 text-white px-8"
+                                        className="bg-teal-600 hover:bg-teal-700 text-white px-8 w-full sm:w-auto"
                                     >
                                         سوال بعدی
                                         <ChevronLeft className="w-5 h-5 mr-2" />
@@ -274,7 +230,8 @@ export function ExamInterface({ questions, durationMinutes, answers, onAnswerCha
                         </motion.div>
                     </AnimatePresence>
                 </div>
-            </main>
+            </div>
+            </div>
         </div>
     );
 }

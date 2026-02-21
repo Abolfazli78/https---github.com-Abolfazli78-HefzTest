@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
-import { PaymentStatus as PaymentStatusEnum } from "@/generated";
-import type { PaymentStatus } from "@/generated";
-import type { Prisma } from "@/generated/client";
+import { PaymentStatus as PaymentStatusEnum } from "@prisma/client";
+import type { PaymentStatus } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 
 type GroupBy = "day" | "month" | "user" | "role" | "plan";
 

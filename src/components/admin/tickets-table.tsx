@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { TicketStatus } from "@/generated";
+import { TicketStatus } from "@prisma/client";
 import { Eye, Trash2, Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

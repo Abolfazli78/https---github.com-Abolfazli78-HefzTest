@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,39 +8,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Check, Crown, CreditCard, Sparkles } from "lucide-react";
-import { SubscriptionStatus } from "@/generated";
+import { SubscriptionStatus } from "@prisma/client";
 import { PaymentStatus } from "@/components/payment/payment-status";
 import { RolePlans } from "@/components/subscription/role-plans";
 import { useSubscription } from "@/hooks/use-subscription";
+import { useSearchParams } from "next/navigation";
 
-interface SubscriptionPlan {
-  id: string;
-  name: string;
-  description?: string;
-  price: number;
-  duration: number;
-  features?: string;
-  targetRole?: string;
-  maxQuestionsPerMonth?: number;
-  maxStudentsAllowed?: number;
-  maxExamsPerMonth?: number;
-  maxTeachersAllowed?: number;
-  maxClassesAllowed?: number;
-}
-
-interface UserSubscription {
-  id: string;
-  status: SubscriptionStatus;
-  startDate: Date;
-  endDate?: Date;
-  plan: SubscriptionPlan;
-}
-
-export default function SubscriptionsPage() {
+function SubscriptionsContent() {
   const { data: session } = useSession();
   const { subscriptionInfo, upgradeSubscription, loading } = useSubscription();
+  const searchParams = useSearchParams();
+
   const [discountCode, setDiscountCode] = useState("");
   const [discountError, setDiscountError] = useState("");
+
+  const redirectUrl = searchParams.get("redirect_url");
 
   const getStatusLabel = (status: SubscriptionStatus) => {
     const labels = {
@@ -58,12 +40,10 @@ export default function SubscriptionsPage() {
       return;
     }
 
-    // If user has active subscription, use upgrade API
     if (subscriptionInfo?.hasActiveSubscription) {
       try {
         await upgradeSubscription(planId);
         alert("اشتراک شما با موفقیت ارتقاء یافت!");
-        // The hook will automatically refresh the subscription info
       } catch (error) {
         console.error("Upgrade error:", error);
         alert(error instanceof Error ? error.message : "خطا در ارتقاء اشتراک");
@@ -71,7 +51,6 @@ export default function SubscriptionsPage() {
       return;
     }
 
-    // For new subscriptions, use payment API
     try {
       const response = await fetch("/api/payment/request", {
         method: "POST",
@@ -79,13 +58,13 @@ export default function SubscriptionsPage() {
         body: JSON.stringify({
           planId,
           discountCode: discountCode || undefined,
+          redirectUrl: redirectUrl || undefined,
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
         if (data.url) {
-          // Redirect to ZarinPal payment gateway
           window.location.href = data.url;
         } else {
           alert("خطا در ایجاد درخواست پرداخت");
@@ -97,15 +76,6 @@ export default function SubscriptionsPage() {
     } catch (error) {
       console.error("Payment error:", error);
       setDiscountError("خطا در خرید اشتراک");
-    }
-  };
-
-  const handleUpgrade = async (planId: string) => {
-    try {
-      await upgradeSubscription(planId);
-    } catch (error) {
-      console.error("Upgrade error:", error);
-      alert(error instanceof Error ? error.message : "خطا در ارتقاء اشتراک");
     }
   };
 
@@ -132,7 +102,6 @@ export default function SubscriptionsPage() {
 
       <PaymentStatus />
 
-      {/* Current Subscription */}
       {subscriptionInfo?.hasActiveSubscription && (
         <Card className="mb-6">
           <CardHeader>
@@ -144,36 +113,43 @@ export default function SubscriptionsPage() {
           <CardContent>
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
-                <p className="font-black text-lg">{subscriptionInfo.planName || "پلن فعلی"}</p>
+                <p className="font-black text-lg">
+                  {subscriptionInfo.planName || "پلن فعلی"}
+                </p>
                 <p className="text-sm text-muted-foreground">
                   {subscriptionInfo.subscription?.endDate
-                    ? `تا ${new Date(subscriptionInfo.subscription.endDate).toLocaleDateString("fa-IR")}`
+                    ? `تا ${new Date(
+                        subscriptionInfo.subscription.endDate
+                      ).toLocaleDateString("fa-IR")}`
                     : "بدون محدودیت"}
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <Badge variant="default">{getStatusLabel(subscriptionInfo.subscription?.status as SubscriptionStatus || "ACTIVE")}</Badge>
-                <Button variant="outline" size="sm">
-                  ارتقاء
-                </Button>
+                <Badge variant="default">
+                  {getStatusLabel(
+                    subscriptionInfo.subscription?.status ||
+                      "ACTIVE"
+                  )}
+                </Badge>
               </div>
             </div>
           </CardContent>
         </Card>
       )}
 
-      {/* Discount Code */}
       <Card className="mb-6">
         <CardHeader>
           <CardTitle className="text-lg">کد تخفیف</CardTitle>
-          <CardDescription>در صورت داشتن کد تخفیف، اینجا وارد کنید</CardDescription>
+          <CardDescription>
+            در صورت داشتن کد تخفیف، اینجا وارد کنید
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex gap-2">
             <Input
               placeholder="کد تخفیف"
               value={discountCode}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onChange={(e) => {
                 setDiscountCode(e.target.value);
                 setDiscountError("");
               }}
@@ -191,13 +167,14 @@ export default function SubscriptionsPage() {
             </Button>
           </div>
           {discountError && (
-            <p className="text-sm text-red-500 mt-2">{discountError}</p>
+            <p className="text-sm text-red-500 mt-2">
+              {discountError}
+            </p>
           )}
         </CardContent>
       </Card>
 
-      {/* Role-Based Plans */}
-      <RolePlans 
+      <RolePlans
         currentRole={session?.user?.role}
         onUpgrade={handleSubscribe}
         currentSubscription={subscriptionInfo?.subscription}
@@ -206,3 +183,16 @@ export default function SubscriptionsPage() {
   );
 }
 
+export default function SubscriptionsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="container mx-auto py-8 px-4 text-center">
+          <p>در حال بارگذاری...</p>
+        </div>
+      }
+    >
+      <SubscriptionsContent />
+    </Suspense>
+  );
+}

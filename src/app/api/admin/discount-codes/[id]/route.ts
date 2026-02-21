@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { auth } from "@/lib/auth";
-import type { Prisma } from "@/generated/client";
+import type { Prisma } from "@prisma/client";
 
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {

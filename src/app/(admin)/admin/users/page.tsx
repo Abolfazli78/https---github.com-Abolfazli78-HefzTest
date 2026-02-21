@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
-import { Prisma, UserRole } from "@/generated/client";
+import { Prisma, UserRole } from "@prisma/client";
 import { UsersTable } from "@/components/admin/users-table";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 

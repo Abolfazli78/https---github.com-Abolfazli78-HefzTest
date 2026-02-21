@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { UserRole } from "@/generated";
+import { UserRole } from "@prisma/client";
 import {
   DropdownMenu,
   DropdownMenuContent,

@@ -2,8 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated"
+  provider = "prisma-client-js"
 }
 
 model TicketParticipant {
@@ -52,6 +51,11 @@ enum CorrectAnswer {
   B
   C
   D
+}
+
+enum QuestionKind {
+  MEMORIZATION
+  CONCEPTS
 }
 
 enum AttemptStatus {
@@ -118,6 +122,9 @@ model User {
 
   // Exams created by this user (Teacher/Admin)
   createdExams Exam[] @relation("CreatedBy")
+
+  // User-created simulator exams (student/teacher/institute)
+  userExams UserExam[]
 }
 
 enum OtpPurpose {
@@ -174,14 +181,26 @@ model Question {
   explanation   String?       @db.Text
   year          Int?
   juz           Int?
+  surahId       Int?
   topic         String?
   difficultyLevel String?
+  questionKind  QuestionKind  @default(CONCEPTS)
   isActive      Boolean       @default(true)
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 
   exam          Exam?         @relation(fields: [examId], references: [id], onDelete: Cascade)
   examAnswers   ExamAnswer[]
+  officialExamQuestions OfficialExamQuestion[]
+  userExamQuestions     UserExamQuestion[]
+
+  @@index([isActive])
+  @@index([juz])
+  @@index([surahId])
+  @@index([year])
+  @@index([difficultyLevel])
+  @@index([questionKind])
+  @@index([createdAt])
 }
 
 model ExamAttempt {
@@ -290,6 +309,7 @@ model SubscriptionPlan {
   isActive    Boolean  @default(true)
   features    String?  @db.Text // JSON array of features
   targetRole  PlanTargetRole @default(STUDENT)
+  examSimulatorEnabled Boolean @default(false)
   // Quotas
   maxQuestionsPerMonth Int     @default(0)
   maxStudentsAllowed   Int     @default(0)
@@ -404,4 +424,90 @@ model Invitation {
 
   @@index([phone])
   @@index([senderId])
+}
+
+// ----- Official Exam Simulator (isolated from custom exams) -----
+
+model OfficialExam {
+  id              String   @id @default(cuid())
+  title           String
+  year            Int
+  degree          Int
+  juzStart        Int
+  juzEnd          Int
+  durationMinutes Int
+  totalQuestions  Int
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+
+  questions    OfficialExamQuestion[]
+  simulatorAttempts SimulatorAttempt[]
+
+  @@index([isActive])
+  @@index([year])
+}
+
+model OfficialExamQuestion {
+  id              String   @id @default(cuid())
+  officialExamId  String
+  questionId      String
+  order           Int
+  juz             Int
+  questionKind    String   // MEMORIZATION | CONCEPTS (matches QuestionKind)
+
+  officialExam    OfficialExam @relation(fields: [officialExamId], references: [id], onDelete: Cascade)
+  question        Question     @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([officialExamId])
+  @@index([questionId])
+}
+
+model SimulatorAttempt {
+  id              String    @id @default(cuid())
+  userId          String
+  officialExamId  String
+  score           Int       // percentage or points
+  totalQuestions  Int
+  correctAnswers  Int
+  startedAt       DateTime  @default(now())
+  submittedAt     DateTime?
+
+  officialExam    OfficialExam @relation(fields: [officialExamId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([officialExamId])
+}
+
+// ----- User-created simulator exams (dashboard) -----
+
+model UserExam {
+  id              String   @id @default(cuid())
+  userId          String
+  title           String
+  juzStart        Int
+  juzEnd          Int
+  year            Int?     // optional filter
+  durationMinutes Int
+  totalQuestions  Int
+  createdAt       DateTime @default(now())
+
+  user     User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questions UserExamQuestion[]
+
+  @@index([userId])
+}
+
+model UserExamQuestion {
+  id         String   @id @default(cuid())
+  userExamId String
+  questionId String
+  order      Int
+  juz        Int
+  questionKind String // MEMORIZATION | CONCEPTS
+
+  userExam  UserExam  @relation(fields: [userExamId], references: [id], onDelete: Cascade)
+  question  Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([userExamId])
+  @@index([questionId])
 }

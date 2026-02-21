@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+export const runtime = 'nodejs';
 import { db } from '@/lib/db';
 import { zarinpal } from '@/lib/zarinpal';
 
@@ -7,11 +8,13 @@ export async function GET(req: Request) {
     const authority = searchParams.get('Authority');
     const status = searchParams.get('Status');
     const paymentId = searchParams.get('paymentId');
+    const redirectUrl = searchParams.get('redirect_url');
 
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
     if (status !== 'OK') {
-        return NextResponse.redirect(`${baseUrl}/subscriptions?payment=failed&status=${status}`);
+        const failedUrl = redirectUrl ? `${baseUrl}${redirectUrl}?payment=failed&status=${status}` : `${baseUrl}/subscriptions?payment=failed&status=${status}`;
+        return NextResponse.redirect(failedUrl);
     }
 
     if (!authority) {
@@ -105,7 +108,8 @@ export async function GET(req: Request) {
                 }
             });
 
-            return NextResponse.redirect(`${baseUrl}/subscriptions?payment=success&refId=${response.data.ref_id}`);
+            const successUrl = redirectUrl || `${baseUrl}/subscriptions`;
+            return NextResponse.redirect(`${successUrl}?payment=success&refId=${response.data.ref_id}`);
         } else {
             return NextResponse.redirect(`${baseUrl}/subscriptions?payment=failed&code=${response.data.code}`);
         }
