@@ -45,6 +45,12 @@ export function Navbar() {
               </span>
             </Link>
 
+            <div className="hidden md:flex items-center gap-8">
+              <NavLink href="/about">درباره ما</NavLink>
+              <NavLink href="/features">امکانات</NavLink>
+              <NavLink href="/pricing">قیمت‌ها</NavLink>
+            </div>
+
             {session && (
               <div className="hidden md:flex items-center gap-8">
                 <NavLink href="/dashboard">داشبورد</NavLink>

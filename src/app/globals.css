@@ -268,4 +268,53 @@
   .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #64748b;
   }
+  /* Drop cap (RTL-friendly) */
+  .drop-cap:first-letter {
+    float: right;
+    font-size: 3.25rem;
+    line-height: 1;
+    padding-left: 0.15rem;
+    font-weight: 800;
+  }
+
+  /* Vertical accent line */
+  .accent-line {
+    position: relative;
+  }
+  .accent-line::before {
+    content: "";
+    position: absolute;
+    right: -1.25rem;
+    top: 0.25rem;
+    bottom: 0.25rem;
+    width: 3px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #10b981, #f59e0b);
+    opacity: 0.6;
+  }
+
+  /* Underline animation */
+  @keyframes underline {
+    from { transform: scaleX(0); opacity: 0.4; }
+    to { transform: scaleX(1); opacity: 1; }
+  }
+
+  /* Soft float particles */
+  @keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0.2; }
+    50% { transform: translateY(-8px) translateX(4px); opacity: 0.35; }
+    100% { transform: translateY(0) translateX(0); opacity: 0.2; }
+  }
+
+  /* Accordion smooth open */
+  .accordion-content {
+    overflow: hidden;
+    max-height: 0px;
+    opacity: 0;
+    transition: max-height 350ms cubic-bezier(0.22, 1, 0.36, 1), opacity 300ms ease;
+  }
+  details[open] .accordion-content {
+    max-height: 800px; /* sufficiently large */
+    opacity: 1;
+  }
 }

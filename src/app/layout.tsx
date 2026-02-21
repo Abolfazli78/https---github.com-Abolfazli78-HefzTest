@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Providers } from "@/components/providers/session-provider";
 import { Navbar } from "@/components/common/navbar";
 import { InvitationBanner } from "@/components/organization/invitation-banner";
@@ -8,7 +8,12 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "سیستم تست حفظ - Online Memorization Test",
   description: "سیستم پیشرفته تست حفظ با پشتیبانی کامل از زبان فارسی و عربی",
-  viewport: "width=device-width, initial-scale=1",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://hefztest.ir"),
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
