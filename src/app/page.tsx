@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { HefzButton } from "@/components/ui/hefz-button";
 import {
   BookOpen,
@@ -68,7 +69,7 @@ export default function HomePage() {
           >
             <div className="grid md:grid-cols-2 gap-10 items-start">
               <div className="text-center md:text-right mb-12">
-                <h1 className="text-[3rem] font-extrabold tracking-tight mb-4 bg-gradient-to-r from-primary via-secondary to-primary dark:from-primary dark:via-secondary/80 dark:to-white bg-clip-text text-transparent leading-[1.5] max-w-2xl mx-auto md:mx-0">
+                <h1 className="text-[3rem] font-extrabold tracking-tight mb-4 text-primary opacity-100 leading-[1.5] max-w-2xl mx-auto md:mx-0">
                   سنجش&#160;محفوظات و موفقیت در آزمون های رسمی حفظ قرآن
                 </h1>
                 <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-12 md:mb-14 max-w-2xl mx-auto md:ml-auto leading-relaxed">
@@ -248,7 +249,7 @@ export default function HomePage() {
             <IconFeature icon={<Award className="h-7 w-7 text-primary" />} title="گزارش‌های پیشرفته" desc="نمودارها و آمار دقیق برای تصمیم‌گیری بهتر." />
             <IconFeature icon={<Shield className="h-7 w-7 text-primary" />} title="بانک سوالات استاندارد" desc="دسترسی به هزاران سوال معتبر و به‌روز." />
             <IconFeature icon={<Users className="h-7 w-7 text-primary" />} title="رده‌بندی و رقابت" desc="جدول برترین‌ها و رقابت سالم بین کاربران." />
-            <IconFeature icon={<CheckCircle className="h-7 w-7 text-primary" />} title="تصحیح خودکار" desc="نتیجه آنی به همراه گزارش دقیق خطاها." />
+            <IconFeature icon={<CheckCircle className="h-7 w-7 text-accent" />} title="تصحیح خودکار" desc="نتیجه آنی به همراه گزارش دقیق خطاها." />
             <IconFeature icon={<Star className="h-7 w-7 text-primary" />} title="امنیت و پشتیبان‌گیری" desc="نگهداری امن داده‌ها و نسخه‌های پشتیبان." />
             <IconFeature icon={<GraduationCap className="h-7 w-7 text-primary" />} title="یکپارچگی آموزشی" desc="هماهنگی با فرایندهای آموزشی موسسات." />
           </div>
@@ -341,15 +342,8 @@ export default function HomePage() {
         <div className="container mx-auto px-4 grid gap-10 md:grid-cols-4">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              {/* لوگوی جدید SVG اصلاح شده برای Next.js */}
-              <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="100" height="100" rx="24" fill="#4F46E5" />
-                <path d="M30 70V35C30 32.2386 32.2386 30 35 30H65C67.7614 30 70 32.2386 70 35V70" stroke="white" strokeWidth="6" strokeLinecap="round"/>
-                <path d="M30 60C35 55 65 55 70 60" stroke="white" strokeWidth="4" strokeLinecap="round"/>
-                <circle cx="75" cy="25" r="15" fill="#10B981" />
-                <path d="M68 25L73 30L82 20" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <span className="text-xl font-bold text-white">تست حفظ</span>
+              <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-10 w-auto" />
+              <span className="sr-only">تست حفظ</span>
             </div>
             <p className="text-slate-400 text-sm">نرم‌افزاری سبک، سریع و به‌شدت قدرتمند برای سنجش و ارزیابی هوشمند.</p>
           </div>

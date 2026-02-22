@@ -396,7 +396,7 @@ export function CustomExamBuilder({ role, assignableStudents, demoMode = false, 
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
                       currentStep === step
-                        ? "bg-blue-600 text-white"
+                        ? "bg-accent text-accent-foreground"
                         : currentStep > step
                           ? "bg-green-600 text-white"
                           : "bg-gray-300 text-gray-500"
@@ -407,7 +407,7 @@ export function CustomExamBuilder({ role, assignableStudents, demoMode = false, 
                   <span
                     className={`mr-2 text-sm font-medium ${
                       currentStep === step
-                        ? "text-blue-600"
+                        ? "text-accent"
                         : currentStep > step
                           ? "text-green-600"
                           : "text-gray-500"
@@ -520,8 +520,8 @@ export function CustomExamBuilder({ role, assignableStudents, demoMode = false, 
                         </div>
                       </div>
                     </div>
-                    <div className="p-3 bg-blue-50 rounded-lg">
-                      <p className="text-sm text-blue-800">
+                    <div className="p-3 bg-primary/10 rounded-lg">
+                      <p className="text-sm text-primary">
                         <strong>محدوده انتخاب شده:</strong> از سال {yearRange.fromYear} تا سال{" "}
                         {yearRange.toYear}
                       </p>
@@ -545,7 +545,7 @@ export function CustomExamBuilder({ role, assignableStudents, demoMode = false, 
               className={`flex items-center space-x-3 space-x-reverse p-4 border rounded-lg
                 ${
                   isMedium
-                    ? "cursor-pointer hover:bg-gray-50 border-blue-500"
+                    ? "cursor-pointer hover:bg-gray-50 border-primary"
                     : "opacity-40 cursor-not-allowed bg-gray-100"
                 }`}
               onClick={() => {
@@ -557,7 +557,7 @@ export function CustomExamBuilder({ role, assignableStudents, demoMode = false, 
               <div
                 className={`w-4 h-4 rounded-full border-2 ${
                   isSelected
-                    ? "bg-blue-600 border-blue-600"
+                    ? "bg-accent border-accent"
                     : "border-gray-300"
                 }`}
               >
@@ -575,8 +575,8 @@ export function CustomExamBuilder({ role, assignableStudents, demoMode = false, 
       </div>
     </div>
 
-    <div className="p-3 bg-blue-50 rounded-lg">
-      <p className="text-sm text-blue-800">
+    <div className="p-3 bg-primary/10 rounded-lg">
+      <p className="text-sm text-primary">
         <strong>
           موقتا فقط سطح متوسط در دسترس است. سطح انتخاب شده:
         </strong>{" "}

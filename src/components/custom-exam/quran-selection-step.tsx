@@ -247,7 +247,7 @@ export function QuranSelectionStep({
             <div
               className={`w-4 h-4 rounded-full border-2 ${
                 state.surahSelectionMode === "range"
-                  ? "bg-blue-600 border-blue-600"
+                  ? "bg-accent border-accent"
                   : "border-gray-300"
               }`}
             />
@@ -260,7 +260,7 @@ export function QuranSelectionStep({
             <div
               className={`w-4 h-4 rounded-full border-2 ${
                 state.surahSelectionMode === "multiple"
-                  ? "bg-blue-600 border-blue-600"
+                  ? "bg-accent border-accent"
                   : "border-gray-300"
               }`}
             />
@@ -406,7 +406,7 @@ export function QuranSelectionStep({
             <div
               className={`w-4 h-4 rounded-full border-2 ${
                 state.juzSelectionMode === "range"
-                  ? "bg-blue-600 border-blue-600"
+                  ? "bg-accent border-accent"
                   : "border-gray-300"
               }`}
             />
@@ -419,7 +419,7 @@ export function QuranSelectionStep({
             <div
               className={`w-4 h-4 rounded-full border-2 ${
                 state.juzSelectionMode === "multiple"
-                  ? "bg-blue-600 border-blue-600"
+                  ? "bg-accent border-accent"
                   : "border-gray-300"
               }`}
             />
@@ -535,8 +535,8 @@ export function QuranSelectionStep({
       )}
 
       {/* Summary */}
-      <div className="p-3 bg-blue-50 rounded-lg">
-        <p className="text-sm text-blue-800">
+      <div className="p-3 bg-primary/10 rounded-lg">
+        <p className="text-sm text-primary">
           <strong>خلاصه انتخاب:</strong>
           {hasAny ? (
             <span className="block mt-1">

@@ -147,7 +147,7 @@ export function UsersTable({ users: initialUsers }: UsersTableProps) {
     const roleConfig = {
       ADMIN: { label: "مدیر", variant: "default" as const, color: "bg-red-100 text-red-700 border-red-200" },
       INSTITUTE: { label: "موسسه", variant: "secondary" as const, color: "bg-purple-100 text-purple-700 border-purple-200" },
-      TEACHER: { label: "معلم", variant: "secondary" as const, color: "bg-blue-100 text-blue-700 border-blue-200" },
+      TEACHER: { label: "معلم", variant: "secondary" as const, color: "bg-primary/10 text-primary border-primary/20" },
       STUDENT: { label: "دانش‌آموز", variant: "secondary" as const, color: "bg-emerald-100 text-emerald-700 border-emerald-200" },
     };
     const config = roleConfig[role];

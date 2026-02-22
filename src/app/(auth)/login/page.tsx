@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { PhoneInputSimple } from "@/components/ui/phone-input-simple";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -96,7 +97,10 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-4">
       <Card className="w-full max-w-md shadow-lg">
-        <CardHeader className="space-y-1 text-center">
+        <CardHeader className="space-y-4 text-center">
+          <div className="flex justify-center">
+            <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-12 w-auto" priority />
+          </div>
           <CardTitle className="text-3xl font-bold">ورود</CardTitle>
           <CardDescription className="text-base">
             اطلاعات خود را وارد کنید
@@ -180,12 +184,12 @@ export default function LoginPage() {
 
             <div className="text-center text-sm">
               <span className="text-muted-foreground">حساب کاربری ندارید؟ </span>
-              <Link href="/register" className="text-primary hover:underline font-medium">
+              <Link href="/register" className="text-accent hover:underline font-medium">
                 ایجاد حساب جدید
               </Link>
             </div>
             <div className="text-center text-sm">
-              <Link href="/forgot" className="text-primary hover:underline font-medium">
+              <Link href="/forgot" className="text-accent hover:underline font-medium">
                 فراموشی رمز عبور
               </Link>
             </div>

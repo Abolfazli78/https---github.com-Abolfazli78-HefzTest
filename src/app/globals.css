@@ -25,6 +25,8 @@
   --color-foreground: var(--foreground);
   --font-arabic: var(--font-arabic);
   --font-persian: 'Vazirmatn', var(--font-persian);
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
 
   /* Sidebar Colors */
   --color-sidebar-ring: var(--sidebar-ring);
@@ -74,42 +76,41 @@
 :root {
   --radius: 0.625rem;
 
-  /* Default Theme (Light) */
-  --background: oklch(0.985 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --background: #F8FAFC;
+  --foreground: #0D3D38;
+  --card: #ffffff;
+  --card-foreground: #0D3D38;
+  --popover: #ffffff;
+  --popover-foreground: #0D3D38;
+  --primary: #0D3D38;
+  --primary-foreground: #ffffff;
+  --secondary: #f3f4f6;
+  --secondary-foreground: #0D3D38;
+  --muted: #eef2f7;
+  --muted-foreground: #64748b;
+  --accent: #10B981;
+  --accent-foreground: #ffffff;
+  --highlight: #D9A441;
+  --highlight-foreground: #0D3D38;
+  --destructive: #dc3545;
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: #0D3D38;
 
-  /* Charts */
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --chart-1: #0D3D38;
+  --chart-2: #10B981;
+  --chart-3: #D9A441;
+  --chart-4: #64748b;
+  --chart-5: #334155;
 
-  /* Sidebar */
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0D3D38;
+  --sidebar-primary: #0D3D38;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f3f4f6;
+  --sidebar-accent-foreground: #0D3D38;
+  --sidebar-border: #e5e7eb;
+  --sidebar-ring: #0D3D38;
 }
 
 /* Admin Theme (Indigo/Slate) */
@@ -194,6 +195,7 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+
 @layer base {
   html {
     font-family: 'Vazirmatn', sans-serif;
@@ -236,7 +238,41 @@
     font-family: 'QuranFont', serif;
     font-size: 1.5rem;
     line-height: 2.5;
-    direction: rtl;
+    letter-spacing: 0.05em;
+    font-weight: 400;
+  }
+
+  /* Hefz Test Design System Utilities */
+  .btn-primary {
+    @apply bg-accent text-accent-foreground px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
+  }
+  
+  .btn-accent {
+    @apply bg-accent text-accent-foreground px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
+  }
+  
+  .btn-ghost {
+    @apply bg-transparent text-primary border border-primary px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:bg-primary hover:text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+  }
+  
+  .card-hefz {
+    @apply bg-card border border-border rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+  
+  .heading-primary {
+    @apply text-3xl font-bold text-primary mb-4;
+  }
+  
+  .heading-secondary {
+    @apply text-xl font-semibold text-primary mb-2;
+  }
+  
+  .text-body {
+    @apply text-base text-foreground leading-relaxed;
+  }
+  
+  .text-muted {
+    @apply text-sm text-muted-foreground;
   }
 
   /* Custom scrollbar styles */
@@ -245,16 +281,16 @@
   }
   
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: #f1f5f9;
+    background: #f8f9fa;
   }
   
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: #dee2e6;
     border-radius: 4px;
   }
   
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+    background: #adb5bd;
   }
   
   .dark .custom-scrollbar::-webkit-scrollbar-track {
@@ -268,53 +304,19 @@
   .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #64748b;
   }
-  /* Drop cap (RTL-friendly) */
-  .drop-cap:first-letter {
-    float: right;
-    font-size: 3.25rem;
-    line-height: 1;
-    padding-left: 0.15rem;
-    font-weight: 800;
-  }
+}
 
-  /* Vertical accent line */
-  .accent-line {
-    position: relative;
+/* Marquee Animation for Testimonials */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
   }
-  .accent-line::before {
-    content: "";
-    position: absolute;
-    right: -1.25rem;
-    top: 0.25rem;
-    bottom: 0.25rem;
-    width: 3px;
-    border-radius: 999px;
-    background: linear-gradient(180deg, #10b981, #f59e0b);
-    opacity: 0.6;
+  100% {
+    transform: translateX(-50%);
   }
+}
 
-  /* Underline animation */
-  @keyframes underline {
-    from { transform: scaleX(0); opacity: 0.4; }
-    to { transform: scaleX(1); opacity: 1; }
-  }
-
-  /* Soft float particles */
-  @keyframes float {
-    0% { transform: translateY(0) translateX(0); opacity: 0.2; }
-    50% { transform: translateY(-8px) translateX(4px); opacity: 0.35; }
-    100% { transform: translateY(0) translateX(0); opacity: 0.2; }
-  }
-
-  /* Accordion smooth open */
-  .accordion-content {
-    overflow: hidden;
-    max-height: 0px;
-    opacity: 0;
-    transition: max-height 350ms cubic-bezier(0.22, 1, 0.36, 1), opacity 300ms ease;
-  }
-  details[open] .accordion-content {
-    max-height: 800px; /* sufficiently large */
-    opacity: 1;
-  }
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+  width: fit-content;
 }

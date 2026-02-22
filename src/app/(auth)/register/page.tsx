@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { User as UserIcon, GraduationCap, School, Mail, Lock, User, Phone, Shield, CheckCircle, ArrowLeft, Sparkles, Zap } from "lucide-react";
+import Image from "next/image";
 import { PhoneInputSimple } from "@/components/ui/phone-input-simple";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -199,9 +200,9 @@ export default function RegisterPage() {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                className="mx-auto w-20 h-20 bg-gradient-to-br from-slate-700 to-gray-800 rounded-2xl flex items-center justify-center shadow-lg"
+                className="mx-auto w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-lg border border-slate-200"
               >
-                <Sparkles className="w-10 h-10 text-white" />
+                <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-12 w-auto" priority />
               </motion.div>
               
               <div className="space-y-2">

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -112,14 +113,12 @@ export function AdminSidebar() {
             <div className="hidden md:flex h-screen w-64 flex-col border-l border-white/10 bg-sidebar/80 backdrop-blur-xl text-sidebar-foreground shadow-2xl relative overflow-hidden">
             {/* Glassmorphism Background Effects */}
             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
 
             <div className="flex h-20 items-center border-b border-white/10 px-6 relative z-10">
                 <Link href="/" className="flex items-center gap-3 font-bold text-xl tracking-tight">
-                    <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
-                        A
-                    </div>
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
+                    <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-8 w-auto" />
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
                         پنل مدیریت
                     </span>
                 </Link>
@@ -136,16 +135,16 @@ export function AdminSidebar() {
                                 className={cn(
                                     "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 group relative overflow-hidden",
                                     isActive
-                                        ? "bg-gradient-to-r from-indigo-500/10 to-purple-500/10 text-indigo-400 shadow-sm border border-indigo-500/20"
+                                        ? "bg-gradient-to-r from-accent/10 to-accent/5 text-accent shadow-sm border border-accent/20"
                                         : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
                                 )}
                             >
                                 {isActive && (
-                                    <div className="absolute left-0 top-0 h-full w-1 bg-indigo-500 rounded-r-full" />
+                                    <div className="absolute left-0 top-0 h-full w-1 bg-accent rounded-r-full" />
                                 )}
                                 <item.icon className={cn(
                                     "h-5 w-5 transition-transform group-hover:scale-110",
-                                    isActive ? "text-indigo-500" : "text-slate-500 group-hover:text-slate-300"
+                                    isActive ? "text-accent" : "text-slate-500 group-hover:text-slate-300"
                                 )} />
                                 {item.title}
                             </Link>
@@ -173,9 +172,7 @@ export function AdminSidebar() {
                     <div className="absolute inset-y-0 right-0 w-72 bg-sidebar/90 backdrop-blur-xl text-sidebar-foreground border-l border-white/10 shadow-2xl flex flex-col">
                         <div className="flex h-16 items-center justify-between border-b border-white/10 px-4">
                             <Link href="/" className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
-                                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white">
-                                    A
-                                </div>
+                                <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-8 w-auto" />
                                 <span className="font-bold">پنل مدیریت</span>
                             </Link>
                             <button
@@ -199,16 +196,16 @@ export function AdminSidebar() {
                                             className={cn(
                                                 "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 group relative overflow-hidden",
                                                 isActive
-                                                    ? "bg-gradient-to-r from-indigo-500/10 to-purple-500/10 text-indigo-400 border border-indigo-500/20"
+                                                    ? "bg-gradient-to-r from-accent/10 to-accent/5 text-accent border border-accent/20"
                                                     : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
                                             )}
                                         >
                                             {isActive && (
-                                                <div className="absolute left-0 top-0 h-full w-1 bg-indigo-500 rounded-r-full" />
+                                                <div className="absolute left-0 top-0 h-full w-1 bg-accent rounded-r-full" />
                                             )}
                                             <item.icon className={cn(
                                                 "h-5 w-5",
-                                                isActive ? "text-indigo-500" : "text-slate-500 group-hover:text-slate-300"
+                                                isActive ? "text-accent" : "text-slate-500 group-hover:text-slate-300"
                                             )} />
                                             {item.title}
                                         </Link>

@@ -64,13 +64,13 @@ export default function HomePageClient() {
       <section className="relative pt-20 pb-32 md:pt-32 md:pb-48">
         {/* Background Blobs */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full -z-10">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[120px] animate-pulse" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] animate-pulse" />
           <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-emerald-400/10 rounded-full blur-[120px] animate-pulse delay-700" />
           <div
             className="absolute inset-0 opacity-20 blur-3xl -z-10"
             style={{
               background:
-                "radial-gradient(60% 60% at 70% 20%, rgba(79,70,229,0.25), transparent 60%), radial-gradient(50% 50% at 20% 80%, rgba(16,185,129,0.18), transparent 60%)",
+                "radial-gradient(60% 60% at 70% 20%, rgba(13,61,56,0.25), transparent 60%), radial-gradient(50% 50% at 20% 80%, rgba(16,185,129,0.18), transparent 60%)",
             }}
           />
         </div>
@@ -83,11 +83,11 @@ export default function HomePageClient() {
               <div className="text-center md:text-right">
                 <Badge
                   variant="outline"
-                  className="mb-6 px-4 py-1 border-indigo-200 bg-indigo-50 text-indigo-700 dark:bg-indigo-900/20 dark:text-indigo-300 dark:border-indigo-800"
+                  className="mb-6 px-4 py-1 border-primary/20 bg-primary/10 text-primary dark:bg-primary/15 dark:text-primary dark:border-primary/30"
                 >
                   ✨ پلتفرم آزمون آنلاین حفظ و ترجمه قرآن کریم
                 </Badge>
-                <h2 className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-6 bg-gradient-to-r from-indigo-700 via-indigo-500 to-purple-500 dark:from-indigo-300 dark:via-indigo-200 dark:to-white bg-clip-text text-transparent leading-[1.1]">
+                <h2 className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-6" style={{ color: '#0D3D38' }}>
                   سنجش محفوظات و موفقیت در آزمون های رسمی حفظ قرآن
                 </h2>
                 <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 max-w-2xl md:ml-auto leading-relaxed">
@@ -97,7 +97,7 @@ export default function HomePageClient() {
                   <Link href={isLoggedIn ? "/dashboard" : "/register"}>
                     <Button
                       size="lg"
-                      className="relative overflow-hidden text-lg px-8 h-12 rounded-full bg-indigo-600 hover:bg-indigo-700 shadow-xl shadow-indigo-500/20 transition-all hover:scale-105 ring-1 ring-white/20 shadow-inner"
+                      className="relative overflow-hidden text-lg px-8 h-12 rounded-full bg-highlight hover:bg-[#C18C35] text-highlight-foreground shadow-xl shadow-primary/20 transition-all hover:scale-105 ring-1 ring-white/20 shadow-inner"
                     >
                       {isLoggedIn ? "ورود به داشبورد" : "همین حالا رایگان شروع کنید"}
                       {!isLoggedIn && (
@@ -210,7 +210,7 @@ export default function HomePageClient() {
       {/* Role-based Features (Bento) */}
       <section className="relative py-24 bg-slate-50 dark:bg-slate-900/50">
         <div className="pointer-events-none absolute -z-10 inset-0">
-          <div className="absolute -top-10 left-10 w-64 h-64 bg-indigo-400/10 blur-3xl rounded-full" />
+          <div className="absolute -top-10 left-10 w-64 h-64 bg-primary/10 blur-3xl rounded-full" />
           <div className="absolute bottom-0 right-20 w-72 h-72 bg-purple-400/10 blur-3xl rounded-full" />
         </div>
         <div className="container mx-auto px-4">
@@ -229,7 +229,7 @@ export default function HomePageClient() {
               <RoleCard icon={<TrendingUp className="h-10 w-10 text-emerald-600" />} title="دانش‌آموزان" points={["نمودار پیشرفت", "گزارش نمرات", "محدودیت سوالات"]} />
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
-              <RoleCard icon={<PenTool className="h-10 w-10 text-blue-600" />} title="معلمان" points={["طراحی آزمون هوشمند", "مدیریت کلاس", "گزارشات گروهی"]} />
+              <RoleCard icon={<PenTool className="h-10 w-10 text-primary" />} title="معلمان" points={["طراحی آزمون هوشمند", "مدیریت کلاس", "گزارشات گروهی"]} />
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
               <RoleCard icon={<Building className="h-10 w-10 text-purple-600" />} title="موسسات" points={["برندینگ اختصاصی", "مدیریت اساتید", "پنل مانیتورینگ"]} />
@@ -246,14 +246,14 @@ export default function HomePageClient() {
             <p className="text-slate-500">ترکیبی از سادگی استفاده و قدرت حرفه‌ای</p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <IconFeature icon={<BookOpen className="h-6 w-6 text-indigo-700" />} title="آزمون‌های شخصی‌سازی شده" desc="ایجاد آزمون بر اساس جزء، سوره یا صفحات دلخواه." />
-            <IconFeature icon={<Clock className="h-6 w-6 text-indigo-700" />} title="تحلیل زمان پاسخ" desc="اندازه‌گیری و بهینه‌سازی زمان پاسخگویی." />
-            <IconFeature icon={<Award className="h-6 w-6 text-indigo-700" />} title="گزارش‌های پیشرفته" desc="نمودارها و آمار دقیق برای تصمیم‌گیری بهتر." />
-            <IconFeature icon={<Shield className="h-6 w-6 text-indigo-700" />} title="بانک سوالات استاندارد" desc="دسترسی به هزاران سوال معتبر و به‌روز." />
-            <IconFeature icon={<Users className="h-6 w-6 text-indigo-700" />} title="رده‌بندی و رقابت" desc="جدول برترین‌ها و رقابت سالم بین کاربران." />
-            <IconFeature icon={<CheckCircle className="h-6 w-6 text-indigo-700" />} title="تصحیح خودکار" desc="نتیجه آنی به همراه گزارش دقیق خطاها." />
-            <IconFeature icon={<Star className="h-6 w-6 text-indigo-700" />} title="امنیت و پشتیبان‌گیری" desc="نگهداری امن داده‌ها و نسخه‌های پشتیبان." />
-            <IconFeature icon={<GraduationCap className="h-6 w-6 text-indigo-700" />} title="یکپارچگی آموزشی" desc="هماهنگی با فرایندهای آموزشی موسسات." />
+            <IconFeature icon={<BookOpen className="h-6 w-6 text-primary" />} title="آزمون‌های شخصی‌سازی شده" desc="ایجاد آزمون بر اساس جزء، سوره یا صفحات دلخواه." />
+            <IconFeature icon={<Clock className="h-6 w-6 text-primary" />} title="تحلیل زمان پاسخ" desc="اندازه‌گیری و بهینه‌سازی زمان پاسخگویی." />
+            <IconFeature icon={<Award className="h-6 w-6 text-primary" />} title="گزارش‌های پیشرفته" desc="نمودارها و آمار دقیق برای تصمیم‌گیری بهتر." />
+            <IconFeature icon={<Shield className="h-6 w-6 text-primary" />} title="بانک سوالات استاندارد" desc="دسترسی به هزاران سوال معتبر و به‌روز." />
+            <IconFeature icon={<Users className="h-6 w-6 text-primary" />} title="رده‌بندی و رقابت" desc="جدول برترین‌ها و رقابت سالم بین کاربران." />
+            <IconFeature icon={<CheckCircle className="h-6 w-6 text-accent" />} title="تصحیح خودکار" desc="نتیجه آنی به همراه گزارش دقیق خطاها." />
+            <IconFeature icon={<Star className="h-6 w-6 text-primary" />} title="امنیت و پشتیبان‌گیری" desc="نگهداری امن داده‌ها و نسخه‌های پشتیبان." />
+            <IconFeature icon={<GraduationCap className="h-6 w-6 text-primary" />} title="یکپارچگی آموزشی" desc="هماهنگی با فرایندهای آموزشی موسسات." />
           </div>
         </div>
       </section>
@@ -302,7 +302,7 @@ export default function HomePageClient() {
       {/* Pricing Section */}
       <section className="relative py-20">
         <div className="pointer-events-none absolute -z-10 inset-0">
-          <div className="absolute -top-10 right-10 w-64 h-64 bg-indigo-400/10 blur-3xl rounded-full" />
+          <div className="absolute -top-10 right-10 w-64 h-64 bg-primary/10 blur-3xl rounded-full" />
           <div className="absolute bottom-0 left-20 w-72 h-72 bg-emerald-400/10 blur-3xl rounded-full" />
           <div
             className="absolute inset-0 opacity-20 blur-3xl -z-10"
@@ -383,7 +383,7 @@ export default function HomePageClient() {
         <div className="container mx-auto px-4 grid gap-10 md:grid-cols-4">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="h-8 w-8 rounded-lg bg-indigo-600 flex items-center justify-center">
+              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
                 <span className="text-white font-bold text-lg">آ</span>
               </div>
               <span className="text-xl font-bold">تست حفظ</span>
@@ -478,7 +478,7 @@ function DashboardPreview() {
               {["مهدی رضایی", "فاطمه امینی", "زهرا احمدی", "حسین نظری"].map((n, i) => (
                 <li key={i} className="flex items-center justify-between">
                   <span className="flex items-center gap-2">
-                    <span className="h-6 w-6 rounded-full bg-indigo-500/20" />
+                    <span className="h-6 w-6 rounded-full bg-primary/20" />
                     {n}
                   </span>
                   <span className="text-xs text-slate-500">+{(i + 1) * 3} امتیاز</span>
@@ -489,7 +489,7 @@ function DashboardPreview() {
           <div className="md:col-span-3 rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white/90 dark:bg-white/5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-indigo-600" />
+                <BookOpen className="h-5 w-5 text-primary" />
                 <h4 className="font-bold">آخرین آزمون: جزء ۲۷</h4>
               </div>
               <Button size="sm" className="rounded-full">
@@ -541,7 +541,7 @@ function RoleCard({ icon, title, points, className }: { icon: React.ReactNode; t
       style={{ backgroundImage: `radial-gradient(400px circle at ${spot.x}% ${spot.y}%, rgba(99,102,241,0.12), transparent 40%)` }}
     >
       <div className="flex items-center gap-3 mb-4">
-        <div className="h-10 w-10 rounded-xl bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300 flex items-center justify-center">{icon}</div>
+        <div className="h-10 w-10 rounded-xl bg-primary/10 text-primary dark:bg-primary/15 dark:text-primary flex items-center justify-center">{icon}</div>
         <h3 className="text-xl font-bold">{title}</h3>
       </div>
       <ul className="space-y-2 text-slate-600 dark:text-slate-400 text-sm">
@@ -609,7 +609,7 @@ function PriceCard({ title, audience, price, features, highlight, cta }: { title
           </li>
         ))}
       </ul>
-      <Button className={`rounded-full ${highlight ? "bg-indigo-600 hover:bg-indigo-700" : "bg-slate-900 hover:bg-slate-800"} w-full shadow-inner`}>
+      <Button className={`rounded-full ${highlight ? "bg-highlight hover:bg-[#C18C35] text-highlight-foreground" : "bg-slate-900 hover:bg-slate-800"} w-full shadow-inner`}>
         {cta}
       </Button>
     </div>
@@ -621,7 +621,7 @@ function PriceCard({ title, audience, price, features, highlight, cta }: { title
 
   return (
     <div className="relative rounded-2xl p-[1px] bg-gradient-to-r from-indigo-500 via-violet-500 to-indigo-500 shadow-[0_0_0_1px_rgba(99,102,241,.4),0_0_35px_8px_rgba(99,102,241,.15)] overflow-hidden">
-      <span className="absolute -top-3 right-4 px-3 py-1 text-xs rounded-full bg-indigo-600 text-white">محبوب</span>
+      <span className="absolute -top-3 right-4 px-3 py-1 text-xs rounded-full bg-highlight text-highlight-foreground">محبوب</span>
       <motion.div
         aria-hidden
         className="pointer-events-none absolute inset-0"
@@ -659,7 +659,7 @@ function TestCardPreview() {
     <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 bg-white/80 dark:bg-white/10">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <BookOpen className="h-5 w-5 text-indigo-600" />
+          <BookOpen className="h-5 w-5 text-primary" />
           <span className="font-semibold">آزمون تشخیصی جزء ۳۰</span>
         </div>
         <Badge variant="outline" className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20">
