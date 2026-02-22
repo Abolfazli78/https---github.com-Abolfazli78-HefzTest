@@ -48,11 +48,11 @@ export function UserUsageWidget() {
   }
 
   return (
-    <Card className="mb-4">
-      <CardHeader>
-        <CardTitle className="text-sm">اشتراک</CardTitle>
+    <Card className="mb-4 rounded-2xl border-border/60 shadow-sm">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-sm font-semibold">اشتراک</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-4">
         {!quotaUsage.hasActiveSubscription ? (
           <div className="flex items-center justify-between gap-3">
             <div>
@@ -60,7 +60,7 @@ export function UserUsageWidget() {
               <div className="text-xs text-muted-foreground">برای دسترسی به امکانات بیشتر ارتقاء دهید</div>
             </div>
             <Link href="/subscriptions">
-              <Button size="sm">ارتقاء</Button>
+              <Button size="sm" className="rounded-lg px-4">ارتقاء</Button>
             </Link>
           </div>
         ) : (

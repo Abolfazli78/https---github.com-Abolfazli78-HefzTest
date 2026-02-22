@@ -93,7 +93,7 @@ export function UserSidebar() {
             <button
                 type="button"
                 aria-label="open sidebar"
-                className="md:hidden fixed top-4 right-4 z-50 rounded-md border bg-background/80 backdrop-blur px-3 py-2 shadow"
+                className="lg:hidden fixed top-4 right-4 z-50 rounded-xl border bg-background/80 backdrop-blur px-3 py-2 shadow-sm hover:shadow-md transition-all"
                 onClick={() => setMobileOpen(true)}
             >
                 <span className="block w-5 h-0.5 bg-foreground mb-1"></span>
@@ -102,9 +102,9 @@ export function UserSidebar() {
             </button>
 
             {/* Desktop sidebar */}
-            <div className="hidden md:flex w-72 border-l bg-card flex-col h-screen sticky top-0">
+            <div className="hidden lg:flex w-72 border-l bg-card/80 backdrop-blur-xl flex-col h-screen sticky top-0 shadow-xl">
                 <UpgradeModal open={upgradeOpen} onOpenChange={setUpgradeOpen} />
-                <div className="p-6 border-b">
+                <div className="p-6 border-b border-border/60">
                     <Link href="/" className="flex items-center gap-2">
                         <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-8 w-auto" />
                         <span className="text-xl font-bold bg-gradient-to-l from-primary to-blue-600 bg-clip-text text-transparent">
@@ -113,7 +113,7 @@ export function UserSidebar() {
                     </Link>
                 </div>
 
-                <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+                <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto">
                     {visibleMenuItems.map((item) => {
                         const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
                         const isLocked = item.href === "/support" && (!hasSupportAccess && subscriptionInfo !== null);
@@ -128,10 +128,10 @@ export function UserSidebar() {
                                     }
                                 }}
                                 className={cn(
-                                    "flex items-center justify-between p-3 rounded-xl transition-all duration-200 group",
+                                    "flex items-center justify-between px-3.5 py-3 rounded-xl transition-all duration-200 group",
                                     isActive
-                                        ? "bg-accent text-accent-foreground shadow-lg shadow-accent/20"
-                                        : "hover:bg-muted text-muted-foreground hover:text-foreground"
+                                        ? "bg-accent text-accent-foreground shadow-md shadow-accent/20"
+                                        : "hover:bg-muted/70 text-muted-foreground hover:text-foreground"
                                 )}
                             >
                                 <div className="flex items-center gap-3">
@@ -144,11 +144,11 @@ export function UserSidebar() {
                     })}
                 </nav>
 
-                <div className="p-4 border-t">
+                <div className="p-4 border-t border-border/60">
                     <UserUsageWidget />
                     <Button
                         variant="ghost"
-                        className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"
+                        className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-50/80 dark:hover:bg-red-950/30 h-11 rounded-xl"
                         onClick={() => signOut({ callbackUrl: "/" })}
                     >
                         <LogOut className="ml-3 h-5 w-5" />
@@ -159,10 +159,10 @@ export function UserSidebar() {
 
             {/* Mobile overlay sidebar */}
             {mobileOpen && (
-                <div className="md:hidden fixed inset-0 z-40">
+                <div className="lg:hidden fixed inset-0 z-40">
                     <div className="absolute inset-0 bg-black/40" onClick={() => setMobileOpen(false)} />
-                    <div className="absolute inset-y-0 right-0 w-72 bg-card border-l shadow-xl flex flex-col">
-                        <div className="p-4 border-b flex items-center justify-between">
+                    <div className="absolute inset-y-0 right-0 w-72 bg-card/95 backdrop-blur-xl border-l shadow-2xl flex flex-col">
+                        <div className="p-4 border-b border-border/60 flex items-center justify-between">
                             <Link href="/" className="flex items-center gap-2" onClick={() => setMobileOpen(false)}>
                                 <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-8 w-auto" />
                                 <span className="text-lg font-bold">پنل کاربری</span>
@@ -170,13 +170,13 @@ export function UserSidebar() {
                             <button
                                 type="button"
                                 aria-label="close sidebar"
-                                className="rounded-md p-2 hover:bg-muted"
+                                className="rounded-xl p-2 hover:bg-muted/70"
                                 onClick={() => setMobileOpen(false)}
                             >
                                 ✕
                             </button>
                         </div>
-                        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+                        <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto">
                             {visibleMenuItems.map((item) => {
                                 const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
                                 const isLocked = item.href === "/support" && (!hasSupportAccess && subscriptionInfo !== null);
@@ -193,10 +193,10 @@ export function UserSidebar() {
                                             setMobileOpen(false);
                                         }}
                                         className={cn(
-                                            "flex items-center justify-between p-3 rounded-xl transition-all duration-200 group",
+                                            "flex items-center justify-between px-3.5 py-3 rounded-xl transition-all duration-200 group",
                                             isActive
-                                                ? "bg-accent text-accent-foreground shadow-lg shadow-accent/20"
-                                                : "hover:bg-muted text-muted-foreground hover:text-foreground"
+                                                ? "bg-accent text-accent-foreground shadow-md shadow-accent/20"
+                                                : "hover:bg-muted/70 text-muted-foreground hover:text-foreground"
                                         )}
                                     >
                                         <div className="flex items-center gap-3">
@@ -208,11 +208,11 @@ export function UserSidebar() {
                                 );
                             })}
                         </nav>
-                        <div className="p-4 border-t">
+                        <div className="p-4 border-t border-border/60">
                             <UserUsageWidget />
                             <Button
                                 variant="ghost"
-                                className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"
+                                className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-50/80 dark:hover:bg-red-950/30 h-11 rounded-xl"
                                 onClick={() => { setMobileOpen(false); signOut({ callbackUrl: "/" }); }}
                             >
                                 <LogOut className="ml-3 h-5 w-5" />
