@@ -197,7 +197,7 @@ export function QuestionsTable({
                       className={cn(
                         "h-3 w-3",
                         isSortedBy("year", "asc")
-                          ? "text-blue-600"
+                          ? "text-primary"
                           : "text-muted-foreground/60"
                       )}
                     />
@@ -205,7 +205,7 @@ export function QuestionsTable({
                       className={cn(
                         "h-3 w-3 -mt-1",
                         isSortedBy("year", "desc")
-                          ? "text-blue-600"
+                          ? "text-primary"
                           : "text-muted-foreground/60"
                       )}
                     />
@@ -222,7 +222,7 @@ export function QuestionsTable({
                         className={cn(
                           "h-3 w-3",
                           hasActiveFilter("year")
-                            ? "text-blue-600"
+                            ? "text-primary"
                             : "text-muted-foreground/70"
                         )}
                       />
@@ -267,7 +267,7 @@ export function QuestionsTable({
                       className={cn(
                         "h-3 w-3",
                         isSortedBy("juz", "asc")
-                          ? "text-blue-600"
+                          ? "text-primary"
                           : "text-muted-foreground/60"
                       )}
                     />
@@ -275,7 +275,7 @@ export function QuestionsTable({
                       className={cn(
                         "h-3 w-3 -mt-1",
                         isSortedBy("juz", "desc")
-                          ? "text-blue-600"
+                          ? "text-primary"
                           : "text-muted-foreground/60"
                       )}
                     />
@@ -292,7 +292,7 @@ export function QuestionsTable({
                         className={cn(
                           "h-3 w-3",
                           hasActiveFilter("juz")
-                            ? "text-blue-600"
+                            ? "text-primary"
                             : "text-muted-foreground/70"
                         )}
                       />
@@ -339,7 +339,7 @@ export function QuestionsTable({
                       className={cn(
                         "h-3 w-3",
                         isSortedBy("topic", "asc")
-                          ? "text-blue-600"
+                          ? "text-primary"
                           : "text-muted-foreground/60"
                       )}
                     />
@@ -347,7 +347,7 @@ export function QuestionsTable({
                       className={cn(
                         "h-3 w-3 -mt-1",
                         isSortedBy("topic", "desc")
-                          ? "text-blue-600"
+                          ? "text-primary"
                           : "text-muted-foreground/60"
                       )}
                     />
@@ -364,7 +364,7 @@ export function QuestionsTable({
                         className={cn(
                           "h-3 w-3",
                           hasActiveFilter("topic")
-                            ? "text-blue-600"
+                            ? "text-primary"
                             : "text-muted-foreground/70"
                         )}
                       />
@@ -407,7 +407,7 @@ export function QuestionsTable({
                       className={cn(
                         "h-3 w-3",
                         isSortedBy("difficultyLevel", "asc")
-                          ? "text-blue-600"
+                          ? "text-primary"
                           : "text-muted-foreground/60"
                       )}
                     />
@@ -415,7 +415,7 @@ export function QuestionsTable({
                       className={cn(
                         "h-3 w-3 -mt-1",
                         isSortedBy("difficultyLevel", "desc")
-                          ? "text-blue-600"
+                          ? "text-primary"
                           : "text-muted-foreground/60"
                       )}
                     />
@@ -432,7 +432,7 @@ export function QuestionsTable({
                         className={cn(
                           "h-3 w-3",
                           hasActiveFilter("difficultyLevel")
-                            ? "text-blue-600"
+                            ? "text-primary"
                             : "text-muted-foreground/70"
                         )}
                       />
@@ -538,7 +538,7 @@ export function QuestionsTable({
                       className={cn(
                         "h-3 w-3",
                         isSortedBy("questionKind", "asc")
-                          ? "text-blue-600"
+                          ? "text-primary"
                           : "text-muted-foreground/60"
                       )}
                     />
@@ -546,7 +546,7 @@ export function QuestionsTable({
                       className={cn(
                         "h-3 w-3 -mt-1",
                         isSortedBy("questionKind", "desc")
-                          ? "text-blue-600"
+                          ? "text-primary"
                           : "text-muted-foreground/60"
                       )}
                     />
@@ -563,7 +563,7 @@ export function QuestionsTable({
                         className={cn(
                           "h-3 w-3",
                           hasActiveFilter("questionKind")
-                            ? "text-blue-600"
+                            ? "text-primary"
                             : "text-muted-foreground/70"
                         )}
                       />

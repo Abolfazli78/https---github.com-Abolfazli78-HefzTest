@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
@@ -99,10 +100,10 @@ export function InstituteSidebar({ quotaUsage }: { quotaUsage: QuotaUsageSummary
     return (
         <motion.div
             animate={{ width: isCollapsed ? 80 : 280 }}
-            className="flex h-screen flex-col border-l border-white/10 bg-indigo-950 text-white shadow-2xl relative transition-all duration-300 ease-in-out"
+            className="flex h-screen flex-col border-l border-white/10 bg-slate-950 text-white shadow-2xl relative transition-all duration-300 ease-in-out"
         >
             {/* Background Gradient Glow */}
-            <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[100px] rounded-full pointer-events-none" />
+            <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[100px] rounded-full pointer-events-none" />
 
             <div className="flex h-20 items-center justify-between border-b border-white/5 px-6 relative z-10">
                 {!isCollapsed && (
@@ -112,18 +113,16 @@ export function InstituteSidebar({ quotaUsage }: { quotaUsage: QuotaUsageSummary
                         exit={{ opacity: 0, x: 20 }}
                     >
                         <Link href="/" className="flex items-center gap-3 font-bold text-xl tracking-tight text-white">
-                            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
-                                M
-                            </div>
-                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-blue-400 font-black">
+                            <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-8 w-auto" />
+                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent font-black">
                                 پنل مدیر موسسه
                             </span>
                         </Link>
                     </motion.div>
                 )}
                 {isCollapsed && (
-                    <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center text-white mx-auto">
-                        M
+                    <div className="flex justify-center w-full">
+                        <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-8 w-auto" />
                     </div>
                 )}
                 {!isCollapsed && <NotificationCenter />}
@@ -155,13 +154,13 @@ export function InstituteSidebar({ quotaUsage }: { quotaUsage: QuotaUsageSummary
                                 className={cn(
                                     "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-200 group relative overflow-hidden",
                                     isActive
-                                        ? "bg-indigo-500/20 text-indigo-300 shadow-[inset_0_0_20px_rgba(99,102,241,0.05)] border border-indigo-500/30"
-                                        : "text-indigo-200/50 hover:text-white hover:bg-white/5"
+                                        ? "bg-accent/10 text-accent shadow-[inset_0_0_20px_rgba(16,185,129,0.12)] border border-accent/20"
+                                        : "text-white/50 hover:text-white hover:bg-white/5"
                                 )}
                             >
                                 <item.icon className={cn(
                                     "h-5 w-5 shrink-0 transition-transform group-hover:scale-110",
-                                    isActive ? "text-indigo-400" : "text-indigo-500/50 group-hover:text-indigo-300"
+                                    isActive ? "text-accent" : "text-white/50 group-hover:text-accent/70"
                                 )} />
                                 {!isCollapsed && (
                                     <motion.span
@@ -174,7 +173,7 @@ export function InstituteSidebar({ quotaUsage }: { quotaUsage: QuotaUsageSummary
                                 {isActive && !isCollapsed && (
                                     <motion.div
                                         layoutId="active-pill-inst"
-                                        className="absolute left-0 top-0 h-full w-1 bg-indigo-400 rounded-r-full shadow-[0_0_15px_rgba(129,140,248,0.5)]"
+                                        className="absolute left-0 top-0 h-full w-1 bg-accent rounded-r-full shadow-[0_0_15px_rgba(16,185,129,0.5)]"
                                     />
                                 )}
                             </Link>
@@ -213,12 +212,12 @@ export function InstituteSidebar({ quotaUsage }: { quotaUsage: QuotaUsageSummary
                             </>
                         ) : (
                             <Link href="/institute/subscriptions" className="block">
-                                <div className="rounded-xl bg-indigo-500/20 border border-indigo-400/30 p-3 flex items-center justify-between hover:bg-indigo-500/25 transition-colors">
+                                <div className="rounded-xl bg-highlight/15 border border-highlight/30 p-3 flex items-center justify-between hover:bg-highlight/20 transition-colors">
                                     <div>
                                         <div className="text-xs font-black text-white">ارتقاء پلن</div>
                                         <div className="text-[10px] text-white/60 mt-1">برای فعال‌سازی امکانات، پلن تهیه کنید</div>
                                     </div>
-                                    <Crown className="h-4 w-4 text-indigo-300" />
+                                    <Crown className="h-4 w-4 text-highlight" />
                                 </div>
                             </Link>
                         )}
@@ -240,7 +239,7 @@ export function InstituteSidebar({ quotaUsage }: { quotaUsage: QuotaUsageSummary
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute -left-3 top-[-20px] h-6 w-6 rounded-full bg-indigo-900 border border-white/10 text-white shadow-xl hover:bg-indigo-800 hidden md:flex"
+                    className="absolute -left-3 top-[-20px] h-6 w-6 rounded-full bg-primary/20 border border-white/10 text-white shadow-xl hover:bg-primary/30 hidden md:flex"
                     onClick={() => setIsCollapsed(!isCollapsed)}
                 >
                     {isCollapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}

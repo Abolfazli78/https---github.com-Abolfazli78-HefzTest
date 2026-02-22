@@ -100,7 +100,7 @@ export function NotificationsDropdown() {
       case "ERROR":
         return "bg-red-50 border-red-200 text-red-800";
       default:
-        return "bg-blue-50 border-blue-200 text-blue-800";
+        return "bg-primary/10 border-primary/20 text-primary";
     }
   };
 
@@ -154,7 +154,7 @@ export function NotificationsDropdown() {
                     <div className="flex items-center justify-between gap-2">
                       <p className="font-medium text-sm truncate">{notification.title}</p>
                       {!notification.isRead && (
-                        <div className="h-2 w-2 rounded-full bg-blue-500" />
+                        <div className="h-2 w-2 rounded-full bg-accent" />
                       )}
                     </div>
                     <p className="text-xs text-muted-foreground mt-1 line-clamp-2">

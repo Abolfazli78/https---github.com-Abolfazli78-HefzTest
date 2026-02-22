@@ -26,7 +26,7 @@ export default function RootLayout({
     "@type": "Organization",
     name: "حفظ تست",
     url: "https://hefztest.ir/",
-    logo: "https://hefztest.ir/logo.png",
+    logo: "https://hefztest.ir/LOGO.jpg",
   };
 
   const websiteJsonLd = {

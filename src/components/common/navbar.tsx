@@ -2,6 +2,7 @@
 
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,12 +38,8 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-10">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-600 to-blue-700 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
-                <span className="text-white font-bold text-lg">آ</span>
-              </div>
-              <span className="text-xl font-bold tracking-tight bg-gradient-to-l from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 bg-clip-text text-transparent">
-                تست حفظ
-              </span>
+              <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-10 w-auto" priority />
+              <span className="sr-only">تست حفظ</span>
             </Link>
 
             <div className="hidden md:flex items-center gap-8">
@@ -66,7 +63,7 @@ export function Navbar() {
             {session && session.user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0 overflow-hidden border-2 border-transparent hover:border-indigo-500/50 transition-all">
+                  <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0 overflow-hidden border-2 border-transparent hover:border-primary/50 transition-all">
                     <div className="h-full w-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 flex items-center justify-center">
                       <User className="h-5 w-5 text-slate-600 dark:text-slate-300" />
                     </div>
@@ -78,7 +75,7 @@ export function Navbar() {
                     <p className="text-xs text-muted-foreground mt-0.5" dir="ltr">
                       {user?.email}
                     </p>
-                    <Badge variant="outline" className="mt-2 text-[10px] h-5 bg-indigo-500/10 text-indigo-600 border-indigo-500/20">
+                    <Badge variant="outline" className="mt-2 text-[10px] h-5 bg-accent/10 text-accent border-accent/20">
                       {user?.role}
                     </Badge>
                   </div>
@@ -120,7 +117,7 @@ export function Navbar() {
                   <Button variant="ghost" className="rounded-xl h-10 px-5">ورود</Button>
                 </Link>
                 <Link href="/register">
-                  <Button className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl h-10 px-6 shadow-lg shadow-indigo-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
+                  <Button className="bg-highlight hover:bg-[#C18C35] text-highlight-foreground rounded-xl h-10 px-6 shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
                     ثبت نام
                   </Button>
                 </Link>
@@ -141,13 +138,13 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
     <Link
       href={href}
       className={cn(
-        "text-sm font-medium transition-colors hover:text-primary relative py-1",
-        isActive ? "text-primary" : "text-muted-foreground"
+        "text-sm font-medium transition-colors hover:text-accent relative py-1",
+        isActive ? "text-accent" : "text-muted-foreground"
       )}
     >
       {children}
       {isActive && (
-        <span className="absolute bottom-0 right-0 h-0.5 w-full bg-primary rounded-full" />
+        <span className="absolute bottom-0 right-0 h-0.5 w-full bg-accent rounded-full" />
       )}
     </Link>
   );

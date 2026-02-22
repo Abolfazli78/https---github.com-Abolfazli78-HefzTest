@@ -25,6 +25,8 @@
   --color-foreground: var(--foreground);
   --font-arabic: var(--font-arabic);
   --font-persian: 'Vazirmatn', var(--font-persian);
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
 
   /* Sidebar Colors */
   --color-sidebar-ring: var(--sidebar-ring);
@@ -74,42 +76,41 @@
 :root {
   --radius: 0.625rem;
 
-  /* Hefz Test Light Theme Design System */
-  --background: #ffffff; /* Clean white background */
-  --foreground: #1A237E; /* Dark Navy for primary text */
-  --card: #ffffff; /* White cards */
-  --card-foreground: #1A237E; /* Dark Navy text on cards */
-  --popover: #ffffff; /* White popovers */
-  --popover-foreground: #1A237E; /* Dark Navy text in popovers */
-  --primary: #1A237E; /* Dark Navy primary */
-  --primary-foreground: #ffffff; /* White text on primary */
-  --secondary: #f8f9fa; /* Very light gray for secondary */
-  --secondary-foreground: #1A237E; /* Dark Navy secondary text */
-  --muted: #f8f9fa; /* Light gray for muted */
-  --muted-foreground: #6c757d; /* Gray for muted text */
-  --accent: #FFD700; /* Warm Gold accent */
-  --accent-foreground: #1A237E; /* Dark Navy text on accent */
-  --destructive: #dc3545; /* Standard red for destructive */
-  --border: #e9ecef; /* Light gray borders */
-  --input: #e9ecef; /* Light gray inputs */
-  --ring: #1A237E; /* Dark Navy focus ring */
+  --background: #F8FAFC;
+  --foreground: #0D3D38;
+  --card: #ffffff;
+  --card-foreground: #0D3D38;
+  --popover: #ffffff;
+  --popover-foreground: #0D3D38;
+  --primary: #0D3D38;
+  --primary-foreground: #ffffff;
+  --secondary: #f3f4f6;
+  --secondary-foreground: #0D3D38;
+  --muted: #eef2f7;
+  --muted-foreground: #64748b;
+  --accent: #10B981;
+  --accent-foreground: #ffffff;
+  --highlight: #D9A441;
+  --highlight-foreground: #0D3D38;
+  --destructive: #dc3545;
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: #0D3D38;
 
-  /* Charts - using theme colors */
-  --chart-1: #1A237E; /* Primary Navy */
-  --chart-2: #FFD700; /* Accent Gold */
-  --chart-3: #4a5568; /* Medium Gray */
-  --chart-4: #718096; /* Lighter Gray */
-  --chart-5: #2d3748; /* Dark Gray */
+  --chart-1: #0D3D38;
+  --chart-2: #10B981;
+  --chart-3: #D9A441;
+  --chart-4: #64748b;
+  --chart-5: #334155;
 
-  /* Sidebar - matching main theme */
-  --sidebar: #ffffff; /* White sidebar */
-  --sidebar-foreground: #1A237E; /* Dark Navy sidebar text */
-  --sidebar-primary: #1A237E; /* Dark Navy sidebar primary */
-  --sidebar-primary-foreground: #ffffff; /* White text on sidebar primary */
-  --sidebar-accent: #f8f9fa; /* Light gray sidebar accent */
-  --sidebar-accent-foreground: #1A237E; /* Dark Navy accent text */
-  --sidebar-border: #e9ecef; /* Light gray sidebar borders */
-  --sidebar-ring: #1A237E; /* Dark Navy sidebar ring */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0D3D38;
+  --sidebar-primary: #0D3D38;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f3f4f6;
+  --sidebar-accent-foreground: #0D3D38;
+  --sidebar-border: #e5e7eb;
+  --sidebar-ring: #0D3D38;
 }
 
 /* Admin Theme (Indigo/Slate) */
@@ -243,7 +244,7 @@
 
   /* Hefz Test Design System Utilities */
   .btn-primary {
-    @apply bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+    @apply bg-accent text-accent-foreground px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
   }
   
   .btn-accent {

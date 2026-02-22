@@ -106,7 +106,7 @@ export function TicketReplySystem({
 
   const getStatusColor = (status: TicketStatus) => {
     switch (status) {
-      case "NEW": return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300";
+      case "NEW": return "bg-primary/10 text-primary dark:bg-primary/20 dark:text-white";
       case "IN_PROGRESS": return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300";
       case "CLOSED": return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300";
       default: return "bg-gray-100 text-gray-800";
@@ -201,7 +201,7 @@ export function TicketReplySystem({
                   }`}>
                     {/* Avatar */}
                     <Avatar className="h-8 w-8 flex-shrink-0">
-                      <AvatarFallback className={message.isAdmin ? "bg-blue-100" : "bg-gray-100"}>
+                      <AvatarFallback className={message.isAdmin ? "bg-primary/10" : "bg-gray-100"}>
                         {message.isAdmin ? (
                           <Bot className="h-4 w-4" />
                         ) : (
@@ -225,7 +225,7 @@ export function TicketReplySystem({
                       
                       <div className={`rounded-lg p-3 ${
                         message.isAdmin 
-                          ? "bg-blue-50 dark:bg-blue-900/20 text-blue-900 dark:text-blue-100" 
+                          ? "bg-primary/10 dark:bg-primary/20 text-primary dark:text-white" 
                           : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                       }`}>
                         <p className="text-sm whitespace-pre-wrap">{message.message}</p>

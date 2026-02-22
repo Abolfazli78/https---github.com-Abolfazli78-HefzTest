@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 interface HefzButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'accent' | 'ghost';
+  variant?: 'primary' | 'accent' | 'highlight' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
 }
@@ -17,8 +17,9 @@ export const HefzButton: React.FC<HefzButtonProps> = ({
   const baseClasses = "font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2";
   
   const variantClasses = {
-    primary: "bg-primary text-primary-foreground hover:opacity-90 focus:ring-primary",
+    primary: "bg-accent text-accent-foreground hover:opacity-90 focus:ring-accent",
     accent: "bg-accent text-accent-foreground hover:opacity-90 focus:ring-accent",
+    highlight: "bg-highlight text-highlight-foreground hover:opacity-95 focus:ring-highlight",
     ghost: "bg-transparent text-primary border border-primary hover:bg-primary hover:text-primary-foreground focus:ring-primary"
   };
   
