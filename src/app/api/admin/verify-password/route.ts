@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     });
 
     if (!admin) {
-      return NextResponse.json({ error: "Admin not found" }, { status: 404 });
+      return NextResponse.json({ error: "مدیر یافت نشد" }, { status: 404 });
     }
 
     const isValid = await bcrypt.compare(password, admin.password);
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Verify password error:", error);
     return NextResponse.json(
-      { error: "Failed to verify password" },
+      { error: "خطا در بررسی رمز عبور" },
       { status: 500 }
     );
   }

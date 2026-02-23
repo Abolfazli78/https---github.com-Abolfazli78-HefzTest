@@ -16,7 +16,7 @@ export async function POST(req: Request) {
         const userId = session.user.id;
 
         if (!planId) {
-            return NextResponse.json({ error: 'Missing planId' }, { status: 400 });
+            return NextResponse.json({ error: "شناسه پلن الزامی است" }, { status: 400 });
         }
 
         const plan = await db.subscriptionPlan.findUnique({
@@ -130,11 +130,11 @@ export async function POST(req: Request) {
                 finalAmount,
             });
         } else {
-            return NextResponse.json({ error: 'Failed to create payment' }, { status: 500 });
+            return NextResponse.json({ error: "خطا در ایجاد پرداخت" }, { status: 500 });
         }
 
     } catch (error) {
         console.error('Payment Request Error:', error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        return NextResponse.json({ error: "خطای داخلی سرور" }, { status: 500 });
     }
 }

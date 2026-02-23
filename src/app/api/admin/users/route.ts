@@ -6,7 +6,7 @@ export async function GET() {
   try {
     const session = await auth();
     if (!session?.user?.id || session.user.role !== "ADMIN") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "غیرمجاز" }, { status: 401 });
     }
 
     const users = await db.user.findMany({

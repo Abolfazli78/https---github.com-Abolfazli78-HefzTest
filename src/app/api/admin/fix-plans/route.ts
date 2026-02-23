@@ -6,7 +6,7 @@ export async function POST() {
   try {
     const session = await getServerSession();
     if (!session || session.user.role !== "ADMIN") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "غیرمجاز" }, { status: 401 });
     }
 
     console.log('Fixing subscription plans...');
@@ -35,7 +35,7 @@ export async function POST() {
 
     return NextResponse.json({ 
       success: true,
-      message: "Plans fixed successfully",
+      message: "پلن‌ها با موفقیت اصلاح شدند",
       updated: [
         { name: teacherPlan.name, targetRole: teacherPlan.targetRole },
         { name: institutePlan.name, targetRole: institutePlan.targetRole }
@@ -44,7 +44,7 @@ export async function POST() {
   } catch (error) {
     console.error("Error fixing plans:", error);
     return NextResponse.json(
-      { error: "Failed to fix plans" },
+      { error: "خطا در اصلاح پلن‌ها" },
       { status: 500 }
     );
   }

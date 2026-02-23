@@ -18,7 +18,7 @@ export async function GET(req: Request) {
     }
 
     if (!authority) {
-        return NextResponse.json({ error: 'Missing authority' }, { status: 400 });
+        return NextResponse.json({ error: "کد پرداخت (Authority) ارسال نشده است" }, { status: 400 });
     }
 
     try {
@@ -36,7 +36,7 @@ export async function GET(req: Request) {
         }
 
         if (!payment) {
-            return NextResponse.json({ error: 'Payment not found' }, { status: 404 });
+            return NextResponse.json({ error: "پرداخت یافت نشد" }, { status: 404 });
         }
 
         // Verify with ZarinPal

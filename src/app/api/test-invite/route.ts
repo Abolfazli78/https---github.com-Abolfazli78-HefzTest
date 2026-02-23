@@ -7,11 +7,11 @@ export async function POST(request: Request) {
     console.log("Test body:", body);
     
     return NextResponse.json({ 
-      message: "Test successful",
+      message: "تست با موفقیت انجام شد",
       received: body
     });
   } catch (error) {
     console.error("Test error:", error);
-    return NextResponse.json({ error: "Test failed" }, { status: 500 });
+    return NextResponse.json({ error: "تست ناموفق بود" }, { status: 500 });
   }
 }

@@ -7,7 +7,7 @@ export async function GET() {
   try {
     const session = await auth();
     if (!session?.user?.id || session.user.role !== "ADMIN") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "غیرمجاز" }, { status: 401 });
     }
 
     const discountCodes = await db.discountCode.findMany({
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
   try {
     const session = await auth();
     if (!session?.user?.id || session.user.role !== "ADMIN") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "غیرمجاز" }, { status: 401 });
     }
 
     const body = await request.json();

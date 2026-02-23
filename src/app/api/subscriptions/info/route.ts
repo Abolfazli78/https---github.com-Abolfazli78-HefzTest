@@ -6,7 +6,7 @@ export async function GET() {
   try {
     const session = await getServerSession();
     if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "غیرمجاز" }, { status: 401 });
     }
 
     const subscriptionInfo = await getUserSubscriptionInfo(session.user.id);
@@ -25,14 +25,14 @@ export async function POST(request: Request) {
   try {
     const session = await getServerSession();
     if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "غیرمجاز" }, { status: 401 });
     }
 
     const { feature, requestedQuota } = await request.json();
     
     if (!feature) {
       return NextResponse.json(
-        { error: "Feature name is required" },
+        { error: "نام قابلیت الزامی است" },
         { status: 400 }
       );
     }

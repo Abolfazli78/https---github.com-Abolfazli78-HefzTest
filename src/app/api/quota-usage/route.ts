@@ -21,7 +21,7 @@ async function getActiveSubscriptionWithPlan(userId: string) {
 export async function GET() {
     const session = await getServerSession();
     if (!session) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        return NextResponse.json({ error: "غیرمجاز" }, { status: 401 });
     }
 
     const activeSub = await getActiveSubscriptionWithPlan(session.user.id);

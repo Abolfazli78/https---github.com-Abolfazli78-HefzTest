@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
+import { getAccessibleExams } from "@/lib/exam-access";
+import { UserRole } from "@prisma/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -24,14 +26,14 @@ export default async function DashboardPage() {
     redirect("/institute");
   }
 
-  const activeExamsData = await db.exam.findMany({
-    where: { isActive: true },
-    orderBy: { createdAt: "desc" },
-    take: 6,
-  });
+  // Only load exams that this user is allowed to see (own + teacher/institute/admin according to hierarchy)
+  const accessibleExams = await getAccessibleExams(
+    session.user.id,
+    session.user.role as UserRole
+  );
 
-  // Transform null to undefined for the component
-  const activeExams = activeExamsData.map((exam) => ({
+  // Limit to last 6 exams for the "suggested exams" section
+  const activeExams = accessibleExams.slice(0, 6).map((exam) => ({
     id: exam.id,
     title: exam.title,
     description: exam.description ?? undefined,

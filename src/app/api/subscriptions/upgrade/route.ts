@@ -6,14 +6,14 @@ export async function POST(request: Request) {
   try {
     const session = await getServerSession();
     if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "غیرمجاز" }, { status: 401 });
     }
 
     const { planId } = await request.json();
     
     if (!planId) {
       return NextResponse.json(
-        { error: "Plan ID is required" },
+        { error: "شناسه پلن الزامی است" },
         { status: 400 }
       );
     }
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       subscription,
-      message: "Subscription upgraded successfully"
+      message: "اشتراک با موفقیت ارتقاء یافت"
     });
   } catch (error) {
     console.error("Error upgrading subscription:", error);

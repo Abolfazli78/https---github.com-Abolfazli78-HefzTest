@@ -63,12 +63,12 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({
             count,
             estimatedMinutes,
-            message: `Found ${count} questions matching your criteria.`,
+            message: `${count} سوال مطابق معیارهای انتخاب‌شده یافت شد.`,
         });
     } catch (error) {
         console.error("Match Engine Error:", error);
         return NextResponse.json(
-            { error: "Failed to calculate match." },
+            { error: "خطا در محاسبه تعداد سوالات" },
             { status: 500 }
         );
     }

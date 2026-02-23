@@ -11,7 +11,7 @@ export async function POST() {
 
     if (existingAdmin) {
       return NextResponse.json({ 
-        message: "Admin already exists",
+        message: "مدیر از قبل وجود دارد",
         phone: existingAdmin.phone,
         email: existingAdmin.email,
       });
@@ -31,7 +31,7 @@ export async function POST() {
     });
 
     return NextResponse.json({
-      message: "Admin created successfully",
+      message: "مدیر با موفقیت ایجاد شد",
       phone: admin.phone,
       email: admin.email,
       password: "admin123",
@@ -39,7 +39,7 @@ export async function POST() {
   } catch (error) {
     console.error("Create admin error:", error);
     return NextResponse.json(
-      { error: "Failed to create admin" },
+      { error: "خطا در ایجاد مدیر" },
       { status: 500 }
     );
   }

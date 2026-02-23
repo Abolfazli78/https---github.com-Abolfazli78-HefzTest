@@ -7,13 +7,13 @@ export async function POST(req: Request) {
     const session = await getServerSession();
     
     if (!session || session.user.role !== "ADMIN") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "غیرمجاز" }, { status: 401 });
     }
 
     const { email, phone } = await req.json();
 
     if (!email && !phone) {
-      return NextResponse.json({ error: "Email or phone is required" }, { status: 400 });
+      return NextResponse.json({ error: "ایمیل یا شماره تماس الزامی است" }, { status: 400 });
     }
 
     // Find user by email or phone
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     });
 
     if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+      return NextResponse.json({ error: "کاربر یافت نشد" }, { status: 404 });
     }
 
     // Get current date
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
     // This is a soft reset - we're not deleting data, just adjusting the quota calculation
     
     return NextResponse.json({
-      message: "User quotas reset successfully",
+      message: "سهمیه‌های کاربر با موفقیت بازنشانی شد",
       user: {
         id: user.id,
         email: user.email,
@@ -71,7 +71,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Reset quotas error:", error);
     return NextResponse.json(
-      { error: "Failed to reset quotas", details: error instanceof Error ? error.message : String(error) },
+      { error: "خطا در بازنشانی سهمیه‌ها", details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }

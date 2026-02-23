@@ -184,6 +184,15 @@ export async function POST(req: NextRequest) {
           { status: 400 }
         );
       }
+
+      // If the thrown error message is already a user-facing Persian message, return it as-is.
+      // (Many validation errors in this route are thrown in Persian.)
+      if (/[\u0600-\u06FF]/.test(error.message)) {
+        return NextResponse.json(
+          { error: error.message },
+          { status: 400 }
+        );
+      }
       
       // Quota or subscription errors
       if (

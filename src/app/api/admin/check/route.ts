@@ -17,14 +17,14 @@ export async function GET() {
     });
 
     if (!admin) {
-      return NextResponse.json({ error: "Admin not found" }, { status: 404 });
+      return NextResponse.json({ error: "مدیر یافت نشد" }, { status: 404 });
     }
 
     return NextResponse.json({ admin });
   } catch (error) {
     console.error("Check admin error:", error);
     return NextResponse.json(
-      { error: "Failed to check admin" },
+      { error: "خطا در بررسی مدیر" },
       { status: 500 }
     );
   }
