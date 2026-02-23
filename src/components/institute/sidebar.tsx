@@ -113,7 +113,7 @@ export function InstituteSidebar({ quotaUsage }: { quotaUsage: QuotaUsageSummary
                         exit={{ opacity: 0, x: 20 }}
                     >
                         <Link href="/" className="flex items-center gap-3 font-bold text-xl tracking-tight text-white">
-                            <img src="/logo.jpg" alt="تست حفظ" className="h-8 object-contain" />
+                            <img src="/logo.png" alt="تست حفظ" className="h-8 object-contain" />
                             <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent font-black">
                                 پنل مدیر موسسه
                             </span>
@@ -122,7 +122,7 @@ export function InstituteSidebar({ quotaUsage }: { quotaUsage: QuotaUsageSummary
                 )}
                 {isCollapsed && (
                     <div className="flex justify-center w-full">
-                        <img src="/logo.jpg" alt="تست حفظ" className="h-8 object-contain" />
+                        <img src="/logo.png" alt="تست حفظ" className="h-8 object-contain" />
                     </div>
                 )}
                 {!isCollapsed && <NotificationCenter />}

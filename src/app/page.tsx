@@ -342,7 +342,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 grid gap-10 md:grid-cols-4">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <img src="/logo.jpg" alt="تست حفظ" className="h-10 object-contain" />
+              <img src="/logo.png" alt="تست حفظ" className="h-10 object-contain" />
               <span className="sr-only">تست حفظ</span>
             </div>
             <p className="text-slate-400 text-sm">نرم‌افزاری سبک، سریع و به‌شدت قدرتمند برای سنجش و ارزیابی هوشمند.</p>

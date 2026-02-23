@@ -38,7 +38,7 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-10">
             <Link href="/" className="flex items-center gap-2 group">
-              <img src="/logo.jpg" alt="تست حفظ" className="h-10 object-contain" />
+              <img src="/logo.png" alt="تست حفظ" className="h-10 object-contain" />
               <span className="sr-only">تست حفظ</span>
             </Link>
 

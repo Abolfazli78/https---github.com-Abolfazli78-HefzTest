@@ -202,7 +202,7 @@ export default function RegisterPage() {
                 transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
                 className="mx-auto w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-lg border border-slate-200"
               >
-                <img src="/logo.jpg" alt="تست حفظ" className="h-12 object-contain" />
+                <img src="/logo.png" alt="تست حفظ" className="h-12 object-contain" />
               </motion.div>
               
               <div className="space-y-2">
