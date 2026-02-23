@@ -107,7 +107,7 @@ export async function checkAccess(
     return {
       allowed: false,
       reason: "NO_ACTIVE_SUBSCRIPTION",
-      message: "این قابلیت در پلن فعلی شما موجود نیست",
+      message: "اشتراک شما فعال نیست یا به پایان رسیده است",
     };
   }
 
@@ -148,10 +148,16 @@ export async function checkAccess(
     const limit = plan[requiredQuota.key] as number;
 
     if (!isUnlimited(limit) && requiredQuota.used + requested > limit) {
+      let message = "این قابلیت در پلن فعلی شما موجود نیست";
+      if (requiredQuota.key === "maxExamsPerMonth") {
+        message = "سقف ساخت آزمون ماهانه شما تکمیل شده است";
+      } else if (requiredQuota.key === "maxQuestionsPerMonth") {
+        message = "تعداد سوالات درخواستی بیشتر از سقف اشتراک ماهانه شماست";
+      }
       return {
         allowed: false,
         reason: "QUOTA_EXCEEDED",
-        message: "این قابلیت در پلن فعلی شما موجود نیست",
+        message,
       };
     }
   }
