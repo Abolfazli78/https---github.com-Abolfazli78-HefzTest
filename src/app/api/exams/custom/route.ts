@@ -37,13 +37,13 @@ export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession();
     if (!session || !session.user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "دسترسی غیرمجاز است" }, { status: 401 });
     }
 
     // Rate limiting
     if (!checkRateLimit(session.user.id)) {
       return NextResponse.json(
-        { error: "Too many requests. Please try again later." },
+        { error: "تعداد درخواست‌ها زیاد است. کمی بعد دوباره تلاش کنید." },
         { status: 429 }
       );
     }
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
     } catch (parseError) {
       console.error("JSON parse error:", parseError);
       return NextResponse.json(
-        { error: "Invalid JSON in request body" },
+        { error: "فرمت JSON بدنه درخواست نامعتبر است" },
         { status: 400 }
       );
     }
@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
     if (!body || typeof body !== 'object') {
       console.error("Invalid body type:", typeof body);
       return NextResponse.json(
-        { error: "Request body must be a valid object" },
+        { error: "بدنه درخواست باید یک شیء معتبر باشد" },
         { status: 400 }
       );
     }
@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
       console.error("Validation error:", validationResult.error.issues);
       console.error("Received body:", body);
       return NextResponse.json(
-        { error: "Invalid input", details: validationResult.error.issues },
+        { error: "داده‌های ورودی نامعتبر است", details: validationResult.error.issues },
         { status: 400 }
       );
     }
@@ -98,12 +98,12 @@ export async function POST(req: NextRequest) {
       const totalCount = await tx.question.count({ where: filters });
       if (totalCount < input.questionCount) {
         throw new Error(
-          `Only ${totalCount} questions found in your selected range, but you requested ${input.questionCount}.`
+          `در محدوده انتخاب‌شده فقط ${totalCount} سوال یافت شد، اما شما ${input.questionCount} سوال درخواست کرده‌اید.`
         );
       }
       if (minCategories > 0 && minCategories > input.questionCount) {
         throw new Error(
-          `You selected ${minCategories} categories but requested only ${input.questionCount} questions. Minimum required is ${minCategories}.`
+          `شما ${minCategories} دسته انتخاب کرده‌اید اما فقط ${input.questionCount} سوال درخواست کرده‌اید. حداقل لازم ${minCategories} سوال است.`
         );
       }
 
@@ -161,7 +161,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       ...result,
-      message: "Custom exam created successfully"
+      message: "آزمون دلخواه با موفقیت ایجاد شد"
     });
 
   } catch (error) {
@@ -185,8 +185,15 @@ export async function POST(req: NextRequest) {
         );
       }
       
-      // Quota errors
-      if (error.message.includes("quota") || error.message.includes("subscription")) {
+      // Quota or subscription errors
+      if (
+        error.message.includes("quota") ||
+        error.message.includes("subscription") ||
+        error.message.includes("اشتراک") ||
+        error.message.includes("پلن") ||
+        error.message.includes("سقف") ||
+        error.message.includes("ظرفیت")
+      ) {
         return NextResponse.json(
           { error: error.message },
           { status: 403 }
@@ -196,14 +203,14 @@ export async function POST(req: NextRequest) {
       // Conflict errors
       if (error.message.includes("conflict")) {
         return NextResponse.json(
-          { error: "Resource conflict. Please try again." },
+          { error: "تداخل در منابع رخ داد. دوباره تلاش کنید." },
           { status: 409 }
         );
       }
     }
     
     return NextResponse.json(
-      { error: "Failed to create custom exam.", details: error instanceof Error ? error.message : String(error) },
+      { error: "ایجاد آزمون دلخواه ناموفق بود.", details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }
