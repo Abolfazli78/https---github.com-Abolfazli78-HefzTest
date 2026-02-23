@@ -117,7 +117,7 @@ export function Navbar() {
                   <Button variant="ghost" className="rounded-xl h-10 px-5">ورود</Button>
                 </Link>
                 <Link href="/register">
-                  <Button className="bg-highlight hover:bg-[#C18C35] text-highlight-foreground rounded-xl h-10 px-6 shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
+                  <Button className="bg-highlight hover:bg-[#C18C35] text-white rounded-xl h-10 px-6 shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
                     ثبت نام
                   </Button>
                 </Link>
