@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import { HefzButton } from "@/components/ui/hefz-button";
 import {
   BookOpen,
@@ -237,7 +237,7 @@ export default function HomePage() {
       </section>
 
       {/* Iconic Feature Grid (Detailed Boxes) */}
-      <section className="py-16 md:py-20">
+      <section id="faq" className="py-16 md:py-20">
         <div className="container mx-auto max-w-7xl px-4">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl font-bold mb-4 tracking-tight">امکانات کلیدی پلتفرم</h2>
@@ -291,7 +291,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 grid gap-10 md:grid-cols-4">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-10 w-auto" />
+              <img src="/logo.png" alt="تست حفظ" className="h-10 object-contain" />
               <span className="sr-only">تست حفظ</span>
             </div>
             <p className="text-slate-400 text-sm">نرم‌افزاری سبک، سریع و به‌شدت قدرتمند برای سنجش و ارزیابی هوشمند.</p>
@@ -412,7 +412,9 @@ function TestCardPreview() {
 
       <div className="px-6 pb-6 pt-4 border-t border-slate-200/70 dark:border-slate-800 flex items-center justify-between">
         <span className="text-xs text-slate-500">آماده برای شروع</span>
-        <HefzButton size="sm" className="rounded-full shadow-md hover:shadow-lg transition-all duration-300">شروع</HefzButton>
+        <Link href="/demo">
+          <HefzButton size="sm" className="rounded-full shadow-md hover:shadow-lg transition-all duration-300">شروع</HefzButton>
+        </Link>
       </div>
     </div>
   );
@@ -526,5 +528,59 @@ function RoleCard({ icon, title, points, className }: { icon: React.ReactNode; t
         ))}
       </ul>
     </div>
+  );
+}
+
+function CounterItem({ label, value, suffix = "" }: { label: string; value: number; suffix?: string }) {
+  return (
+    <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-white/5 backdrop-blur text-center">
+      <div className="text-3xl font-extrabold text-slate-900 dark:text-white">
+        <AnimatedCounter to={value} />{suffix}
+      </div>
+      <div className="text-sm text-slate-500 mt-1">{label}</div>
+    </div>
+  );
+}
+
+function AnimatedCounter({ to, duration = 1200 }: { to: number; duration?: number }) {
+  const [val, setVal] = React.useState(0);
+  React.useEffect(() => {
+    let start: number | null = null;
+    const from = 0;
+    const step = (ts: number) => {
+      if (start === null) start = ts;
+      const p = Math.min((ts - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setVal(Math.floor(from + (to - from) * eased));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    const id = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(id);
+  }, [to, duration]);
+  return <span dir="ltr">{val.toLocaleString("fa-IR")}</span>;
+}
+
+
+function GraphPreview() {
+  const points = Array.from({ length: 24 }).map((_, i) => 30 + Math.round(20 * Math.sin(i / 2) + Math.random() * 8));
+  return (
+    <svg viewBox="0 0 240 100" className="w-full h-32">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(79,70,229,.5)" />
+          <stop offset="100%" stopColor="rgba(79,70,229,0)" />
+        </linearGradient>
+      </defs>
+      <path
+        d={"M 0 80 " + points.map((p, i) => `L ${i * 10} ${100 - p}`).join(" ")}
+        fill="none"
+        stroke="rgb(79,70,229)"
+        strokeWidth="2"
+      />
+      <path
+        d={`M 0 100 ${points.map((p, i) => `L ${i * 10} ${100 - p}`).join(" ")} L 230 100 Z`}
+        fill="url(#g)"
+      />
+    </svg>
   );
 }

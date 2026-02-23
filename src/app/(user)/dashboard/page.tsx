@@ -67,29 +67,29 @@ export default async function DashboardPage() {
   });
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">خوش آمدید، {session.user.name}</h1>
-        <p className="text-muted-foreground">خلاصه فعالیت‌ها و آزمون‌های شما</p>
+    <div className="space-y-10 md:space-y-12">
+      <div className="space-y-2">
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">خوش آمدید، {session.user.name}</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">خلاصه فعالیت‌ها و آزمون‌های شما</p>
       </div>
 
       <UserUsageWidget />
 
-      <div className="grid gap-6 md:grid-cols-3">
-        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0 shadow-lg">
+      <div className="grid gap-6 lg:gap-8 md:grid-cols-3">
+        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0 shadow-lg rounded-2xl overflow-hidden transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5">
           <CardHeader className="pb-2">
-            <CardDescription className="text-blue-100">کل آزمون‌ها</CardDescription>
-            <CardTitle className="text-4xl">{totalAttempts}</CardTitle>
+            <CardDescription className="text-blue-100 text-sm">کل آزمون‌ها</CardDescription>
+            <CardTitle className="text-3xl sm:text-4xl">{totalAttempts}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-blue-100">{completedAttemptsCount} آزمون تکمیل شده</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-0 shadow-lg">
+        <Card className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border-0 shadow-lg rounded-2xl overflow-hidden transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5">
           <CardHeader className="pb-2">
-            <CardDescription className="text-emerald-100">میانگین نمرات</CardDescription>
-            <CardTitle className="text-4xl">
+            <CardDescription className="text-emerald-100 text-sm">میانگین نمرات</CardDescription>
+            <CardTitle className="text-3xl sm:text-4xl">
               {avgScore._avg.score ? Math.round(avgScore._avg.score) : 0}%
             </CardTitle>
           </CardHeader>
@@ -98,10 +98,10 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-amber-500 to-amber-600 text-white border-0 shadow-lg">
+        <Card className="bg-gradient-to-br from-amber-500 to-amber-600 text-white border-0 shadow-lg rounded-2xl overflow-hidden transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5">
           <CardHeader className="pb-2">
-            <CardDescription className="text-amber-100">اشتراک فعال</CardDescription>
-            <CardTitle className="text-2xl">
+            <CardDescription className="text-amber-100 text-sm">اشتراک فعال</CardDescription>
+            <CardTitle className="text-2xl sm:text-3xl">
               {activeSubscription?.plan?.name ? activeSubscription.plan.name : "رایگان"}
             </CardTitle>
           </CardHeader>
@@ -124,9 +124,9 @@ export default async function DashboardPage() {
       <div className="grid gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
           <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold">آزمون‌های پیشنهادی</h2>
+            <h2 className="text-xl sm:text-2xl font-bold">آزمون‌های پیشنهادی</h2>
             <Link href="/exams">
-              <Button variant="ghost" size="sm">مشاهده همه</Button>
+              <Button variant="outline" size="sm" className="rounded-full px-4">مشاهده همه</Button>
             </Link>
           </div>
           <div className="grid gap-6 md:grid-cols-2">
@@ -135,7 +135,7 @@ export default async function DashboardPage() {
             ))}
           </div>
           {activeExams.length === 0 && (
-            <Card className="bg-muted/50 border-dashed">
+            <Card className="bg-muted/50 border-dashed rounded-2xl">
               <CardContent className="py-12 text-center text-muted-foreground">
                 در حال حاضر آزمونی در دسترس نیست
               </CardContent>
@@ -147,16 +147,16 @@ export default async function DashboardPage() {
           <InvitationsList />
           
           <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold">فعالیت‌های اخیر</h2>
+            <h2 className="text-xl sm:text-2xl font-bold">فعالیت‌های اخیر</h2>
             <Link href="/history">
-              <Button variant="ghost" size="sm">تاریخچه</Button>
+              <Button variant="outline" size="sm" className="rounded-full px-4">تاریخچه</Button>
             </Link>
           </div>
           <div className="space-y-4">
             {recentAttempts.length > 0 ? (
               recentAttempts.map((attempt) => (
-                <Card key={attempt.id} className="overflow-hidden hover:shadow-md transition-shadow">
-                  <CardContent className="p-4">
+                <Card key={attempt.id} className="rounded-2xl border-border/60 hover:shadow-md transition-all duration-200">
+                  <CardContent className="p-5">
                     <div className="flex justify-between items-center">
                       <div className="space-y-1">
                         <h3 className="font-semibold text-sm line-clamp-1">{attempt.exam.title}</h3>
@@ -180,7 +180,7 @@ export default async function DashboardPage() {
                 </Card>
               ))
             ) : (
-              <Card className="bg-muted/50 border-dashed">
+              <Card className="bg-muted/50 border-dashed rounded-2xl">
                 <CardContent className="py-8 text-center text-muted-foreground text-sm">
                   هنوز آزمونی شرکت نکرده‌اید
                 </CardContent>

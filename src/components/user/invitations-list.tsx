@@ -83,9 +83,9 @@ export function InvitationsList() {
 
   if (invitations.length === 0) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+      <Card className="rounded-2xl border-border/60">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-lg">
             <Users className="h-5 w-5 text-blue-500" />
             دعوت‌نامه‌ها
           </CardTitle>
@@ -101,9 +101,9 @@ export function InvitationsList() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+    <Card className="rounded-2xl border-border/60">
+      <CardHeader className="pb-3">
+        <CardTitle className="flex items-center gap-2 text-lg">
           <Users className="h-5 w-5 text-blue-500" />
           دعوت‌نامه‌ها
         </CardTitle>
@@ -113,7 +113,7 @@ export function InvitationsList() {
         {invitations.map((invitation) => (
           <div
             key={invitation.id}
-            className="border rounded-lg p-4 space-y-3"
+            className="border rounded-xl p-4 space-y-3 bg-muted/30 hover:bg-muted/50 transition-colors"
           >
             <div className="flex items-start justify-between">
               <div className="space-y-2">
@@ -137,7 +137,7 @@ export function InvitationsList() {
                   {new Date(invitation.createdAt).toLocaleDateString("fa-IR")}
                 </div>
               </div>
-              <div className="flex flex-col items-end gap-2">
+                <div className="flex flex-col items-end gap-2">
                 {getStatusBadge(invitation.status)}
                 {invitation.status === "PENDING" && (
                   <div className="flex gap-2">
@@ -149,7 +149,7 @@ export function InvitationsList() {
                         handleResponse(invitation.id, "reject");
                       }}
                       disabled={isLoading}
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg"
                     >
                       <X className="h-4 w-4" />
                       رد
@@ -161,7 +161,7 @@ export function InvitationsList() {
                         handleResponse(invitation.id, "accept");
                       }}
                       disabled={isLoading}
-                      className="text-green-600 hover:text-green-700 hover:bg-green-50"
+                        className="text-green-600 hover:text-green-700 hover:bg-green-50 rounded-lg"
                     >
                       <Check className="h-4 w-4" />
                       پذیرش

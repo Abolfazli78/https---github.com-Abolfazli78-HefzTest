@@ -57,6 +57,12 @@ export interface AssignableStudent {
 export interface CustomExamBuilderProps {
   role: CustomExamRole;
   assignableStudents?: AssignableStudent[];
+  demoMode?: boolean;
+  demoConfig?: {
+    juzRange: [number, number];
+    year: string;
+    questionCount: number;
+  };
 }
 
 const YEAR_OPTIONS = Array.from({ length: 20 }, (_, i) => ({
@@ -86,7 +92,7 @@ function getSuccessRedirect(role: CustomExamRole): string {
   }
 }
 
-export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilderProps) {
+export function CustomExamBuilder({ role, assignableStudents, demoMode = false, demoConfig }: CustomExamBuilderProps) {
   const router = useRouter();
   const [subscriptionInfo, setSubscriptionInfo] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -113,11 +119,59 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
     allowRetake: false,
   });
 
+  const isQuickDemo = demoMode && !demoConfig;
+
   const minQuestionLimit = useMemo(() => getMinQuestionLimit(quranSelection), [quranSelection]);
 
   useEffect(() => {
     setQuestionCountError("");
   }, [currentStep]);
+
+  // Demo mode: set defaults and jump to final step
+  useEffect(() => {
+    if (!demoMode) return;
+    const isQuickDemo = demoMode && !demoConfig;
+    if (isQuickDemo) {
+      setQuranSelection({
+        ...initialQuranSelectionState,
+        useSurahFilter: false,
+        useJuzFilter: true,
+        surahSelectionMode: "range",
+        juzSelectionMode: "multiple",
+        selectedJuz: [1, 2, 3, 4, 5, 6],
+      });
+      setYearRange({ fromYear: "1404", toYear: "1404" });
+      setSelectedDifficulty("Medium");
+      setExamSettings((prev) => ({
+        ...prev,
+        title: prev.title || "آزمون دمو جزء ۱ تا ۶",
+        duration: "20",
+        questionCount: "30",
+      }));
+      setCurrentStep(6);
+      return;
+    }
+    if (demoConfig) {
+      setQuranSelection({
+        ...initialQuranSelectionState,
+        useSurahFilter: false,
+        useJuzFilter: true,
+        surahSelectionMode: "range",
+        juzSelectionMode: "multiple",
+        selectedJuz: [],
+        fromJuz: demoConfig.juzRange[0],
+        toJuz: demoConfig.juzRange[1],
+      });
+      setYearRange({ fromYear: demoConfig.year, toYear: demoConfig.year });
+      setSelectedDifficulty("Medium");
+      setExamSettings((prev) => ({
+        ...prev,
+        duration: "20",
+        questionCount: String(demoConfig.questionCount),
+      }));
+      setCurrentStep(1);
+    }
+  }, [demoMode, demoConfig]);
 
   const handleTopicChange = (value: string, checked: boolean) => {
     if (checked) {
@@ -221,6 +275,21 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
         return;
       }
 
+      if (demoMode && demoConfig) {
+        const params = new URLSearchParams();
+        params.set("take", "1");
+        params.set("year", demoConfig.year);
+        const demoJuzValues = Array.from(
+          { length: demoConfig.juzRange[1] - demoConfig.juzRange[0] + 1 },
+          (_, i) => String(demoConfig.juzRange[0] + i)
+        );
+        params.set("juz", demoJuzValues.join(","));
+        params.set("count", String(questionCount));
+        if (examSettings.title) params.set("title", examSettings.title);
+        router.push(`/demo?${params.toString()}`);
+        return;
+      }
+
       const quranPayload = quranSelectionToApiPayload(quranSelection);
 
       const topicPayload =
@@ -295,7 +364,7 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
     }
   }, []);
 
-  const showLock = loading || !subscriptionInfo?.hasActiveSubscription;
+  const showLock = demoMode ? false : (loading || !subscriptionInfo?.hasActiveSubscription);
 
   return (
     <div className="space-y-8">
@@ -381,6 +450,15 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
                     onChange={setQuranSelection}
                     surahSearch={surahSearch}
                     onSurahSearchChange={setSurahSearch}
+                    allowSurahFilter={demoConfig ? false : true}
+                    allowedJuz={
+                      demoConfig
+                        ? Array.from(
+                            { length: demoConfig.juzRange[1] - demoConfig.juzRange[0] + 1 },
+                            (_, i) => demoConfig.juzRange[0] + i
+                          )
+                        : undefined
+                    }
                   />
                 )}
 
@@ -402,7 +480,11 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
                             </SelectTrigger>
                             <SelectContent>
                               {YEAR_OPTIONS.map((year) => (
-                                <SelectItem key={year.value} value={year.value}>
+                                <SelectItem
+                                  key={year.value}
+                                  value={year.value}
+                                  disabled={!!demoConfig && year.value !== demoConfig.year}
+                                >
                                   {year.label}
                                 </SelectItem>
                               ))}
@@ -425,7 +507,10 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
                                 <SelectItem
                                   key={year.value}
                                   value={year.value}
-                                  disabled={parseInt(year.value) < parseInt(yearRange.fromYear)}
+                                  disabled={
+                                    parseInt(year.value) < parseInt(yearRange.fromYear) ||
+                                    (!!demoConfig && year.value !== demoConfig.year)
+                                  }
                                 >
                                   {year.label}
                                 </SelectItem>
@@ -578,6 +663,7 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
                             onChange={(e) => {
                               setExamSettings((prev) => ({ ...prev, questionCount: e.target.value }));
                             }}
+                            disabled={!!demoConfig}
                           />
                           {questionCountError && (
                             <p className="text-xs text-red-600 mt-1">{questionCountError}</p>
@@ -740,10 +826,17 @@ export function CustomExamBuilder({ role, assignableStudents }: CustomExamBuilde
                     <ChevronRight className="ml-2 h-4 w-4" />
                     مرحله قبل
                   </Button>
-                  <Button onClick={currentStep === 6 ? handleSubmitExam : handleNextStep}>
-                    {currentStep === 6 ? "ایجاد آزمون" : "مرحله بعد"}
-                    <ChevronLeft className="mr-2 h-4 w-4" />
-                  </Button>
+                  {isQuickDemo ? (
+                    <Button onClick={() => router.push("/demo?take=1&year=1404&juz=1,2,3,4,5&count=25&topic=memorization,concepts")}> 
+                      شروع دمو
+                      <ChevronLeft className="mr-2 h-4 w-4" />
+                    </Button>
+                  ) : (
+                    <Button onClick={currentStep === 6 ? handleSubmitExam : handleNextStep}>
+                      {currentStep === 6 ? "ایجاد آزمون" : "مرحله بعد"}
+                      <ChevronLeft className="mr-2 h-4 w-4" />
+                    </Button>
+                  )}
                 </div>
               </CardContent>
             </Card>

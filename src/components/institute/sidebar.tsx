@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
@@ -113,7 +113,7 @@ export function InstituteSidebar({ quotaUsage }: { quotaUsage: QuotaUsageSummary
                         exit={{ opacity: 0, x: 20 }}
                     >
                         <Link href="/" className="flex items-center gap-3 font-bold text-xl tracking-tight text-white">
-                            <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-8 w-auto" />
+                            <img src="/logo.png" alt="تست حفظ" className="h-8 object-contain" />
                             <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent font-black">
                                 پنل مدیر موسسه
                             </span>
@@ -122,7 +122,7 @@ export function InstituteSidebar({ quotaUsage }: { quotaUsage: QuotaUsageSummary
                 )}
                 {isCollapsed && (
                     <div className="flex justify-center w-full">
-                        <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-8 w-auto" />
+                        <img src="/logo.png" alt="تست حفظ" className="h-8 object-contain" />
                     </div>
                 )}
                 {!isCollapsed && <NotificationCenter />}

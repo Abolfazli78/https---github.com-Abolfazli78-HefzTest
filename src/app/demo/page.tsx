@@ -1,62 +1,70 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { JsonLd } from "@/components/seo/json-ld";
-import { breadcrumbJsonLd } from "@/components/seo/breadcrumbs";
-import { SeoPillarLayout } from "@/components/seo/pillar-layout";
-import { SeoCtaRow } from "@/components/seo/cta-row";
+import { db } from "@/lib/db";
+import DemoExam from "@/components/demo/DemoExam";
+import { CustomExamBuilder } from "@/components/exams/CustomExamBuilder";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-export const metadata: Metadata = {
-  title: "دموی سیستم | آزمون آنلاین حفظ قرآن و مدیریت موسسات",
-  description:
-    "دموی سامانه حفظ تست برای آشنایی با آزمون آنلاین حفظ قرآن، گزارش پیشرفت و امکانات مدیریت آموزشی موسسات. درخواست دمو و شروع رایگان.",
-  alternates: {
-    canonical: "https://hefztest.ir/demo",
-  },
-};
+export default async function DemoUnifiedPage(props: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  const searchParams = await props.searchParams;
+  const takeParam = Array.isArray(searchParams?.take) ? searchParams.take[0] : (searchParams?.take as string | undefined);
+  const take = takeParam === "1";
 
-export default function Page() {
-  const breadcrumbs = breadcrumbJsonLd([
-    { name: "خانه", item: "https://hefztest.ir/" },
-    { name: "دموی سیستم", item: "https://hefztest.ir/demo" },
-  ]);
+  if (take) {
+    const yearParam = Array.isArray(searchParams.year) ? searchParams.year[0] : (searchParams.year as string | undefined);
+    const year = parseInt(yearParam || "1404", 10);
+    const countParam = Array.isArray(searchParams.count) ? searchParams.count[0] : (searchParams.count as string | undefined);
+    const count = Math.min(25, Math.max(1, parseInt(countParam || "25", 10)));
+    const juzParam = Array.isArray(searchParams.juz) ? searchParams.juz[0] : (searchParams.juz as string | undefined);
+    const topicsParam = Array.isArray(searchParams.topic) ? searchParams.topic[0] : (searchParams.topic as string | undefined);
+    const allowedJuz = (juzParam || "1,2,3,4,5")
+      .split(",")
+      .map((x: string) => parseInt(x, 10))
+      .filter((x: number) => !Number.isNaN(x));
+    const topics = (topicsParam || "")
+      .split(",")
+      .map((x: string) => x.trim())
+      .filter((x: string) => !!x);
+
+    const where: any = {
+      isActive: true,
+      year,
+      juz: { in: allowedJuz },
+    };
+    if (topics.length > 0) {
+      where.topic = { in: topics };
+    }
+
+    const questions = await db.question.findMany({
+      where,
+      orderBy: { id: "asc" },
+      take: count,
+      select: {
+        id: true,
+        questionText: true,
+        optionA: true,
+        optionB: true,
+        optionC: true,
+        optionD: true,
+        correctAnswer: true,
+      },
+    });
+
+    return <DemoExam questions={questions as any} />;
+  }
 
   return (
-    <>
-      <JsonLd data={breadcrumbs} />
-      <SeoPillarLayout>
-        <header className="space-y-4">
-          <h1 className="text-3xl font-bold leading-relaxed">مشاهده دموی سیستم حفظ تست</h1>
-          <p className="text-base leading-8 text-slate-700 dark:text-slate-300">
-            در این صفحه می‌توانید با قابلیت‌های اصلی سامانه آشنا شوید: <strong>آزمون آنلاین حفظ قرآن</strong>، ثبت خطا،
-            <strong> گزارش پیشرفت حافظان قرآن</strong> و ابزارهای <strong>مدیریت آموزشی موسسات</strong>. اگر قصد دارید قبل از ثبت‌نام
-            امکانات را ببینید، این دمو بهترین نقطه شروع است.
-          </p>
-          <SeoCtaRow />
-        </header>
-
-        <section className="mt-10 space-y-4">
-          <h2 className="text-2xl font-semibold">چه چیزهایی در دمو می‌بینید؟</h2>
-          <ul className="list-disc pr-6 space-y-2 text-slate-700 dark:text-slate-300">
-            <li>نمونه جریان برگزاری آزمون و نمایش نتیجه</li>
-            <li>نمونه گزارش پیشرفت و تحلیل خطا</li>
-            <li>نمای کلی پنل‌های نقش‌محور (قرآن‌آموز، معلم، مدیر موسسه)</li>
-          </ul>
-        </section>
-
-        <section className="mt-10 space-y-4">
-          <h2 className="text-2xl font-semibold">لینک‌های پیشنهادی برای مطالعه</h2>
-          <p className="leading-8 text-slate-700 dark:text-slate-300">
-            <Link className="underline" href="/azmoon-online-hifz-quran">آزمون آنلاین حفظ قرآن</Link>
-          </p>
-          <p className="leading-8 text-slate-700 dark:text-slate-300">
-            <Link className="underline" href="/modiriyat-amoozeshi-moassesat">مدیریت آموزشی موسسات</Link>
-          </p>
-        </section>
-
-        <footer className="mt-12">
-          <SeoCtaRow />
-        </footer>
-      </SeoPillarLayout>
-    </>
+    <div className="container mx-auto py-8 px-4 space-y-8">
+      <div className="text-center mb-2">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">ساخت آزمون دلخواه (دمو محدود)</h1>
+        <p className="text-gray-600">برای استفاده آزمایشی می‌توانید جزء ۱ تا ۵ و سال ۱۴۰۴ را انتخاب کنید. تعداد سوال: ۲۵.</p>
+      </div>
+      <CustomExamBuilder role="USER" demoMode demoConfig={{ juzRange: [1, 5], year: "1404", questionCount: 25 }} />
+      <Card>
+        <CardHeader>
+          <CardTitle>راهنما</CardTitle>
+          <CardDescription>در مرحله نهایی، با کلیک روی ایجاد آزمون، دمو آغاز می‌شود و نتیجه محاسبه می‌گردد.</CardDescription>
+        </CardHeader>
+        <CardContent />
+      </Card>
+    </div>
   );
 }

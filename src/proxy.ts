@@ -1,26 +1,60 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { auth } from "@/lib/auth";
+import { NextRequest, NextResponse } from "next/server";
+
+const publicRoutes = [
+  "/features",
+  "/pricing",
+  "/about",
+  "/legal/terms",
+  "/legal/privacy",
+  "/demo",
+  "/",
+  "/rahnama-samane-test-hefz",
+  "/faq",
+];
+
+const authPages = [
+  "/login",
+  "/register",
+  "/forgot",
+  "/subscription-required",
+];
 
 export default async function proxy(request: NextRequest) {
-  const session = await auth();
-  const isAdmin = session?.user?.role === "ADMIN";
-  const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
+  const { pathname } = request.nextUrl;
 
-  // Allow access to public routes
-  const publicRoutes = ["/", "/login", "/register", "/forgot"];
-  if (publicRoutes.includes(request.nextUrl.pathname)) {
+  const isPublic = publicRoutes.some((route) => pathname === route || pathname.startsWith(`${route}/`));
+  if (isPublic) {
     return NextResponse.next();
   }
 
-  // Require authentication for protected routes
-  if (!session) {
-    return NextResponse.redirect(new URL("/login", request.url));
+  const hasSession = Boolean(
+    request.cookies.get("__Secure-next-auth.session-token") ||
+    request.cookies.get("next-auth.session-token") ||
+    request.cookies.get("__Secure-authjs.session-token") ||
+    request.cookies.get("authjs.session-token")
+  );
+
+  const isAuthPage = authPages.some((route) => pathname === route || pathname.startsWith(`${route}/`));
+  if (isAuthPage) {
+    if (pathname === "/login" && hasSession) {
+      const callbackUrl = request.nextUrl.searchParams.get("callbackUrl");
+      if (callbackUrl) {
+        try {
+          const decoded = decodeURIComponent(callbackUrl);
+          return NextResponse.redirect(decoded || "/dashboard");
+        } catch {
+          return NextResponse.redirect(callbackUrl);
+        }
+      }
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
+    return NextResponse.next();
   }
 
-  // Redirect non-admin users trying to access admin routes
-  if (isAdminRoute && !isAdmin) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+  if (!hasSession) {
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("callbackUrl", request.url);
+    return NextResponse.redirect(loginUrl);
   }
 
   return NextResponse.next();

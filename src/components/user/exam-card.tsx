@@ -23,10 +23,10 @@ interface ExamCardProps {
 
 export function ExamCard({ exam }: ExamCardProps) {
   return (
-    <Card className="hover:shadow-lg transition-shadow">
-      <CardHeader>
-        <div className="flex justify-between items-start mb-2">
-          <CardTitle className="text-xl">{exam.title}</CardTitle>
+    <Card className="rounded-2xl border-border/60 hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
+      <CardHeader className="pb-3">
+        <div className="flex justify-between items-start gap-3 mb-2">
+          <CardTitle className="text-lg sm:text-xl line-clamp-1">{exam.title}</CardTitle>
           <Badge variant={exam.accessLevel === "FREE" ? "default" : "secondary"}>
             {exam.accessLevel === "FREE" ? "رایگان" : "اشتراکی"}
           </Badge>
@@ -34,14 +34,14 @@ export function ExamCard({ exam }: ExamCardProps) {
         {(() => {
             const cleanDescription = parseDescription(exam.description || null);
             return cleanDescription !== "بدون توضیحات" ? (
-                <CardDescription className="arabic-text">
+                <CardDescription className="arabic-text text-sm leading-7">
                     {cleanDescription}
                 </CardDescription>
             ) : null;
         })()}
       </CardHeader>
-      <CardContent>
-        <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground">
+      <CardContent className="pt-0">
+        <div className="flex items-center gap-4 mb-4 text-xs sm:text-sm text-muted-foreground">
           <div className="flex items-center gap-1">
             <Clock className="h-4 w-4" />
             <span>{exam.duration} دقیقه</span>
@@ -52,7 +52,7 @@ export function ExamCard({ exam }: ExamCardProps) {
           </div>
         </div>
         <Link href={`/exams/${exam.id}`}>
-          <Button className="w-full">
+          <Button className="w-full rounded-xl">
             شروع آزمون
             <ArrowLeft className="mr-2 h-4 w-4" />
           </Button>

@@ -45,7 +45,7 @@ export function UsageTracker({ tone = "light", title, used, limit, className }: 
             <Progress
                 value={percent}
                 indicatorClassName={indicatorClassName}
-                className={cn("h-2", trackClassName)}
+                className={cn("h-3", trackClassName)}
             />
         </div>
     );

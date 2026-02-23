@@ -5,12 +5,86 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Crown, Zap, Users, GraduationCap, Building, Check, X, AlertCircle } from "lucide-react";
-import { useSubscription } from "@/hooks/use-subscription";
+import { useSubscription, type SubscriptionInfo } from "@/hooks/use-subscription";
 import { FEATURES } from "@/lib/subscription-middleware";
 
 interface SubscriptionDashboardProps {
   showUpgradeButton?: boolean;
   compact?: boolean;
+}
+
+type QuotaKey = keyof SubscriptionInfo["quotas"];
+
+type GetQuotaUsage = (quotaKey: QuotaKey) => {
+  used: number;
+  limit: number;
+  percentage: number;
+};
+
+interface QuotaDisplayProps {
+  quotaKey: QuotaKey;
+  label: string;
+  icon: React.ReactNode;
+  getQuotaUsage: GetQuotaUsage;
+  tier: SubscriptionInfo["tier"];
+}
+
+interface FeatureListProps {
+  features: string[];
+}
+
+function QuotaDisplay({ quotaKey, label, icon, getQuotaUsage, tier }: QuotaDisplayProps) {
+  const usage = getQuotaUsage(quotaKey);
+
+  if (usage.limit === 0 && tier !== "STUDENT") return null;
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center justify-between text-sm">
+        <div className="flex items-center gap-2">
+          {icon}
+          <span>{label}</span>
+        </div>
+        <span className="text-muted-foreground">
+          {usage.limit === -1 ? "نامحدود" : `${usage.used} / ${usage.limit}`}
+        </span>
+      </div>
+      {usage.limit > 0 && <Progress value={usage.percentage} className="h-2" />}
+    </div>
+  );
+}
+
+function FeatureList({ features }: FeatureListProps) {
+  const featureTranslations: Record<string, string> = {
+    [FEATURES.BASIC_EXAMS]: "آزمون‌های پایه",
+    [FEATURES.PERFORMANCE_TRACKING]: "پیگیری عملکرد",
+    [FEATURES.LEADERBOARD_ACCESS]: "دسترسی به رده‌بندی",
+    [FEATURES.UNLIMITED_EXAMS]: "آزمون نامحدود",
+    [FEATURES.ADVANCED_ANALYTICS]: "تحلیل‌های پیشرفته",
+    [FEATURES.EXAM_CREATION]: "ایجاد آزمون",
+    [FEATURES.STUDENT_MANAGEMENT]: "مدیریت دانش‌آموزان",
+    [FEATURES.QUESTION_BANK_ACCESS]: "دسترسی به بانک سوالات",
+    [FEATURES.CUSTOM_EXAMS]: "آزمون‌های سفارشی",
+    [FEATURES.TICKET_SUPPORT]: "پشتیبانی تیکت",
+    [FEATURES.CUSTOM_THEMES]: "پوسته‌های سفارشی",
+    [FEATURES.TEACHER_MANAGEMENT]: "مدیریت معلمان",
+    [FEATURES.WHITE_LABEL]: "برند سفید",
+    [FEATURES.BULK_OPERATIONS]: "عملیات انبوه",
+    [FEATURES.PRIORITY_SUPPORT]: "پشتیبانی اولویت‌دار",
+    [FEATURES.UNLIMITED_EVERYTHING]: "همه چیز نامحدود",
+    [FEATURES.DEDICATED_SUPPORT]: "پشتیبانی اختصاصی",
+  };
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+      {features.map((feature) => (
+        <div key={feature} className="flex items-center gap-2 text-sm">
+          <Check className="h-3 w-3 text-green-500" />
+          <span>{featureTranslations[feature] || feature}</span>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export function SubscriptionDashboard({ showUpgradeButton = true, compact = false }: SubscriptionDashboardProps) {
@@ -77,62 +151,6 @@ export function SubscriptionDashboard({ showUpgradeButton = true, compact = fals
     }
   };
 
-  const QuotaDisplay = ({ quotaKey, label, icon }: { quotaKey: any; label: string; icon: React.ReactNode }) => {
-    const usage = getQuotaUsage(quotaKey);
-    
-    if (usage.limit === 0 && subscriptionInfo.tier !== "STUDENT") return null;
-    
-    return (
-      <div className="space-y-2">
-        <div className="flex items-center justify-between text-sm">
-          <div className="flex items-center gap-2">
-            {icon}
-            <span>{label}</span>
-          </div>
-          <span className="text-muted-foreground">
-            {usage.limit === -1 ? "نامحدود" : `${usage.used} / ${usage.limit}`}
-          </span>
-        </div>
-        {usage.limit > 0 && (
-          <Progress value={usage.percentage} className="h-2" />
-        )}
-      </div>
-    );
-  };
-
-  const FeatureList = ({ features }: { features: string[] }) => {
-    const featureTranslations: Record<string, string> = {
-      [FEATURES.BASIC_EXAMS]: "آزمون‌های پایه",
-      [FEATURES.PERFORMANCE_TRACKING]: "پیگیری عملکرد",
-      [FEATURES.LEADERBOARD_ACCESS]: "دسترسی به رده‌بندی",
-      [FEATURES.UNLIMITED_EXAMS]: "آزمون نامحدود",
-      [FEATURES.ADVANCED_ANALYTICS]: "تحلیل‌های پیشرفته",
-      [FEATURES.EXAM_CREATION]: "ایجاد آزمون",
-      [FEATURES.STUDENT_MANAGEMENT]: "مدیریت دانش‌آموزان",
-      [FEATURES.QUESTION_BANK_ACCESS]: "دسترسی به بانک سوالات",
-      [FEATURES.CUSTOM_EXAMS]: "آزمون‌های سفارشی",
-      [FEATURES.TICKET_SUPPORT]: "پشتیبانی تیکت",
-      [FEATURES.CUSTOM_THEMES]: "پوسته‌های سفارشی",
-      [FEATURES.TEACHER_MANAGEMENT]: "مدیریت معلمان",
-      [FEATURES.WHITE_LABEL]: "برند سفید",
-      [FEATURES.BULK_OPERATIONS]: "عملیات انبوه",
-      [FEATURES.PRIORITY_SUPPORT]: "پشتیبانی اولویت‌دار",
-      [FEATURES.UNLIMITED_EVERYTHING]: "همه چیز نامحدود",
-      [FEATURES.DEDICATED_SUPPORT]: "پشتیبانی اختصاصی",
-    };
-
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-        {features.map((feature) => (
-          <div key={feature} className="flex items-center gap-2 text-sm">
-            <Check className="h-3 w-3 text-green-500" />
-            <span>{featureTranslations[feature] || feature}</span>
-          </div>
-        ))}
-      </div>
-    );
-  };
-
   return (
     <Card>
       <CardHeader>
@@ -175,28 +193,36 @@ export function SubscriptionDashboard({ showUpgradeButton = true, compact = fals
           <div className="space-y-4">
             <h4 className="font-medium">محدودیت‌های ماهانه</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <QuotaDisplay 
+              <QuotaDisplay
                 quotaKey="maxExamsPerMonth" 
                 label="آزمون" 
                 icon={<Zap className="h-4 w-4" />}
+                getQuotaUsage={getQuotaUsage}
+                tier={subscriptionInfo.tier}
               />
-              <QuotaDisplay 
+              <QuotaDisplay
                 quotaKey="maxQuestionsPerMonth" 
                 label="سوال" 
                 icon={<AlertCircle className="h-4 w-4" />}
+                getQuotaUsage={getQuotaUsage}
+                tier={subscriptionInfo.tier}
               />
               {(subscriptionInfo.tier === "TEACHER" || subscriptionInfo.tier === "INSTITUTE") && (
-                <QuotaDisplay 
+                <QuotaDisplay
                   quotaKey="maxStudentsAllowed" 
                   label="دانش‌آموز" 
                   icon={<Users className="h-4 w-4" />}
+                  getQuotaUsage={getQuotaUsage}
+                  tier={subscriptionInfo.tier}
                 />
               )}
               {subscriptionInfo.tier === "INSTITUTE" && (
-                <QuotaDisplay 
+                <QuotaDisplay
                   quotaKey="maxTeachersAllowed" 
                   label="معلم" 
                   icon={<GraduationCap className="h-4 w-4" />}
+                  getQuotaUsage={getQuotaUsage}
+                  tier={subscriptionInfo.tier}
                 />
               )}
             </div>

@@ -48,6 +48,8 @@ export interface QuranSelectionStepProps {
   onChange: (state: QuranSelectionState) => void;
   surahSearch?: string;
   onSurahSearchChange?: (value: string) => void;
+  allowSurahFilter?: boolean;
+  allowedJuz?: number[];
 }
 
 function formatSurahPreview(ids: number[], maxShow = 5): string {
@@ -72,6 +74,8 @@ export function QuranSelectionStep({
   onChange,
   surahSearch = "",
   onSurahSearchChange,
+  allowSurahFilter = true,
+  allowedJuz,
 }: QuranSelectionStepProps) {
   const updateState = useCallback(
     (partial: Partial<QuranSelectionState>) => {
@@ -210,6 +214,7 @@ export function QuranSelectionStep({
             id="use-surah-filter"
             checked={state.useSurahFilter}
             onCheckedChange={(checked) => setUseSurahFilter(checked === true)}
+            disabled={!allowSurahFilter}
           />
           <Label htmlFor="use-surah-filter" className="cursor-pointer font-medium">
             استفاده از فیلتر سوره
@@ -437,7 +442,11 @@ export function QuranSelectionStep({
                 </SelectTrigger>
                 <SelectContent>
                   {JUZ_OPTIONS.map((j) => (
-                    <SelectItem key={j.value} value={String(j.value)}>
+                    <SelectItem
+                      key={j.value}
+                      value={String(j.value)}
+                      disabled={!!allowedJuz && !allowedJuz.includes(j.value)}
+                    >
                       {j.label}
                     </SelectItem>
                   ))}
@@ -461,7 +470,8 @@ export function QuranSelectionStep({
                       key={j.value}
                       value={String(j.value)}
                       disabled={
-                        state.fromJuz != null && j.value < state.fromJuz
+                        (state.fromJuz != null && j.value < state.fromJuz) ||
+                        (!!allowedJuz && !allowedJuz.includes(j.value))
                       }
                     >
                       {j.label}
@@ -507,6 +517,7 @@ export function QuranSelectionStep({
                       id={`juz-${j.value}`}
                       checked={state.selectedJuz.includes(j.value)}
                       onCheckedChange={() => toggleJuz(j.value)}
+                      disabled={!!allowedJuz && !allowedJuz.includes(j.value)}
                     />
                     <Label
                       htmlFor={`juz-${j.value}`}
