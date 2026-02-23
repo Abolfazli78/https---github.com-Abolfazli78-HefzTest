@@ -191,7 +191,7 @@ export default function HomePage() {
             </div>
           </motion.div>
         </div>
-      </section>
+      </section> 
 
       {/* Role-based Features (Bento) */}
       <section className="relative py-16 md:py-20 bg-slate-50 dark:bg-slate-900/50">
@@ -257,58 +257,7 @@ export default function HomePage() {
       </section>
 
       {/* Trusted By */}
-      <section className="py-16 md:py-20 bg-white dark:bg-slate-950">
-        <div className="container mx-auto max-w-7xl px-4">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">اعتماد شده توسط موسسات آموزشی</h2>
-            <p className="mt-2 text-sm md:text-base text-slate-500 leading-relaxed">مراکز آموزشی که برای سنجش و آزمون به ما اعتماد کرده‌اند</p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
-            {['المهدی','الکوثر','نور','المبین','حکمت','طه'].map((name, i) => (
-              <div
-                key={i}
-                className="relative h-14 rounded-2xl ring-1 ring-slate-200 dark:ring-slate-800 flex items-center justify-center bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 overflow-hidden"
-              >
-                <div className="pointer-events-none absolute -z-10 inset-0 bg-gradient-to-br from-accent/10 via-transparent to-secondary/10 opacity-70" />
-                <span className="relative text-xs md:text-sm font-semibold tracking-wider text-slate-700 dark:text-slate-200">{name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section id="pricing" className="relative py-16 md:py-20">
-        <div className="pointer-events-none absolute -z-10 inset-0">
-          <div className="absolute -top-10 right-10 w-64 h-64 bg-secondary/10 blur-3xl rounded-full" />
-          <div className="absolute bottom-0 left-20 w-72 h-72 bg-accent/10 blur-3xl rounded-full" />
-          <div className="absolute inset-0 opacity-20 blur-3xl -z-10" style={{ background: 'radial-gradient(60% 60% at 80% 20%, rgba(30,41,59,0.25), transparent 60%), radial-gradient(50% 50% at 20% 80%, rgba(16,185,129,0.18), transparent 60%)' }} />
-        </div>
-        <div className="container mx-auto max-w-7xl px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 tracking-tight">پلن‌های اشتراک</h2>
-            <p className="text-sm md:text-base text-slate-500 leading-relaxed">امکانات حرفه‌ای با قیمت منصفانه برای هر سطح</p>
-          </div>
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.15 } } }}
-            className="grid gap-6 md:grid-cols-3"
-          >
-            <motion.div variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}>
-              <PriceCard title="رایگان" audience="مناسب برای مطالعه فردی" price="۰" cta="شروع رایگان" features={["دسترسی به تست‌های پایه", "ردیابی عملکرد محدود", "۱۰۰ سوال/ماه"]} />
-            </motion.div>
-            <motion.div variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}>
-              <PriceCard title="محبوب" audience="ویژه دبیران و مشاوران" price="۱۹۹٬۰۰۰" highlight cta="شروع اشتراک" features={["تمام امکانات پایه", "تست‌های نامحدود", "تحلیل پیشرفته", "پشتیبانی تیکت"]} />
-            </motion.div>
-            <motion.div variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}>
-              <PriceCard title="سازمانی" audience="قدرتمند برای مراکز آموزشی" price="تماس بگیرید" cta="درخواست دمو" features={["پنل موسسه و چند معلم", "دامنه و برندینگ اختصاصی", "سهمیه نامحدود", "پشتیبانی ویژه"]} />
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
+      
       {/* FAQ Section */}
       <section className="py-16 md:py-20">
         <div className="container mx-auto max-w-7xl px-4">
