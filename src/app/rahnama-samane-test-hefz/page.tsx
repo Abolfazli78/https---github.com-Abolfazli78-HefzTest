@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { CreateExamGallery } from "@/components/guide/create-exam-gallery";
 import {
   Info,
   UserPlus,
@@ -96,16 +97,8 @@ export default function Page() {
               <ClipboardCheck className="h-5 w-5 text-slate-700 dark:text-slate-300" />
               <h3 className="text-lg font-semibold">ایجاد آزمون تمرینی</h3>
             </div>
-            <div className="mt-4 relative rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50/80 dark:bg-slate-900/40 h-52 md:h-72 flex items-center justify-center text-sm text-slate-400">
-              محل درج تصویر صفحه «ساخت آزمون»
-              <div className="absolute bottom-4 right-4 flex gap-2">
-                {["۱", "۲", "۳", "۴", "۵"].map((label) => (
-                  <span key={label} className="h-7 w-7 rounded-full bg-white/90 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs flex items-center justify-center">
-                    {label}
-                  </span>
-                ))}
-              </div>
-            </div>
+            {/* گالری مراحل ساخت آزمون */}
+            <CreateExamGallery />
             <ol className="mt-5 space-y-2 list-decimal pr-5 text-slate-700 dark:text-slate-300">
               <li>انتخاب محدوده محفوظات</li>
               <li>انتخاب سال سوالات</li>
