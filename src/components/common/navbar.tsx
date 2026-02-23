@@ -2,7 +2,7 @@
 
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,7 +38,7 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-10">
             <Link href="/" className="flex items-center gap-2 group">
-              <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-10 w-auto" priority />
+              <img src="/logo.jpg" alt="تست حفظ" className="h-10 object-contain" />
               <span className="sr-only">تست حفظ</span>
             </Link>
 

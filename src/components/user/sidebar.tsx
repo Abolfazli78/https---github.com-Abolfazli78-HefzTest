@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -106,7 +106,7 @@ export function UserSidebar() {
                 <UpgradeModal open={upgradeOpen} onOpenChange={setUpgradeOpen} />
                 <div className="p-6 border-b border-border/60">
                     <Link href="/" className="flex items-center gap-2">
-                        <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-8 w-auto" />
+                        <img src="/logo.jpg" alt="تست حفظ" className="h-8 object-contain" />
                         <span className="text-xl font-bold bg-gradient-to-l from-primary to-blue-600 bg-clip-text text-transparent">
                             پنل کاربری
                         </span>
@@ -164,7 +164,7 @@ export function UserSidebar() {
                     <div className="absolute inset-y-0 right-0 w-72 bg-card/95 backdrop-blur-xl border-l shadow-2xl flex flex-col">
                         <div className="p-4 border-b border-border/60 flex items-center justify-between">
                             <Link href="/" className="flex items-center gap-2" onClick={() => setMobileOpen(false)}>
-                                <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-8 w-auto" />
+                                <img src="/logo.jpg" alt="تست حفظ" className="h-8 object-contain" />
                                 <span className="text-lg font-bold">پنل کاربری</span>
                             </Link>
                             <button

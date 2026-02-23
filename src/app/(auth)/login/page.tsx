@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { PhoneInputSimple } from "@/components/ui/phone-input-simple";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -99,7 +99,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="space-y-4 text-center">
           <div className="flex justify-center">
-            <Image src="/LOGO.jpg" alt="تست حفظ" width={160} height={48} className="h-12 w-auto" priority />
+            <img src="/logo.jpg" alt="تست حفظ" className="h-12 object-contain" />
           </div>
           <CardTitle className="text-3xl font-bold">ورود</CardTitle>
           <CardDescription className="text-base">
