@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CreateExamGallery } from "@/components/guide/create-exam-gallery";
+import { SimulatorGallery } from "@/components/guide/simulator-gallery";
 import {
   Info,
   UserPlus,
@@ -117,25 +118,7 @@ export default function Page() {
             <PlayCircle className="h-6 w-6 text-indigo-600" />
             <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">شبیه‌ساز آزمون رسمی</h2>
           </div>
-          <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-white/5 p-6 md:p-8">
-            <div className="flex items-center gap-3">
-              <PlayCircle className="h-5 w-5 text-slate-700 dark:text-slate-300" />
-              <h3 className="text-lg font-semibold">شرکت در آزمون استاندارد</h3>
-            </div>
-            <div className="mt-4 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50/80 dark:bg-slate-900/40 h-48 md:h-64 flex items-center justify-center text-sm text-slate-400">
-              محل درج تصویر انتخاب درجه
-            </div>
-            <div className="mt-4 grid gap-3 md:grid-cols-3">
-              {["درجه ۳", "درجه ۴", "درجه ۵"].map((item) => (
-                <div key={item} className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-white/5 p-4 text-center text-sm text-slate-700 dark:text-slate-300">
-                  {item}
-                </div>
-              ))}
-            </div>
-            <p className="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
-              در این بخش، آزمون مطابق ساختار رسمی اعطای مدرک برگزار می‌شود. تعداد سوالات و زمان پاسخ‌گویی بر اساس ضوابط استاندارد تنظیم شده است.
-            </p>
-          </div>
+          <SimulatorGallery />
         </section>
 
         <section className="mt-12 space-y-6">
