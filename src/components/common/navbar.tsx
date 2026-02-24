@@ -39,7 +39,7 @@ export function Navbar() {
           <div className="flex items-center gap-10">
             <Link href="/" className="flex items-center gap-1 p-0 group transition-opacity duration-200 hover:opacity-90">
               <img src="/logo2.png" alt="حفظ تست" className="h-14 w-auto block object-contain ml-3" />
-              <span className="flex flex-col mt-3 ml--2">
+              <span className="flex flex-col mt-3">
                 <span className="text-[20px] md:text-[22px] leading-none font-bold tracking-[-0.3px] text-brand whitespace-nowrap">
                   حفظ تست
                 </span>
