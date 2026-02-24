@@ -34,13 +34,21 @@ export function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/70 backdrop-blur-xl supports-[backdrop-filter]:bg-background/40">
-      <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
+      <div className="container mx-auto px-6">
+        <div className="flex h-20 items-center justify-between">
           <div className="flex items-center gap-10">
-            <Link href="/" className="flex items-center gap-2 group">
-              <img src="/logo.png" alt="تست حفظ" className="h-10 object-contain" />
-              <span className="sr-only">تست حفظ</span>
+            <Link href="/" className="flex items-center gap-1 p-0 group transition-opacity duration-200 hover:opacity-90">
+              <img src="/logo2.png" alt="حفظ تست" className="h-14 w-auto block object-contain ml-3" />
+              <span className="flex flex-col mt-3 ml--2">
+                <span className="text-[20px] md:text-[22px] leading-none font-bold tracking-[-0.3px] text-brand whitespace-nowrap">
+                  حفظ تست
+                </span>
+                <span className="hidden sm:block text-[11px] md:text-[12px] leading-[1.2] text-neutral-500 mt-[2px]">
+                  سامانه هوشمند آزمون
+                </span>
+              </span>
             </Link>
+            <div className="hidden md:block h-6 w-px bg-neutral-200" />
 
             <div className="hidden md:flex items-center gap-8">
               <NavLink href="/">صفحه اصلی</NavLink>

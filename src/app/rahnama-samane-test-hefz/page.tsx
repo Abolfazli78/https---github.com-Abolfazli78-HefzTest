@@ -3,6 +3,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CreateExamGallery } from "@/components/guide/create-exam-gallery";
 import { SimulatorGallery } from "@/components/guide/simulator-gallery";
+import { RegisterGallery } from "@/components/guide/register-gallery";
+import { LoginGallery } from "@/components/guide/login-gallery";
+import { ResultsGallery } from "@/components/guide/results-gallery";
 import {
   Info,
   UserPlus,
@@ -56,36 +59,9 @@ export default function Page() {
             <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">ثبت‌نام و ورود</h2>
           </div>
 
-          <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-white/5 p-6 md:p-8">
-            <div className="flex items-center gap-3">
-              <UserPlus className="h-5 w-5 text-slate-700 dark:text-slate-300" />
-              <h3 className="text-lg font-semibold">ثبت‌نام در سامانه</h3>
-            </div>
-            <div className="mt-4 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50/80 dark:bg-slate-900/40 h-48 md:h-64 flex items-center justify-center text-sm text-slate-400">
-              محل درج اسکرین‌شات صفحه ثبت‌نام
-            </div>
-            <ol className="mt-5 space-y-2 list-decimal pr-5 text-slate-700 dark:text-slate-300">
-              <li>ورود به صفحه ثبت‌نام</li>
-              <li>تکمیل اطلاعات کاربری</li>
-              <li>تأیید ثبت‌نام</li>
-            </ol>
-            <p className="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
-              ثبت‌نام در سامانه برای استفاده از آزمون‌ها الزامی است.
-            </p>
-          </div>
+          <RegisterGallery />
 
-          <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-white/5 p-6 md:p-8">
-            <div className="flex items-center gap-3">
-              <LogIn className="h-5 w-5 text-slate-700 dark:text-slate-300" />
-              <h3 className="text-lg font-semibold">ورود به پنل کاربری</h3>
-            </div>
-            <div className="mt-4 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50/80 dark:bg-slate-900/40 h-48 md:h-64 flex items-center justify-center text-sm text-slate-400">
-              محل درج تصویر صفحه ورود
-            </div>
-            <p className="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
-              پس از ثبت‌نام، با وارد کردن نام کاربری و رمز عبور وارد پنل کاربری خود شوید.
-            </p>
-          </div>
+          <LoginGallery />
         </section>
 
         <section className="mt-12 space-y-6">
@@ -126,23 +102,7 @@ export default function Page() {
             <ListChecks className="h-6 w-6 text-indigo-600" />
             <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">مشاهده کارنامه و تحلیل عملکرد</h2>
           </div>
-          <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-white/5 p-6 md:p-8">
-            <div className="flex items-center gap-3">
-              <Award className="h-5 w-5 text-slate-700 dark:text-slate-300" />
-              <h3 className="text-lg font-semibold">بررسی نتایج آزمون</h3>
-            </div>
-            <div className="mt-4 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50/80 dark:bg-slate-900/40 h-48 md:h-64 flex items-center justify-center text-sm text-slate-400">
-              محل درج تصویر صفحه کارنامه
-            </div>
-            <ul className="mt-5 space-y-2 text-slate-700 dark:text-slate-300">
-              <li>نمره کل</li>
-              <li>پاسخ‌های صحیح و نادرست</li>
-              <li>تحلیل عملکرد</li>
-            </ul>
-            <p className="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
-              پس از پایان آزمون، کارنامه بلافاصله نمایش داده می‌شود و امکان بررسی دقیق عملکرد برای کاربر فراهم است.
-            </p>
-          </div>
+          <ResultsGallery />
         </section>
 
         <section className="mt-12 space-y-8">

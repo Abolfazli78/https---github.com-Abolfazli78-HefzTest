@@ -199,7 +199,7 @@ export default function RegisterPage() {
           <Card className="bg-white/80 dark:bg-white/5 backdrop-blur-xl border-0 ring-1 ring-slate-200/70 dark:ring-slate-800 shadow-[0_20px_60px_rgba(2,6,23,0.10)] rounded-2xl overflow-hidden">
             <CardHeader className="p-8 sm:p-10 pb-6 text-center">
               <div className="mx-auto size-16 rounded-2xl bg-white dark:bg-slate-900 ring-1 ring-slate-200/70 dark:ring-slate-800 shadow-sm flex items-center justify-center">
-                <img src="/logo.png" alt="تست حفظ" className="h-9 object-contain" />
+                <img src="/logo.png" alt="تست حفظ" className="h-14 object-contain" />
               </div>
 
               <div className="mt-5 space-y-2">
