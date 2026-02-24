@@ -288,7 +288,7 @@ export default function HomePage() {
 
 {/* Footer */}
       <footer className="py-16 border-t bg-slate-950 text-slate-300">
-        <div className="container mx-auto px-4 grid gap-10 md:grid-cols-4">
+        <div className="container mx-auto px-4 grid gap-10 md:grid-cols-5">
           <div>
             <div className="flex items-center gap-2 mb-4">
               <img src="/logo.png" alt="تست حفظ" className="h-10 object-contain" />
@@ -319,6 +319,25 @@ export default function HomePage() {
               <li><Link href="/legal/privacy">حریم خصوصی</Link></li>
               <li><Link href="/legal/terms">قوانین و شرایط</Link></li>
             </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold mb-3 text-white">اعتماد و گواهی‌ها</h4>
+            <div className="flex items-center gap-3">
+              <a
+                href="https://trustseal.enamad.ir/?id=703130&Code=kNgW7VzcOfCfVGgOr0P8AvQrLKYUF0Yg"
+                target="_blank"
+                referrerPolicy="origin"
+                aria-label="نماد اعتماد الکترونیکی"
+              >
+                <img
+                  src="https://trustseal.enamad.ir/logo.aspx?id=703130&Code=kNgW7VzcOfCfVGgOr0P8AvQrLKYUF0Yg"
+                  referrerPolicy="origin"
+                  className="h-16 w-auto object-contain rounded-lg bg-white p-1 shadow ring-1 ring-slate-200"
+                  alt="نماد اعتماد الکترونیکی"
+                  code="kNgW7VzcOfCfVGgOr0P8AvQrLKYUF0Yg"
+                />
+              </a>
+            </div>
           </div>
         </div>
         <div className="container mx-auto px-4 mt-8 text-xs text-slate-500">© {new Date().getFullYear()} تمامی حقوق محفوظ است.</div>
