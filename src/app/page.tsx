@@ -376,14 +376,9 @@ function TestCardPreview() {
     <div className="w-full rounded-3xl ring-1 ring-slate-200 dark:ring-slate-800 bg-white/85 dark:bg-white/5 backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
       <div className="p-6">
         <div className="flex items-center justify-between mb-5">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-accent/15 to-secondary/10 ring-1 ring-inset ring-secondary/15 flex items-center justify-center">
-              <BookOpen className="h-5 w-5 text-secondary" />
-            </div>
-            <div>
-              <div className="text-sm text-slate-500">نمونه آزمون</div>
-              <div className="font-extrabold text-lg tracking-tight text-slate-900 dark:text-white">آزمون جزء ۳۰</div>
-            </div>
+          <div>
+            <div className="text-sm text-slate-500">نمونه آزمون</div>
+            <div className="font-extrabold text-lg tracking-tight text-slate-900 dark:text-white">آزمون جزء ۱ تا ۵</div>
           </div>
           <span className="text-xs px-3 py-1.5 rounded-full bg-accent/10 text-accent font-semibold">فعال</span>
         </div>
@@ -391,11 +386,11 @@ function TestCardPreview() {
         <div className="grid grid-cols-2 gap-3 text-xs text-slate-600 dark:text-slate-300 mb-5">
           <div className="rounded-2xl bg-slate-50/80 dark:bg-white/5 ring-1 ring-slate-200/60 dark:ring-slate-800 px-3 py-2">
             <div className="text-slate-500">تعداد سوال</div>
-            <div className="font-bold">۲۰ سوال</div>
+            <div className="font-bold">۲۵ سوال</div>
           </div>
           <div className="rounded-2xl bg-slate-50/80 dark:bg-white/5 ring-1 ring-slate-200/60 dark:ring-slate-800 px-3 py-2">
             <div className="text-slate-500">زمان</div>
-            <div className="font-bold">۱۵ دقیقه</div>
+            <div className="font-bold">۲۵ دقیقه</div>
           </div>
         </div>
 
