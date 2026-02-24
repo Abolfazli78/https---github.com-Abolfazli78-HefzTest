@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { User as UserIcon, GraduationCap, School, Mail, Lock, User, Phone, Shield, CheckCircle, ArrowLeft, Sparkles, Zap } from "lucide-react";
+import { User as UserIcon, GraduationCap, School, Mail, Lock, User, Phone, CheckCircle, Sparkles, Zap } from "lucide-react";
 // import Image from "next/image";
 import { PhoneInputSimple } from "@/components/ui/phone-input-simple";
 import Link from "next/link";
@@ -90,7 +90,7 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegisterForm) => {
     if (!isValid) {
-      setError("لطفاً تمام فیلدهای الزامی را correctly وارد کنید");
+      setError("لطفاً تمام فیلدهای الزامی را درست وارد کنید");
       return;
     }
 
@@ -175,383 +175,441 @@ export default function RegisterPage() {
   const canSubmit = isValid && watchedPhone && isOtpSent;
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100">
-      {/* Subtle background elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 -left-4 w-72 h-72 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
-        <div className="absolute top-0 -right-4 w-72 h-72 bg-gray-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-slate-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000"></div>
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute top-0 right-0 w-[520px] h-[520px] bg-primary/10 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-0 left-0 w-[520px] h-[520px] bg-accent/10 rounded-full blur-[120px] animate-pulse delay-700" />
+        <div
+          className="absolute inset-0 opacity-20 blur-3xl"
+          style={{
+            background:
+              "radial-gradient(60% 60% at 70% 20%, rgba(13,61,56,0.18), transparent 60%), radial-gradient(50% 50% at 20% 80%, rgba(16,185,129,0.14), transparent 60%)",
+          }}
+        />
+        <div className="absolute inset-0 [background-image:linear-gradient(to_right,rgba(2,6,23,0.045)_1px,transparent_1px),linear-gradient(to_bottom,rgba(2,6,23,0.045)_1px,transparent_1px)] bg-[size:24px_24px]" />
       </div>
 
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center px-4 py-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="w-full max-w-2xl"
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          className="w-full max-w-[480px]"
         >
-          {/* Main Card */}
-          <Card className="backdrop-blur-xl bg-white/90 border border-gray-200 shadow-2xl overflow-hidden">
-            {/* Header */}
-            <CardHeader className="space-y-6 text-center pb-8 relative">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-slate-600 via-gray-600 to-slate-600"></div>
-              
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                className="mx-auto w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-lg border border-slate-200"
-              >
-                <img src="/logo.png" alt="تست حفظ" className="h-12 object-contain" />
-              </motion.div>
-              
-              <div className="space-y-2">
-                <CardTitle className="text-4xl font-bold text-gray-800">
-                  به خانواده ما خوش آمدید
+          <Card className="bg-white/80 dark:bg-white/5 backdrop-blur-xl border-0 ring-1 ring-slate-200/70 dark:ring-slate-800 shadow-[0_20px_60px_rgba(2,6,23,0.10)] rounded-2xl overflow-hidden">
+            <CardHeader className="p-8 sm:p-10 pb-6 text-center">
+              <div className="mx-auto size-16 rounded-2xl bg-white dark:bg-slate-900 ring-1 ring-slate-200/70 dark:ring-slate-800 shadow-sm flex items-center justify-center">
+                <img src="/logo.png" alt="تست حفظ" className="h-9 object-contain" />
+              </div>
+
+              <div className="mt-5 space-y-2">
+                <CardTitle className="text-2xl sm:text-3xl font-extrabold tracking-tight text-primary">
+                  ساخت حساب کاربری
                 </CardTitle>
-                <CardDescription className="text-gray-600 text-lg">
-                  حساب کاربری خود را بسازید و به دنیای آموزش قدم بگذارید
+                <CardDescription className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+                  ثبت‌نام سریع و امن، با تایید شماره موبایل
                 </CardDescription>
               </div>
 
-              {/* Progress Steps */}
-              <div className="flex items-center justify-center space-x-4 space-x-reverse">
-                <div className="flex items-center">
-                  <div className={cn(
-                    "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all",
-                    currentStep >= 1 ? "bg-gradient-to-r from-slate-600 to-gray-700 text-white" : "bg-gray-200 text-gray-500"
-                  )}>
-                    {currentStep > 1 ? <CheckCircle className="w-4 h-4" /> : "1"}
-                  </div>
-                  <span className="mr-2 text-sm text-gray-600">اطلاعات پایه</span>
+              <div className="mt-6 flex items-center justify-center gap-2">
+                <div
+                  className={cn(
+                    "h-8 px-3 rounded-full text-xs font-semibold flex items-center gap-2 transition-colors",
+                    currentStep >= 1
+                      ? "bg-primary/5 text-primary ring-1 ring-primary/15"
+                      : "bg-muted text-muted-foreground ring-1 ring-border"
+                  )}
+                >
+                  <span className="size-5 rounded-full bg-white dark:bg-slate-900 ring-1 ring-border flex items-center justify-center text-[11px] font-bold">
+                    {currentStep > 1 ? <CheckCircle className="size-3.5 text-accent" /> : "۱"}
+                  </span>
+                  اطلاعات
                 </div>
-                <div className={cn(
-                  "w-12 h-0.5 transition-all",
-                  currentStep >= 2 ? "bg-gradient-to-r from-slate-600 to-gray-700" : "bg-gray-300"
-                )}></div>
-                <div className="flex items-center">
-                  <div className={cn(
-                    "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all",
-                    currentStep >= 2 ? "bg-gradient-to-r from-slate-600 to-gray-700 text-white" : "bg-gray-200 text-gray-500"
-                  )}>
-                    {currentStep > 2 ? <CheckCircle className="w-4 h-4" /> : "2"}
-                  </div>
-                  <span className="mr-2 text-sm text-gray-600">تأیید</span>
+                <div className="h-px w-8 bg-slate-200 dark:bg-slate-800" />
+                <div
+                  className={cn(
+                    "h-8 px-3 rounded-full text-xs font-semibold flex items-center gap-2 transition-colors",
+                    currentStep >= 2
+                      ? "bg-primary/5 text-primary ring-1 ring-primary/15"
+                      : "bg-muted text-muted-foreground ring-1 ring-border"
+                  )}
+                >
+                  <span className="size-5 rounded-full bg-white dark:bg-slate-900 ring-1 ring-border flex items-center justify-center text-[11px] font-bold">
+                    {currentStep > 2 ? <CheckCircle className="size-3.5 text-accent" /> : "۲"}
+                  </span>
+                  تایید
                 </div>
               </div>
             </CardHeader>
 
-            <CardContent className="px-8 pb-8">
+            <CardContent className="px-8 sm:px-10 pb-8 sm:pb-10">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <AnimatePresence mode="wait">
                   {error && (
                     <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 20 }}
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.2 }}
                     >
-                      <Alert variant="destructive" className="border-red-200 bg-red-50 text-red-800">
-                        <AlertDescription>{error}</AlertDescription>
+                      <Alert className="border-destructive/20 bg-destructive/5 text-foreground">
+                        <AlertDescription className="text-destructive/90">
+                          {error}
+                        </AlertDescription>
                       </Alert>
                     </motion.div>
                   )}
                   {info && (
                     <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 20 }}
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.2 }}
                     >
-                      <Alert className="border-green-200 bg-green-50 text-green-800">
-                        <AlertDescription>{info}</AlertDescription>
+                      <Alert className="border-accent/20 bg-accent/5 text-foreground">
+                        <AlertDescription className="text-primary">
+                          {info}
+                        </AlertDescription>
                       </Alert>
                     </motion.div>
                   )}
                 </AnimatePresence>
 
-                {/* Role Selection */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
-                  className="space-y-4"
+                  transition={{ delay: 0.05, duration: 0.25, ease: "easeOut" }}
+                  className="space-y-3"
                 >
-                  <Label className="text-lg font-semibold text-gray-700 flex items-center gap-2">
-                    <Shield className="w-5 h-5 text-slate-600" />
-                    نوع حساب کاربری خود را انتخاب کنید
-                  </Label>
+                  <div className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                    نوع حساب
+                  </div>
                   <RadioGroup
                     value={selectedRole}
-                    onValueChange={(value) => setValue("role", value as "STUDENT" | "TEACHER" | "INSTITUTE")}
-                    className="grid grid-cols-1 md:grid-cols-3 gap-4"
+                    onValueChange={(value) =>
+                      setValue("role", value as "STUDENT" | "TEACHER" | "INSTITUTE")
+                    }
+                    className="grid grid-cols-3 gap-2 rounded-xl bg-muted/60 p-2 ring-1 ring-border"
                   >
                     {[
-                      { value: "STUDENT", icon: UserIcon, label: "دانش‌آموز", desc: "آموزش و یادگیری" },
-                      { value: "TEACHER", icon: GraduationCap, label: "معلم", desc: "آموزش و تدریس" },
-                      { value: "INSTITUTE", icon: School, label: "مدیر موسسه", desc: "مدیریت آموزشگاه" }
-                    ].map((role, index) => (
-                      <motion.div
-                        key={role.value}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.2 + index * 0.1 }}
-                      >
-                        <div>
-                          <RadioGroupItem value={role.value} id={role.value} className="peer sr-only" />
-                          <Label
-                            htmlFor={role.value}
-                            className={cn(
-                              "flex flex-col items-center justify-between rounded-2xl border-2 p-6 cursor-pointer transition-all duration-300",
-                              "bg-white border-gray-200 hover:bg-gray-50 hover:border-slate-400",
-                              "peer-data-[state=checked]:bg-gradient-to-br peer-data-[state=checked]:from-slate-50 peer-data-[state=checked]:to-gray-50 peer-data-[state=checked]:border-slate-500 peer-data-[state=checked]:shadow-lg peer-data-[state=checked]:shadow-slate-200"
-                            )}
-                          >
-                            <role.icon className="mb-3 h-8 w-8 text-gray-500 peer-data-[state=checked]:text-slate-700" />
-                            <span className="text-base font-medium text-gray-700 peer-data-[state=checked]:text-slate-800">{role.label}</span>
-                            <span className="text-xs text-gray-500 mt-1">{role.desc}</span>
-                          </Label>
-                        </div>
-                      </motion.div>
+                      { value: "STUDENT", icon: UserIcon, label: "دانش‌آموز" },
+                      { value: "TEACHER", icon: GraduationCap, label: "معلم" },
+                      { value: "INSTITUTE", icon: School, label: "موسسه" },
+                    ].map((role) => (
+                      <div key={role.value}>
+                        <RadioGroupItem value={role.value} id={role.value} className="peer sr-only" />
+                        <Label
+                          htmlFor={role.value}
+                          className={cn(
+                            "h-10 rounded-lg px-3 flex items-center justify-center gap-2 cursor-pointer transition-all duration-200",
+                            "text-xs sm:text-sm font-semibold text-muted-foreground hover:text-foreground",
+                            "peer-data-[state=checked]:bg-white dark:peer-data-[state=checked]:bg-slate-900 peer-data-[state=checked]:text-primary",
+                            "peer-data-[state=checked]:shadow-sm peer-data-[state=checked]:ring-1 peer-data-[state=checked]:ring-primary/15"
+                          )}
+                        >
+                          <role.icon className="size-4" />
+                          {role.label}
+                        </Label>
+                      </div>
                     ))}
                   </RadioGroup>
                   {errors.role && (
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="text-sm text-red-600 flex items-center gap-1"
-                    >
+                    <div className="text-xs text-destructive/90">
                       {errors.role.message}
-                    </motion.p>
+                    </div>
                   )}
                 </motion.div>
 
-                {/* Personal Information */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="space-y-4"
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="name" className="text-gray-700 flex items-center gap-2">
-                        <User className="w-4 h-4 text-slate-600" />
-                        نام کامل
-                      </Label>
-                      <Input
-                        id="name"
-                        type="text"
-                        placeholder="نام کامل خود را وارد کنید"
-                        {...register("name")}
-                        className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-slate-500 focus:ring-slate-500/20"
-                      />
-                      {errors.name && (
-                        <motion.p
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          className="text-sm text-red-600"
-                        >
-                          {errors.name.message}
-                        </motion.p>
-                      )}
-                    </div>
+                <div className="h-px bg-slate-200/70 dark:bg-slate-800/80" />
 
-                    <div className="space-y-2">
-                      <Label htmlFor="email" className="text-gray-700 flex items-center gap-2">
-                        <Mail className="w-4 h-4 text-slate-600" />
-                        ایمیل (اختیاری)
-                      </Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="example@email.com"
-                        {...register("email")}
-                        className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-slate-500 focus:ring-slate-500/20"
-                        dir="ltr"
-                      />
-                      {errors.email && (
-                        <motion.p
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          className="text-sm text-red-600"
-                        >
-                          {errors.email.message}
-                        </motion.p>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1, duration: 0.25, ease: "easeOut" }}
+                  className="grid grid-cols-1 gap-4"
+                >
+                  <div className="relative">
+                    <Input
+                      id="name"
+                      type="text"
+                      placeholder=" "
+                      aria-invalid={!!errors.name}
+                      {...register("name")}
+                      className={cn(
+                        "peer h-12 rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur border-border",
+                        "pr-10 text-foreground placeholder:text-transparent",
+                        "focus-visible:ring-accent/20 focus-visible:border-accent",
+                        !errors.name && "aria-[invalid=false]:border-border"
                       )}
-                    </div>
+                    />
+                    <User className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+                    <Label
+                      htmlFor="name"
+                      className={cn(
+                        "pointer-events-none absolute right-10 transition-all duration-200",
+                        "text-slate-500 peer-focus:text-primary",
+                        "top-1/2 -translate-y-1/2 text-sm peer-focus:top-3 peer-focus:-translate-y-0 peer-focus:text-xs",
+                        "peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm",
+                        "peer-[&:not(:placeholder-shown)]:top-3 peer-[&:not(:placeholder-shown)]:-translate-y-0 peer-[&:not(:placeholder-shown)]:text-xs"
+                      )}
+                    >
+                      نام کامل
+                    </Label>
+                    {errors.name && (
+                      <div className="mt-1 text-xs text-destructive/90">
+                        {errors.name.message}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="relative">
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder=" "
+                      aria-invalid={!!errors.email}
+                      {...register("email")}
+                      className={cn(
+                        "peer h-12 rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur border-border",
+                        "pr-10 text-foreground placeholder:text-transparent",
+                        "focus-visible:ring-accent/20 focus-visible:border-accent"
+                      )}
+                      dir="ltr"
+                    />
+                    <Mail className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+                    <Label
+                      htmlFor="email"
+                      className={cn(
+                        "pointer-events-none absolute right-10 transition-all duration-200",
+                        "text-slate-500 peer-focus:text-primary",
+                        "top-1/2 -translate-y-1/2 text-sm peer-focus:top-3 peer-focus:-translate-y-0 peer-focus:text-xs",
+                        "peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm",
+                        "peer-[&:not(:placeholder-shown)]:top-3 peer-[&:not(:placeholder-shown)]:-translate-y-0 peer-[&:not(:placeholder-shown)]:text-xs"
+                      )}
+                    >
+                      ایمیل (اختیاری)
+                    </Label>
+                    {errors.email && (
+                      <div className="mt-1 text-xs text-destructive/90">
+                        {errors.email.message}
+                      </div>
+                    )}
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="text-gray-700 flex items-center gap-2">
-                      <Phone className="w-4 h-4 text-slate-600" />
+                    <div className="text-sm font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-2">
+                      <Phone className="size-4 text-slate-400" />
                       شماره موبایل
-                    </Label>
-                    <PhoneInputSimple
-                      value={watchedPhone || ""}
-                      onChange={handlePhoneChange}
-                    />
-                    <input
-                      type="hidden"
-                      {...register("phone")}
-                    />
+                    </div>
+                    <PhoneInputSimple value={watchedPhone || ""} onChange={handlePhoneChange} showCountrySelect={false} label="" />
+                    <input type="hidden" {...register("phone")} />
                     {errors.phone && (
-                      <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="text-sm text-red-600"
-                      >
+                      <div className="text-xs text-destructive/90">
                         {errors.phone.message}
-                      </motion.p>
+                      </div>
                     )}
                   </div>
                 </motion.div>
 
-                {/* Password Fields */}
+                <div className="h-px bg-slate-200/70 dark:bg-slate-800/80" />
+
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                  transition={{ delay: 0.15, duration: 0.25, ease: "easeOut" }}
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-4"
                 >
-                  <div className="space-y-2">
-                    <Label htmlFor="password" className="text-gray-700 flex items-center gap-2">
-                      <Lock className="w-4 h-4 text-slate-600" />
-                      رمز عبور
-                    </Label>
+                  <div className="relative">
                     <Input
                       id="password"
                       type="password"
-                      placeholder="••••••••"
+                      placeholder=" "
+                      aria-invalid={!!errors.password}
                       {...register("password")}
-                      className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-slate-500 focus:ring-slate-500/20"
+                      className={cn(
+                        "peer h-12 rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur border-border",
+                        "pr-10 text-foreground placeholder:text-transparent",
+                        "focus-visible:ring-accent/20 focus-visible:border-accent"
+                      )}
                     />
+                    <Lock className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+                    <Label
+                      htmlFor="password"
+                      className={cn(
+                        "pointer-events-none absolute right-10 transition-all duration-200",
+                        "text-slate-500 peer-focus:text-primary",
+                        "top-1/2 -translate-y-1/2 text-sm peer-focus:top-3 peer-focus:-translate-y-0 peer-focus:text-xs",
+                        "peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm",
+                        "peer-[&:not(:placeholder-shown)]:top-3 peer-[&:not(:placeholder-shown)]:-translate-y-0 peer-[&:not(:placeholder-shown)]:text-xs"
+                      )}
+                    >
+                      رمز عبور
+                    </Label>
                     {errors.password && (
-                      <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="text-sm text-red-600"
-                      >
+                      <div className="mt-1 text-xs text-destructive/90">
                         {errors.password.message}
-                      </motion.p>
+                      </div>
                     )}
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="confirmPassword" className="text-gray-700 flex items-center gap-2">
-                      <Lock className="w-4 h-4 text-slate-600" />
-                      تأیید رمز عبور
-                    </Label>
+                  <div className="relative">
                     <Input
                       id="confirmPassword"
                       type="password"
-                      placeholder="••••••••"
+                      placeholder=" "
+                      aria-invalid={!!errors.confirmPassword}
                       {...register("confirmPassword")}
-                      className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-slate-500 focus:ring-slate-500/20"
+                      className={cn(
+                        "peer h-12 rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur border-border",
+                        "pr-10 text-foreground placeholder:text-transparent",
+                        "focus-visible:ring-accent/20 focus-visible:border-accent"
+                      )}
                     />
+                    <Lock className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+                    <Label
+                      htmlFor="confirmPassword"
+                      className={cn(
+                        "pointer-events-none absolute right-10 transition-all duration-200",
+                        "text-slate-500 peer-focus:text-primary",
+                        "top-1/2 -translate-y-1/2 text-sm peer-focus:top-3 peer-focus:-translate-y-0 peer-focus:text-xs",
+                        "peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm",
+                        "peer-[&:not(:placeholder-shown)]:top-3 peer-[&:not(:placeholder-shown)]:-translate-y-0 peer-[&:not(:placeholder-shown)]:text-xs"
+                      )}
+                    >
+                      تکرار رمز
+                    </Label>
                     {errors.confirmPassword && (
-                      <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="text-sm text-red-600"
-                      >
+                      <div className="mt-1 text-xs text-destructive/90">
                         {errors.confirmPassword.message}
-                      </motion.p>
+                      </div>
                     )}
                   </div>
                 </motion.div>
 
-                {/* OTP Verification */}
+                <div className="h-px bg-slate-200/70 dark:bg-slate-800/80" />
+
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="space-y-4"
+                  transition={{ delay: 0.2, duration: 0.25, ease: "easeOut" }}
+                  className="space-y-3"
                 >
-                  <Label htmlFor="otp" className="text-gray-700 flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-slate-600" />
-                    کد ارسال شده
-                  </Label>
-                  <div className="flex gap-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="text-sm font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-2">
+                      <Zap className="size-4 text-slate-400" />
+                      کد تایید
+                    </div>
+                    {countdown > 0 && (
+                      <div className="text-xs text-muted-foreground">
+                        ارسال مجدد تا {countdown} ثانیه
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-3">
                     <Input
                       id="otp"
                       type="text"
-                      placeholder="------"
+                      placeholder="کد ۴ رقمی"
+                      aria-invalid={!!errors.otp}
                       {...register("otp")}
-                      className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-slate-500 focus:ring-slate-500/20 flex-1"
+                      className={cn(
+                        "h-12 rounded-xl bg-white/70 dark:bg-white/5 backdrop-blur border-border",
+                        "text-center tracking-[0.45em] font-semibold",
+                        "focus-visible:ring-accent/20 focus-visible:border-accent"
+                      )}
                       maxLength={6}
+                      dir="ltr"
                     />
                     <Button
                       type="button"
                       variant="outline"
                       onClick={onSendOtp}
                       disabled={isLoading || countdown > 0 || !watchedPhone || watchedPhone.length < 10}
-                      className="bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-slate-500 transition-all duration-300"
+                      className={cn(
+                        "h-12 rounded-xl px-5 font-semibold transition-all duration-200",
+                        "border-primary/20 bg-white/60 hover:bg-white hover:border-primary/30",
+                        "disabled:opacity-60"
+                      )}
                     >
                       {isLoading ? (
                         <span className="flex items-center gap-2">
-                          <div className="w-4 h-4 border-2 border-gray-600 border-t-transparent rounded-full animate-spin"></div>
-                          در حال ارسال...
+                          <div className="size-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                          در حال ارسال
                         </span>
                       ) : countdown > 0 ? (
                         `${countdown} ثانیه`
                       ) : (
                         <span className="flex items-center gap-2">
-                          <Zap className="w-4 h-4" />
+                          <Zap className="size-4" />
                           ارسال کد
                         </span>
                       )}
                     </Button>
                   </div>
+
                   {errors.otp && (
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="text-sm text-red-600"
-                    >
+                    <div className="text-xs text-destructive/90">
                       {errors.otp.message}
-                    </motion.p>
+                    </div>
                   )}
-                  {isOtpSent && (
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="text-sm text-green-700 flex items-center gap-2"
-                    >
-                      <CheckCircle className="w-4 h-4" />
-                      کد با موفقیت به شماره شما ارسال شد
-                    </motion.p>
+                  {isOtpSent && !errors.otp && (
+                    <div className="text-xs text-primary flex items-center gap-2">
+                      <CheckCircle className="size-4 text-accent" />
+                      کد با موفقیت ارسال شد
+                    </div>
                   )}
                 </motion.div>
 
-                {/* Submit Button */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="space-y-4"
+                  transition={{ delay: 0.25, duration: 0.25, ease: "easeOut" }}
+                  className="space-y-4 pt-1"
                 >
                   <Button
                     type="submit"
-                    className="w-full h-12 bg-gradient-to-r from-slate-700 to-gray-800 hover:from-slate-800 hover:to-gray-900 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
                     disabled={isLoading || !canSubmit}
+                    className={cn(
+                      "w-full h-12 rounded-xl text-base font-bold",
+                      "bg-primary text-primary-foreground hover:bg-primary/95",
+                      "shadow-[0_14px_28px_rgba(13,61,56,0.20)] hover:shadow-[0_18px_36px_rgba(13,61,56,0.24)]",
+                      "transition-all duration-200 hover:-translate-y-0.5 disabled:hover:translate-y-0"
+                    )}
                   >
                     {isLoading ? (
                       <span className="flex items-center gap-2">
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        در حال ایجاد حساب...
+                        <div className="size-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        در حال ایجاد حساب
                       </span>
                     ) : (
                       <span className="flex items-center gap-2">
-                        <Sparkles className="w-5 h-5" />
+                        <Sparkles className="size-5" />
                         ایجاد حساب کاربری
                       </span>
                     )}
                   </Button>
 
-                  <div className="text-center text-sm text-gray-600">
+                  <div className="text-center text-sm text-slate-600 dark:text-slate-400">
                     <span>قبلاً حساب دارید؟ </span>
-                    <Link href="/login" className="text-slate-700 hover:text-slate-900 font-medium underline underline-offset-4 transition-colors">
+                    <Link
+                      href="/login"
+                      className="text-primary hover:text-primary/90 font-semibold underline underline-offset-4 transition-colors"
+                    >
                       وارد شوید
                     </Link>
+                  </div>
+
+                  <div className="text-center text-xs text-muted-foreground leading-relaxed">
+                    با ثبت‌نام،{" "}
+                    <Link href="/legal/terms" className="text-primary hover:underline underline-offset-4">
+                      قوانین
+                    </Link>{" "}
+                    و{" "}
+                    <Link href="/legal/privacy" className="text-primary hover:underline underline-offset-4">
+                      حریم خصوصی
+                    </Link>{" "}
+                    را می‌پذیرید.
                   </div>
                 </motion.div>
               </form>
@@ -559,32 +617,6 @@ export default function RegisterPage() {
           </Card>
         </motion.div>
       </div>
-
-      <style jsx>{`
-        @keyframes blob {
-          0% {
-            transform: translate(0px, 0px) scale(1);
-          }
-          33% {
-            transform: translate(30px, -50px) scale(1.1);
-          }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
-          }
-          100% {
-            transform: translate(0px, 0px) scale(1);
-          }
-        }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-      `}</style>
     </div>
   );
 }
