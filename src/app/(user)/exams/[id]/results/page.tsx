@@ -76,8 +76,34 @@ export default async function ResultsPage({
   );
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-4xl">
-      <Card className="mb-6">
+    <div className="w-full py-8 px-4">
+      <div className="flex flex-col lg:flex-row gap-6">
+        <aside className="w-full lg:w-[360px] lg:flex-none lg:sticky lg:top-6 lg:self-start lg:order-1">
+          <Card className="overflow-hidden border-slate-200/70 bg-white/95 shadow-sm">
+            <div className="h-1.5 w-full bg-gradient-to-l from-teal-500/80 via-emerald-500/70 to-emerald-400/80" />
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">میانبرها</CardTitle>
+              <CardDescription className="text-xs">دسترسی سریع به صفحات مهم</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="rounded-xl border border-slate-200/70 bg-slate-50/80 p-3">
+                <div className="text-xs text-muted-foreground mb-2">آزمون</div>
+                <div className="text-sm font-semibold text-slate-800">{attempt.exam.title}</div>
+              </div>
+              <div className="grid gap-2">
+                <Link href={`/exams/${id}/take`}>
+                  <Button className="w-full">بازگشت به صفحه آزمون</Button>
+                </Link>
+                <Link href="/dashboard">
+                  <Button variant="outline" className="w-full">بازگشت به داشبورد</Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </aside>
+
+        <div className="w-full lg:w-[920px] lg:max-w-[920px] lg:order-2">
+          <Card className="mb-6">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
             <Trophy className="h-16 w-16 text-yellow-500" />
@@ -142,9 +168,6 @@ export default async function ResultsPage({
           </div>
 
           <div className="flex gap-4">
-            <Link href="/dashboard" className="flex-1">
-              <Button variant="outline" className="w-full">بازگشت به صفحه اصلی</Button>
-            </Link>
             <a
               href={`/api/exams/${id}/results/pdf?attempt=${attempt.id}`}
               target="_blank"
@@ -180,40 +203,81 @@ export default async function ResultsPage({
                   )}
                 </div>
                 <p className="mb-3"><RenderText text={answer.question.questionText} /></p>
-                <div className="space-y-1 text-sm">
-                  <p>
-                    <span className="font-semibold">پاسخ شما: </span>
-                    <span>
-                      {answer.selectedAnswer === "A" && <><span>أ) </span><RenderText text={answer.question.optionA} /></>}
-                      {answer.selectedAnswer === "B" && <><span>ب) </span><RenderText text={answer.question.optionB} /></>}
-                      {answer.selectedAnswer === "C" && <><span>ج) </span><RenderText text={answer.question.optionC} /></>}
-                      {answer.selectedAnswer === "D" && <><span>د) </span><RenderText text={answer.question.optionD} /></>}
-                      {!answer.selectedAnswer && "پاسخ نداده‌اید"}
-                    </span>
-                  </p>
-                  {!answer.isCorrect && (
-                    <p>
-                      <span className="font-semibold">پاسخ صحیح: </span>
-                      <span>
-                        {answer.question.correctAnswer === "A" && <><span>أ) </span><RenderText text={answer.question.optionA} /></>}
-                        {answer.question.correctAnswer === "B" && <><span>ب) </span><RenderText text={answer.question.optionB} /></>}
-                        {answer.question.correctAnswer === "C" && <><span>ج) </span><RenderText text={answer.question.optionC} /></>}
-                        {answer.question.correctAnswer === "D" && <><span>د) </span><RenderText text={answer.question.optionD} /></>}
-                      </span>
-                    </p>
-                  )}
-                  {answer.question.explanation && (
-                    <p className="mt-2 text-muted-foreground">
-                      <span className="font-semibold">توضیح: </span>
-                      <RenderText text={answer.question.explanation} />
-                    </p>
-                  )}
+                <div className="grid grid-cols-1 gap-2 text-sm">
+                  {[
+                    { key: "A", label: "الف", text: answer.question.optionA },
+                    { key: "B", label: "ب", text: answer.question.optionB },
+                    { key: "C", label: "ج", text: answer.question.optionC },
+                    { key: "D", label: "د", text: answer.question.optionD },
+                  ].map((option) => {
+                    const isCorrect = answer.question.correctAnswer === option.key;
+                    const isSelected = answer.selectedAnswer === option.key;
+                    const isWrongSelected = isSelected && !isCorrect;
+
+                    const containerClass = [
+                      "flex items-start gap-3 rounded-lg border p-3 sm:p-4 transition",
+                      isCorrect
+                        ? "border-green-500 bg-green-50 dark:bg-green-900/20"
+                        : isWrongSelected
+                          ? "border-red-500 bg-red-50 dark:bg-red-900/20"
+                          : isSelected
+                            ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                            : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40",
+                    ].join(" ");
+
+                    const letterClass = [
+                      "mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-md border text-xs font-bold flex-shrink-0",
+                      isCorrect
+                        ? "border-green-600 text-green-700 bg-green-100/60 dark:bg-green-900/30 dark:text-green-300"
+                        : isWrongSelected
+                          ? "border-red-600 text-red-700 bg-red-100/60 dark:bg-red-900/30 dark:text-red-300"
+                          : isSelected
+                            ? "border-blue-600 text-blue-700 bg-blue-100/60 dark:bg-blue-900/30 dark:text-blue-300"
+                            : "border-slate-300 text-slate-500 dark:border-slate-700 dark:text-slate-300",
+                    ].join(" ");
+
+                    return (
+                      <div key={option.key} className={containerClass}>
+                        <span className={letterClass}>{option.label}</span>
+                        <div className="flex-1">
+                          <div className="leading-7 text-slate-700 dark:text-slate-200">
+                            <RenderText text={option.text} />
+                          </div>
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            {isCorrect && (
+                              <Badge className="bg-green-100 text-green-700 border border-green-200 dark:bg-green-900/30 dark:text-green-200">
+                                پاسخ صحیح
+                              </Badge>
+                            )}
+                            {isSelected && (
+                              <Badge className="bg-blue-100 text-blue-700 border border-blue-200 dark:bg-blue-900/30 dark:text-blue-200">
+                                انتخاب شما
+                              </Badge>
+                            )}
+                            {isWrongSelected && (
+                              <Badge className="bg-red-100 text-red-700 border border-red-200 dark:bg-red-900/30 dark:text-red-200">
+                                انتخاب اشتباه
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
+                {answer.question.explanation && (
+                  <p className="mt-3 text-muted-foreground text-sm">
+                    <span className="font-semibold">توضیح: </span>
+                    <RenderText text={answer.question.explanation} />
+                  </p>
+                )}
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
+        </div>
+      </div>
     </div>
   );
 }
