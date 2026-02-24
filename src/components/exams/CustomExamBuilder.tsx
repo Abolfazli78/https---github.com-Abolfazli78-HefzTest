@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { SubscriptionLock } from "@/components/subscription/subscription-lock";
 import { FEATURES } from "@/lib/subscription-constants";
 import { CreateCustomExamInput } from "@/lib/examValidation";
+import { UsageTracker } from "@/components/subscription/usage-tracker";
 import {
   QuranSelectionStep,
   initialQuranSelectionState,
@@ -96,6 +97,10 @@ export function CustomExamBuilder({ role, assignableStudents, demoMode = false, 
   const router = useRouter();
   const [subscriptionInfo, setSubscriptionInfo] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [quota, setQuota] = useState<{
+    quotas: { maxExamsPerMonth: number; maxQuestionsPerMonth: number };
+    usage: { examsThisMonth: number; questionsThisMonth: number };
+  } | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [quranSelection, setQuranSelection] = useState<QuranSelectionState>(
     initialQuranSelectionState
@@ -326,6 +331,12 @@ export function CustomExamBuilder({ role, assignableStudents, demoMode = false, 
 
       if (response.ok) {
         toast.success("آزمون با موفقیت ایجاد شد");
+        try {
+          window.dispatchEvent(new Event("subscription:updated"));
+        } catch {}
+        try {
+          router.refresh();
+        } catch {}
         router.push(getSuccessRedirect(role));
       } else {
         const error = await response.json();
@@ -364,6 +375,35 @@ export function CustomExamBuilder({ role, assignableStudents, demoMode = false, 
     }
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+    async function fetchQuota() {
+      try {
+        const res = await fetch("/api/quota-usage");
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!cancelled && data?.quotas && data?.usage) {
+          setQuota({
+            quotas: {
+              maxExamsPerMonth: data.quotas.maxExamsPerMonth ?? 0,
+              maxQuestionsPerMonth: data.quotas.maxQuestionsPerMonth ?? 0,
+            },
+            usage: {
+              examsThisMonth: data.usage.examsThisMonth ?? 0,
+              questionsThisMonth: data.usage.questionsThisMonth ?? 0,
+            },
+          });
+        }
+      } catch {
+        // ignore quota display errors
+      }
+    }
+    fetchQuota();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const showLock = demoMode ? false : (loading || !subscriptionInfo?.hasActiveSubscription);
 
   return (
@@ -381,6 +421,23 @@ export function CustomExamBuilder({ role, assignableStudents, demoMode = false, 
             <h1 className="text-3xl font-bold text-gray-900 mb-2">ساخت آزمون دلخواه</h1>
             <p className="text-gray-600">آزمون خود را با دقت طراحی کنید</p>
           </div>
+
+          {quota && (
+            <div className="max-w-3xl mx-auto mb-2">
+              <div className="space-y-3 rounded-xl border p-4">
+                <UsageTracker
+                  title="آزمون‌های دلخواه (این ماه)"
+                  used={quota.usage.examsThisMonth}
+                  limit={quota.quotas.maxExamsPerMonth}
+                />
+                <UsageTracker
+                  title="سوالات دلخواه (این ماه)"
+                  used={quota.usage.questionsThisMonth}
+                  limit={quota.quotas.maxQuestionsPerMonth}
+                />
+              </div>
+            </div>
+          )}
 
           <div className="flex justify-center mb-8">
             <div className="flex items-center space-x-2 space-x-reverse overflow-x-auto">

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ClipboardCheck, PlusCircle, FileText } from "lucide-react";
+import { UsageTracker } from "@/components/subscription/usage-tracker";
 
 export type UserExamItem = {
   id: string;
@@ -35,6 +36,10 @@ export function UserSimulatorList({
 }: UserSimulatorListProps) {
   const [exams, setExams] = useState<UserExamItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [quota, setQuota] = useState<{
+    quotas: { maxExamsPerMonth: number; maxQuestionsPerMonth: number };
+    usage: { examsThisMonth: number; questionsThisMonth: number };
+  } | null>(null);
 
   const enabled = subscriptionInfo?.examSimulatorEnabled === true;
 
@@ -44,10 +49,29 @@ export function UserSimulatorList({
       return;
     }
     if (!enabled) return;
-    fetch("/api/user-exams")
-      .then((res) => (res.ok ? res.json() : []))
-      .then(setExams)
-      .catch(() => setExams([]))
+    Promise.all([
+      fetch("/api/user-exams", { cache: "no-store" }).then((res) => (res.ok ? res.json() : [])),
+      fetch("/api/quota-usage", { cache: "no-store" }).then((res) => (res.ok ? res.json() : null)),
+    ])
+      .then(([examsData, quotaData]) => {
+        setExams(Array.isArray(examsData) ? examsData : []);
+        if (quotaData && quotaData.quotas && quotaData.usage) {
+          setQuota({
+            quotas: {
+              maxExamsPerMonth: quotaData.quotas.maxExamsPerMonth ?? 0,
+              maxQuestionsPerMonth: quotaData.quotas.maxQuestionsPerMonth ?? 0,
+            },
+            usage: {
+              examsThisMonth: quotaData.usage.examsThisMonth ?? 0,
+              questionsThisMonth: quotaData.usage.questionsThisMonth ?? 0,
+            },
+          });
+        }
+      })
+      .catch(() => {
+        setExams([]);
+        setQuota(null);
+      })
       .finally(() => setLoading(false));
   }, [enabled, loadingSubscription]);
 
@@ -119,6 +143,20 @@ export function UserSimulatorList({
             </CardDescription>
           </CardHeader>
           <CardContent>
+            {quota && (
+              <div className="mb-6 space-y-3">
+                <UsageTracker
+                  title="آزمون‌ها (این ماه)"
+                  used={quota.usage.examsThisMonth}
+                  limit={quota.quotas.maxExamsPerMonth}
+                />
+                <UsageTracker
+                  title="سوالات (این ماه)"
+                  used={quota.usage.questionsThisMonth}
+                  limit={quota.quotas.maxQuestionsPerMonth}
+                />
+              </div>
+            )}
             {exams.length === 0 ? (
               <div className="text-center py-12 text-muted-foreground rounded-lg border border-dashed">
                 <p className="mb-4">هنوز آزمونی نساخته‌اید.</p>

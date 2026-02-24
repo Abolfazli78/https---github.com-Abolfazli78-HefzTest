@@ -3,6 +3,7 @@ import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
 import { getUserSubscriptionInfo } from "@/lib/subscription-manager";
 import { buildQuestionFilters } from "@/lib/examFilters";
+import type { Prisma } from "@prisma/client";
 
 const JUZ_MIN = 1;
 const JUZ_MAX = 30;
@@ -172,7 +173,7 @@ export async function POST(req: Request) {
     const finalJuzStart = Math.min(juzStartNorm, juzEndNorm);
     const finalJuzEnd = Math.max(juzStartNorm, juzEndNorm);
 
-    const where: Parameters<typeof db.question.findMany>[0]["where"] = {
+    const where: Prisma.QuestionWhereInput = {
       isActive: true,
       juz: { gte: finalJuzStart, lte: finalJuzEnd },
     };
@@ -263,10 +264,10 @@ export async function POST(req: Request) {
         year: yearFilter ?? (bodyAny.year as unknown),
       };
 
-      const customWhere = buildQuestionFilters(customFilterInput as never);
+      const customWhere = buildQuestionFilters(customFilterInput as never) as Prisma.QuestionWhereInput;
 
       try {
-        const { customSelected } = await db.$transaction(async (tx: typeof db) => {
+        const txResult = await db.$transaction(async (tx) => {
           const totalAvailableInner = await tx.question.count({ where: customWhere });
           console.log("Custom total available:", totalAvailableInner);
           console.log("Requested:", total);
@@ -288,8 +289,8 @@ export async function POST(req: Request) {
             const memCount = Math.round((total * memorizationPercent) / 100);
             const conceptCount = total - memCount;
 
-            const memWhere = { ...(customWhere as object), questionKind: "MEMORIZATION" } as never;
-            const conceptWhere = { ...(customWhere as object), questionKind: "CONCEPTS" } as never;
+            const memWhere: Prisma.QuestionWhereInput = { ...(customWhere as object), questionKind: "MEMORIZATION" } as Prisma.QuestionWhereInput;
+            const conceptWhere: Prisma.QuestionWhereInput = { ...(customWhere as object), questionKind: "CONCEPTS" } as Prisma.QuestionWhereInput;
 
             const memAvailable = await tx.question.count({ where: memWhere });
             const conceptAvailable = await tx.question.count({ where: conceptWhere });
@@ -310,9 +311,9 @@ export async function POST(req: Request) {
             shuffleInPlace(memPool);
             shuffleInPlace(conceptPool);
 
-            const picked = [...memPool.slice(0, memCount), ...conceptPool.slice(0, conceptCount)];
+            const picked: PoolItem[] = [...memPool.slice(0, memCount), ...conceptPool.slice(0, conceptCount)];
             shuffleInPlace(picked);
-            return { customSelected: picked };
+            return { customSelected: picked as PoolItem[] };
           }
 
           const allPool = await tx.question.findMany({
@@ -321,8 +322,9 @@ export async function POST(req: Request) {
           });
 
           shuffleInPlace(allPool);
-          return { customSelected: allPool.slice(0, total) };
+          return { customSelected: allPool.slice(0, total) as PoolItem[] };
         });
+        const { customSelected } = txResult;
 
         if (customSelected == null) {
           return NextResponse.json(
@@ -354,6 +356,67 @@ export async function POST(req: Request) {
 
     const questionKindRaw = (kind: unknown): string =>
       kind != null && typeof kind === "string" ? kind : "CONCEPTS";
+
+    if (session.user.role !== "ADMIN") {
+      try {
+        const startOfMonth = new Date();
+        startOfMonth.setDate(1);
+        startOfMonth.setHours(0, 0, 0, 0);
+
+        const [examsThisMonth, questionsAgg] = await Promise.all([
+          db.userExam.count({
+            where: {
+              userId: session.user.id,
+              createdAt: { gte: startOfMonth },
+            },
+          }),
+          db.userExam.aggregate({
+            where: {
+              userId: session.user.id,
+              createdAt: { gte: startOfMonth },
+            },
+            _sum: { totalQuestions: true },
+          }),
+        ]);
+        const questionsThisMonth = questionsAgg._sum.totalQuestions ?? 0;
+
+        const subscriptionInfo = await getUserSubscriptionInfo(session.user.id);
+        const maxExamsPerMonth = subscriptionInfo.quotas.maxExamsPerMonth ?? 0;
+        const maxQuestionsPerMonth = subscriptionInfo.quotas.maxQuestionsPerMonth ?? 0;
+
+        if (maxExamsPerMonth > 0 && examsThisMonth + 1 > maxExamsPerMonth) {
+          const remainingExams = Math.max(0, maxExamsPerMonth - examsThisMonth);
+          return NextResponse.json(
+            {
+              error: "سقف ساخت آزمون ماهانه شما تکمیل شده است.",
+              remainingExams,
+              maxExamsPerMonth,
+              usedExamsThisMonth: examsThisMonth,
+            },
+            { status: 403 }
+          );
+        }
+
+        if (maxQuestionsPerMonth > 0 && questionsThisMonth + actualTotal > maxQuestionsPerMonth) {
+          const remainingQuestions = Math.max(0, maxQuestionsPerMonth - questionsThisMonth);
+          return NextResponse.json(
+            {
+              error: "تعداد سوالات درخواستی بیشتر از سقف ماهانه پلن شماست.",
+              remainingQuestions,
+              maxQuestionsPerMonth,
+              usedQuestionsThisMonth: questionsThisMonth,
+            },
+            { status: 403 }
+          );
+        }
+      } catch (quotaErr) {
+        console.error("[user-exams/generate] quota check failed:", quotaErr);
+        return NextResponse.json(
+          { error: "خطا در بررسی سهمیه اشتراک" },
+          { status: 500 }
+        );
+      }
+    }
 
     let userExam;
     try {

@@ -6,7 +6,6 @@ import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
 import { mapTopicToPersian } from "@/lib/simulator-labels";
 
 export type ExamMeta = {
@@ -223,74 +222,113 @@ export function OfficialSimulatorTake({ basePath }: { basePath: string }) {
   const timerStr = `${m}:${s.toString().padStart(2, "0")}`;
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-2xl">
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b py-3 mb-4 -mx-4 px-4 flex justify-between items-center text-sm">
-        <span className="font-medium">
-          سوال {currentIndex + 1} از {total}
-        </span>
-        <span className="font-mono tabular-nums">
-          زمان: {timerStr}
-        </span>
-      </div>
+    <div className="h-screen flex flex-col bg-gray-50" dir="rtl">
+      <div className="w-full max-w-3xl mx-auto flex flex-col h-full">
+        <div className="sticky top-0 z-20 bg-white border-b px-4 md:px-6 py-3">
+        <div className="flex items-center justify-between">
+          <span className="text-sm font-medium">
+            سوال {currentIndex + 1} از {total}
+          </span>
+          <span className="font-mono tabular-nums text-sm">
+            زمان: {timerStr}
+          </span>
+        </div>
+        {timerStarted && current && (
+          <h1 className="mt-2 text-lg md:text-xl leading-8 font-medium text-slate-800">
+            {current.questionText}
+          </h1>
+        )}
+        </div>
 
       {!timerStarted ? (
-        <Card>
-          <CardContent className="pt-6">
-            <p className="mb-4">مدت آزمون: {durationMinutes} دقیقه. با کلیک روی دکمه زیر زمان شروع می‌شود.</p>
-            <Button onClick={handleStart}>شروع زمان‌دار</Button>
-          </CardContent>
-        </Card>
-      ) : (
-        <>
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">{current?.questionText}</CardTitle>
-              {current && (
-                <CardDescription>
-                  جزء {current.juz} — {mapTopicToPersian(current.questionKind)}
-                </CardDescription>
-              )}
-            </CardHeader>
-            <CardContent>
-              {current && (
-                <RadioGroup
-                  value={answers[current.id] ?? ""}
-                  onValueChange={(v) =>
-                    setAnswers((prev) => ({ ...prev, [current.id]: v }))
-                  }
-                  className="space-y-3"
-                >
-                  {["A", "B", "C", "D"].map((opt) => (
-                    <div key={opt} className="flex items-center gap-2">
-                      <RadioGroupItem value={opt} id={`${current.id}-${opt}`} />
-                      <Label htmlFor={`${current.id}-${opt}`} className="cursor-pointer">
-                        {current[`option${opt}` as keyof Question] as string}
-                      </Label>
-                    </div>
-                  ))}
-                </RadioGroup>
-              )}
-
-              <div className="flex justify-between mt-6">
-                <Button
-                  variant="outline"
-                  disabled={currentIndex === 0}
-                  onClick={() => setCurrentIndex((i) => i - 1)}
-                >
-                  قبلی
-                </Button>
-                {currentIndex < total - 1 ? (
-                  <Button onClick={() => setCurrentIndex((i) => i + 1)}>
-                    بعدی
-                  </Button>
-                ) : (
-                  <Button onClick={handleSubmit}>ارسال و مشاهده نتیجه</Button>
-                )}
-              </div>
+        <div className="flex-1 px-4 md:px-6 py-3 flex items-center justify-center">
+          <Card className="w-full">
+            <CardContent className="pt-4">
+              <p className="mb-3 text-base">
+                مدت آزمون: {durationMinutes} دقیقه. با کلیک روی دکمه زیر زمان شروع می‌شود.
+              </p>
+              <Button onClick={handleStart} className="min-h-[40px] px-4 py-2 rounded-lg text-base">
+                شروع زمان‌دار
+              </Button>
             </CardContent>
           </Card>
+        </div>
+      ) : (
+        <>
+          <div className="flex-1 overflow-y-auto px-4 md:px-6 py-3 space-y-3">
+            {current && (
+              <Card className="border-0 shadow-none">
+                <CardHeader className="pt-0">
+                  <CardDescription className="text-xs text-slate-500">
+                    جزء {current.juz} — {mapTopicToPersian(current.questionKind)}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <RadioGroup
+                    value={answers[current.id] ?? ""}
+                    onValueChange={(v) =>
+                      setAnswers((prev) => ({ ...prev, [current.id]: v }))
+                    }
+                    className="space-y-3"
+                  >
+                    {["A", "B", "C", "D"].map((opt, idx) => {
+                      const selected = (answers[current.id] ?? "") === opt;
+                      const display = ["الف", "ب", "ج", "د"][idx];
+                      return (
+                        <label
+                          key={opt}
+                          htmlFor={`${current.id}-${opt}`}
+                          className={[
+                            "flex items-start gap-3 p-3 md:p-4 rounded-lg border bg-white cursor-pointer transition",
+                            "text-base leading-7",
+                            selected
+                              ? "border-green-600 bg-green-50"
+                              : "hover:border-green-500"
+                          ].join(" ")}
+                        >
+                          <RadioGroupItem
+                            value={opt}
+                            id={`${current.id}-${opt}`}
+                            className="sr-only"
+                          />
+                          <span className="mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-full border text-xs font-bold text-slate-600">
+                            {display}
+                          </span>
+                          <span className="text-base leading-7">{current[`option${opt}` as keyof Question] as string}</span>
+                        </label>
+                      );
+                    })}
+                  </RadioGroup>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+
+          <div className="sticky bottom-0 bg-white border-t px-4 md:px-6 py-3 flex justify-between gap-3">
+            <Button
+              variant="outline"
+              disabled={currentIndex === 0}
+              onClick={() => setCurrentIndex((i) => i - 1)}
+              className="min-h-[40px] px-4 py-2 rounded-lg text-base"
+            >
+              قبلی
+            </Button>
+            {currentIndex < total - 1 ? (
+              <Button
+                onClick={() => setCurrentIndex((i) => i + 1)}
+                className="min-h-[40px] px-4 py-2 rounded-lg text-base"
+              >
+                بعدی
+              </Button>
+            ) : (
+              <Button onClick={handleSubmit} className="min-h-[40px] px-4 py-2 rounded-lg text-base">
+                ارسال و مشاهده نتیجه
+              </Button>
+            )}
+          </div>
         </>
       )}
+      </div>
     </div>
   );
 }

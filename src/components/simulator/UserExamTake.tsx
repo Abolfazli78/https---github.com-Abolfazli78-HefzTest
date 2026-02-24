@@ -139,13 +139,19 @@ export function UserExamTake({ basePath }: UserExamTakeProps) {
   const optionKeys = ["A", "B", "C", "D"] as const;
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-5xl" dir="rtl">
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b py-4 mb-6 -mx-4 px-4 flex flex-col gap-3">
-        <div className="flex justify-between items-center text-sm">
-          <span className="font-medium">سوال {currentIndex + 1} از {total}</span>
-          <span className="font-mono tabular-nums text-lg font-semibold">{timerStr}</span>
+    <div className="h-screen flex flex-col bg-gray-50" dir="rtl">
+      <div className="w-full max-w-3xl mx-auto flex flex-col h-full">
+      <div className="sticky top-0 z-20 bg-white border-b px-4 md:px-6 py-3">
+        <div className="flex justify-between items-center">
+          <span className="text-sm font-medium">سوال {currentIndex + 1} از {total}</span>
+          <span className="font-mono tabular-nums text-sm">{timerStr}</span>
         </div>
-        <div className="h-2.5 w-full rounded-full bg-muted overflow-hidden transition-[width] duration-300 ease-out">
+        {timerStarted && current && (
+          <h1 className="mt-2 text-lg md:text-xl leading-8 font-medium text-slate-800">
+            {current.questionText}
+          </h1>
+        )}
+        <div className="mt-2 h-2 w-full rounded-full bg-muted overflow-hidden">
           <div
             className={`h-full rounded-full transition-all duration-300 ease-out ${timerBarColor}`}
             style={{ width: `${progressPercent}%` }}
@@ -154,77 +160,85 @@ export function UserExamTake({ basePath }: UserExamTakeProps) {
       </div>
 
       {!timerStarted ? (
-        <Card className="p-12 shadow-lg">
-          <CardHeader>
-            <CardTitle className="text-2xl">{title}</CardTitle>
-            <CardDescription className="text-lg">
-              مدت آزمون: {durationMinutes} دقیقه. با کلیک روی دکمه زیر زمان شروع می‌شود.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button onClick={handleStart} size="lg" className="px-8 py-3 rounded-xl text-base hover:opacity-90 transition-opacity">
-              شروع زمان‌دار
-            </Button>
-          </CardContent>
-        </Card>
-      ) : (
-        <Card className="text-right p-12 shadow-lg border-2 dir-rtl" dir="rtl">
-          <CardHeader className="pb-6">
-            <CardTitle className="text-2xl md:text-3xl text-right leading-relaxed font-medium">
-              {current?.questionText}
-            </CardTitle>
-            {current && (
-              <CardDescription className="text-lg text-right mt-4">
-                جزء {current.juz} — {mapTopicToPersian(current.questionKind)}
+        <div className="flex-1 px-4 md:px-6 py-3 flex items-center justify-center">
+          <Card className="w-full shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-xl">{title}</CardTitle>
+              <CardDescription className="text-base">
+                مدت آزمون: {durationMinutes} دقیقه. با کلیک روی دکمه زیر زمان شروع می‌شود.
               </CardDescription>
-            )}
-          </CardHeader>
-          <CardContent className="space-y-6 pt-6">
-            {current && (
-              <div className="space-y-6" dir="rtl">
-                {optionKeys.map((opt, idx) => (
-                  <label
-                    key={opt}
-                    className="flex items-start gap-4 p-6 rounded-2xl border bg-card hover:border-black dark:hover:border-white transition-colors cursor-pointer"
-                  >
-                    <input
-                      type="radio"
-                      name={current.id}
-                      value={opt}
-                      checked={answers[current.id] === opt}
-                      onChange={() => setAnswers((prev) => ({ ...prev, [current.id]: opt }))}
-                      className="mt-1.5 shrink-0 w-5 h-5 cursor-pointer"
-                    />
-                    <div className="flex-1 text-right text-lg leading-8">
-                      <span className="font-bold ml-2">{optionLetters[idx]}.</span>
-                      {current[`option${opt}` as keyof Question] as string}
-                    </div>
-                  </label>
-                ))}
-              </div>
-            )}
-            <div className="flex justify-between mt-10 pt-6 gap-4">
-              <Button
-                variant="outline"
-                disabled={currentIndex === 0}
-                onClick={() => setCurrentIndex((i) => i - 1)}
-                className="px-8 py-3 rounded-xl text-base hover:opacity-90 transition-opacity"
-              >
-                قبلی
+            </CardHeader>
+            <CardContent>
+              <Button onClick={handleStart} className="min-h-[40px] px-4 py-2 rounded-lg text-base transition-opacity">
+                شروع زمان‌دار
               </Button>
-              {currentIndex < total - 1 ? (
-                <Button onClick={() => setCurrentIndex((i) => i + 1)} className="px-8 py-3 rounded-xl text-base hover:opacity-90 transition-opacity">
-                  بعدی
-                </Button>
-              ) : (
-                <Button onClick={handleSubmit} className="px-8 py-3 rounded-xl text-base hover:opacity-90 transition-opacity">
-                  ارسال و مشاهده نتیجه
-                </Button>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
+      ) : (
+        <>
+          <div className="flex-1 overflow-y-auto px-4 md:px-6 py-3 space-y-3">
+            <Card className="border-0 shadow-none">
+              <CardHeader className="pt-0">
+                <CardDescription className="text-xs text-slate-500">
+                  جزء {current.juz} — {mapTopicToPersian(current.questionKind)}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {optionKeys.map((opt, idx) => {
+                    const selected = answers[current.id] === opt;
+                    return (
+                      <label
+                        key={opt}
+                        className={[
+                          "flex items-start gap-3 p-3 md:p-4 rounded-lg border bg-white cursor-pointer transition",
+                          "text-base leading-7",
+                          selected ? "border-green-600 bg-green-50" : "hover:border-green-500"
+                        ].join(" ")}
+                      >
+                        <input
+                          type="radio"
+                          name={current.id}
+                          value={opt}
+                          checked={answers[current.id] === opt}
+                          onChange={() => setAnswers((prev) => ({ ...prev, [current.id]: opt }))}
+                          className="sr-only"
+                        />
+                        <span className="mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-full border text-xs font-bold text-slate-600">
+                          {optionLetters[idx]}
+                        </span>
+                        <span className="text-base leading-7">{current[`option${opt}` as keyof Question] as string}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="sticky bottom-0 bg-white border-t px-4 md:px-6 py-3 flex justify-between gap-3">
+            <Button
+              variant="outline"
+              disabled={currentIndex === 0}
+              onClick={() => setCurrentIndex((i) => i - 1)}
+              className="min-h-[40px] px-4 py-2 rounded-lg text-base"
+            >
+              قبلی
+            </Button>
+            {currentIndex < total - 1 ? (
+              <Button onClick={() => setCurrentIndex((i) => i + 1)} className="min-h-[40px] px-4 py-2 rounded-lg text-base">
+                بعدی
+              </Button>
+            ) : (
+              <Button onClick={handleSubmit} className="min-h-[40px] px-4 py-2 rounded-lg text-base">
+                ارسال و مشاهده نتیجه
+              </Button>
+            )}
+          </div>
+        </>
       )}
+      </div>
     </div>
   );
 }

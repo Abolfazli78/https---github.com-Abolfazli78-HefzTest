@@ -122,11 +122,11 @@ export function ExamInterface({ questions, durationMinutes, answers, onAnswerCha
                             exit={{ opacity: 0, y: -20 }}
                             className="w-full"
                         >
-                            <Card className="p-6 sm:p-8 lg:p-10 shadow-xl border-0 bg-white dark:bg-slate-900 rounded-2xl lg:rounded-3xl relative overflow-hidden">
+                            <Card className="p-6 sm:p-8 lg:p-10 shadow-xl border-0 bg-white dark:bg-slate-900 rounded-2xl lg:rounded-3xl relative overflow-hidden flex flex-col max-h-[calc(100vh-9rem)] min-h-0">
                                 {/* Decorative background blob */}
                                 <div className="absolute -top-20 -left-20 w-64 h-64 bg-teal-500/5 rounded-full blur-3xl" />
 
-                                <div className="relative z-10">
+                                <div className="relative z-10 flex flex-col flex-1 min-h-0">
                                     <div className="flex items-start justify-between mb-8">
                                         <span className="text-sm font-medium text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/20 px-3 py-1 rounded-full">
                                             سوال {currentQuestionIndex + 1} از {questions.length}
@@ -145,51 +145,55 @@ export function ExamInterface({ questions, durationMinutes, answers, onAnswerCha
                                         </Button>
                                     </div>
 
-                                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-800 dark:text-slate-100 leading-relaxed mb-6 sm:mb-8 lg:mb-10 text-right break-words">
-                                        <RenderText text={currentQuestion.questionText} />
-                                    </h3>
+                                    <div className="flex flex-col gap-4 sm:gap-5 min-h-0 flex-1">
+                                        <h3 className="text-base sm:text-lg lg:text-xl font-bold text-slate-800 dark:text-slate-100 leading-relaxed text-right break-words">
+                                            <RenderText text={currentQuestion.questionText} />
+                                        </h3>
 
-                                    <div className="grid grid-cols-1 gap-3 sm:gap-4">
-                                        {["الف", "ب", "ج", "د"].map((optDisplay, index) => {
-                                            const optKey = String.fromCharCode(65 + index); // Convert index to A, B, C, D
-                                            const optionText = currentQuestion[`option${optKey}` as keyof ParsedQuestion] as string;
-                                            const isSelected = answers[currentQuestionIndex] === optKey;
+                                        <div className="flex-1 min-h-0 overflow-y-auto h-[44vh] sm:h-[48vh] pr-2">
+                                            <div className="grid grid-cols-1 gap-3 sm:gap-4 pr-1">
+                                                {["الف", "ب", "ج", "د"].map((optDisplay, index) => {
+                                                    const optKey = String.fromCharCode(65 + index);
+                                                    const optionText = currentQuestion[`option${optKey}` as keyof ParsedQuestion] as string;
+                                                    const isSelected = answers[currentQuestionIndex] === optKey;
 
-                                            return (
-                                                <div
-                                                    key={optKey}
-                                                    onClick={() => onAnswerChange(currentQuestionIndex, optKey)}
-                                                    className={cn(
-                                                        "group relative p-3 sm:p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 flex items-center gap-3 sm:gap-4 w-full",
-                                                        isSelected
-                                                            ? "border-teal-500 bg-teal-50 dark:bg-teal-900/20"
-                                                            : "border-slate-100 dark:border-slate-800 hover:border-teal-200 dark:hover:border-teal-800 bg-white dark:bg-slate-800"
-                                                    )}
-                                                >
-                                                    <div className={cn(
-                                                        "w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 flex items-center justify-center text-sm font-bold transition-colors flex-shrink-0",
-                                                        isSelected
-                                                            ? "border-teal-500 bg-teal-500 text-white"
-                                                            : "border-slate-300 text-slate-400 group-hover:border-teal-300"
-                                                    )}>
-                                                        {optDisplay}
-                                                    </div>
-                                                    <span className="text-base sm:text-lg text-slate-700 dark:text-slate-200 break-words flex-1">
-                                                        <RenderText text={optionText} />
-                                                    </span>
-
-                                                    {isSelected && (
-                                                        <motion.div
-                                                            initial={{ scale: 0 }}
-                                                            animate={{ scale: 1 }}
-                                                            className="absolute left-4 text-teal-500"
+                                                    return (
+                                                        <div
+                                                            key={optKey}
+                                                            onClick={() => onAnswerChange(currentQuestionIndex, optKey)}
+                                                            className={cn(
+                                                                "group relative p-3 sm:p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 flex items-center gap-3 sm:gap-4 w-full",
+                                                                isSelected
+                                                                    ? "border-teal-500 bg-teal-50 dark:bg-teal-900/20"
+                                                                    : "border-slate-100 dark:border-slate-800 hover:border-teal-200 dark:hover:border-teal-800 bg-white dark:bg-slate-800"
+                                                            )}
                                                         >
-                                                            <CheckCircle2 className="w-6 h-6" />
-                                                        </motion.div>
-                                                    )}
-                                                </div>
-                                            );
-                                        })}
+                                                            <div className={cn(
+                                                                "w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 flex items-center justify-center text-xs sm:text-sm font-bold transition-colors flex-shrink-0",
+                                                                isSelected
+                                                                    ? "border-teal-500 bg-teal-500 text-white"
+                                                                    : "border-slate-300 text-slate-400 group-hover:border-teal-300"
+                                                            )}>
+                                                                {optDisplay}
+                                                            </div>
+                                                            <span className="text-sm sm:text-base text-slate-700 dark:text-slate-200 break-words flex-1">
+                                                                <RenderText text={optionText} />
+                                                            </span>
+
+                                                            {isSelected && (
+                                                                <motion.div
+                                                                    initial={{ scale: 0 }}
+                                                                    animate={{ scale: 1 }}
+                                                                    className="absolute left-4 text-teal-500"
+                                                                >
+                                                                    <CheckCircle2 className="w-6 h-6" />
+                                                                </motion.div>
+                                                            )}
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </Card>

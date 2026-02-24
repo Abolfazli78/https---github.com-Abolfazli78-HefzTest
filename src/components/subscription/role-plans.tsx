@@ -83,10 +83,7 @@ export function RolePlans({ currentRole, onUpgrade, currentSubscription }: RoleP
 
   const formatPrice = (price: number) => {
     if (price === 0) return "رایگان";
-    return new Intl.NumberFormat("fa-IR", {
-      style: "currency",
-      currency: "IRR",
-    }).format(price * 10000); // Convert to Rial
+    return `${price.toLocaleString("fa-IR")} تومان`;
   };
 
   const formatLimit = (limit: number) => {

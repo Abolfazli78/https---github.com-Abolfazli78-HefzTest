@@ -19,6 +19,9 @@ export default function DeleteExamButton({ examId, redirectTo }: { examId: strin
         alert(data.error || "خطا در حذف آزمون");
         return;
       }
+      try {
+        window.dispatchEvent(new Event("subscription:updated"));
+      } catch {}
       router.push(redirectTo);
       router.refresh();
     } finally {

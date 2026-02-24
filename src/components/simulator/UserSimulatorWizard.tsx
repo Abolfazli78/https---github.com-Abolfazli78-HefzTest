@@ -103,6 +103,12 @@ export function UserSimulatorWizard({ basePath }: UserSimulatorWizardProps) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "خطا در ساخت آزمون");
       toast.success("آزمون با موفقیت ساخته شد.");
+      try {
+        window.dispatchEvent(new Event("subscription:updated"));
+      } catch {}
+      try {
+        router.refresh();
+      } catch {}
       router.push(`${basePath}/${data.id}`);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "خطا");

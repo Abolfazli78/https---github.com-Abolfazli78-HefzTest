@@ -5,6 +5,7 @@ import { UsageTracker } from "./usage-tracker";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
 
 interface QuotaUsage {
   hasActiveSubscription: boolean;
@@ -24,24 +25,47 @@ interface QuotaUsage {
 export function UserUsageWidget() {
   const [quotaUsage, setQuotaUsage] = useState<QuotaUsage | null>(null);
   const [loading, setLoading] = useState(true);
+  const pathname = usePathname();
 
   useEffect(() => {
+    let aborted = false;
     const fetchUsage = async () => {
       try {
-        const res = await fetch("/api/quota-usage");
+        const res = await fetch("/api/quota-usage", { cache: "no-store" });
         if (res.ok) {
           const data = await res.json();
-          setQuotaUsage(data);
+          if (!aborted) setQuotaUsage(data);
         }
       } catch (err) {
         console.error("Failed to fetch quota usage:", err);
       } finally {
-        setLoading(false);
+        if (!aborted) setLoading(false);
       }
     };
 
     fetchUsage();
+    // Invalidate on custom event from mutations
+    const onUpdated = () => fetchUsage();
+    window.addEventListener("subscription:updated", onUpdated);
+    return () => {
+      aborted = true;
+      window.removeEventListener("subscription:updated", onUpdated);
+    };
   }, []);
+
+  // Refetch on route changes (e.g., after navigation)
+  useEffect(() => {
+    const refetch = async () => {
+      try {
+        const res = await fetch("/api/quota-usage", { cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          setQuotaUsage(data);
+        }
+      } catch {}
+    };
+    if (pathname) refetch();
+  }, [pathname]);
 
   if (loading || !quotaUsage) {
     return null;

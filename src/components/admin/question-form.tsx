@@ -18,9 +18,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { PrismaClient } from '@prisma/client';
-import { Question, Exam } from '@prisma/client';
-import { QuestionType } from '@prisma/client';
+import { CorrectAnswer, QuestionKind } from "@prisma/client";
 
 const questionSchema = z.object({
   questionText: z.string().min(1, "متن سوال الزامی است"),
