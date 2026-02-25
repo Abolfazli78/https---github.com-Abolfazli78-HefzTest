@@ -43,12 +43,6 @@ export async function GET() {
 <priority>0.8</priority>
 </url>
 <url>
-<loc>${baseUrl}/faq-moalem-quran</loc>
-<lastmod>${now}</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.8</priority>
-</url>
-<url>
 <loc>${baseUrl}/demo</loc>
 <lastmod>${now}</lastmod>
 <changefreq>monthly</changefreq>
@@ -73,49 +67,13 @@ export async function GET() {
 <priority>0.9</priority>
 </url>
 <url>
-<loc>${baseUrl}/azmoon-hafizan-quran-online</loc>
-<lastmod>${now}</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
-</url>
-<url>
 <loc>${baseUrl}/bank-soal-azmoon-hifz</loc>
 <lastmod>${now}</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.9</priority>
 </url>
 <url>
-<loc>${baseUrl}/system-modiriyat-kelas-quran</loc>
-<lastmod>${now}</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
-</url>
-<url>
-<loc>${baseUrl}/modiriyat-amoozeshi-moassesat</loc>
-<lastmod>${now}</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
-</url>
-<url>
 <loc>${baseUrl}/gozaresh-pishraft-hafizan-quran</loc>
-<lastmod>${now}</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
-</url>
-<url>
-<loc>${baseUrl}/gozaresh-modiriati-moassesat-qurani</loc>
-<lastmod>${now}</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
-</url>
-<url>
-<loc>${baseUrl}/tahlil-amalkard-kelas-quran</loc>
-<lastmod>${now}</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
-</url>
-<url>
-<loc>${baseUrl}/tahrir-va-sabt-khata-azmoon-hifz</loc>
 <lastmod>${now}</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.9</priority>
@@ -131,18 +89,6 @@ export async function GET() {
 <lastmod>${now}</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.8</priority>
-</url>
-<url>
-<loc>${baseUrl}/abzar-moalem-quran</loc>
-<lastmod>${now}</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
-</url>
-<url>
-<loc>${baseUrl}/narm-afzar-modiriyat-moassese-qurani</loc>
-<lastmod>${now}</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
 </url>
 <url>
 <loc>${baseUrl}/hefz-5-joz</loc>
@@ -173,8 +119,7 @@ export async function GET() {
   return new NextResponse(sitemap, {
     status: 200,
     headers: {
-      'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+      'Content-Type': 'application/xml',
     },
   });
 }

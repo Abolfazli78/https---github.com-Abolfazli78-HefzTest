@@ -10,6 +10,7 @@ const publicRoutes = [
   "/",
   "/rahnama-samane-test-hefz",
   "/faq",
+  "/sitemap.xml",
 ];
 
 const authPages = [
