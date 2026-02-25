@@ -92,15 +92,14 @@ const authPages = [
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // 🔓 آزادسازی قطعی فایل‌های عمومی مهم
+  // 🔓 آزادسازی قطعی فایل‌های عمومی
   if (
-    pathname === "/sitemap.xml" ||
-    pathname === "/robots.txt"
+    pathname.startsWith("/sitemap.xml") ||
+    pathname.startsWith("/robots.txt")
   ) {
     return NextResponse.next();
   }
 
-  // 🔓 بررسی مسیرهای عمومی
   const isPublic = publicRoutes.some(
     (route) => pathname === route || pathname.startsWith(`${route}/`)
   );
@@ -109,7 +108,6 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // 🔐 بررسی سشن
   const hasSession = Boolean(
     req.cookies.get("__Secure-next-auth.session-token") ||
     req.cookies.get("next-auth.session-token") ||
@@ -117,7 +115,6 @@ export async function middleware(req: NextRequest) {
     req.cookies.get("authjs.session-token")
   );
 
-  // 📄 صفحات احراز هویت
   const isAuthPage = authPages.some(
     (route) => pathname === route || pathname.startsWith(`${route}/`)
   );
@@ -141,7 +138,6 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // 🚫 اگر سشن ندارد → ریدایرکت به لاگین
   if (!hasSession) {
     const loginUrl = new URL("/login", req.nextUrl.origin);
     loginUrl.searchParams.set("callbackUrl", req.nextUrl.href);
