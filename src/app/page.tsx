@@ -291,13 +291,13 @@ export default function HomePage() {
         <div className="container mx-auto px-4 grid gap-10 md:grid-cols-5">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <img src="/logo.png" alt="تست حفظ" className="h-10 object-contain" />
+              <img src="/logo.png" alt="تست حفظ" className="h-10 object-contain" width={40} height={40} />
               <span className="sr-only">تست حفظ</span>
             </div>
             <p className="text-slate-400 text-sm">نرم‌افزاری سبک، سریع و به‌شدت قدرتمند برای سنجش و ارزیابی هوشمند.</p>
           </div>
           <div>
-            <h4 className="font-semibold mb-3 text-white">Product</h4>
+            <h3 className="font-semibold mb-3 text-white">Product</h3>
             <ul className="space-y-2 text-slate-400 text-sm">
               <li><Link href="/features">امکانات</Link></li>
               <li><Link href="/pricing">قیمت‌گذاری</Link></li>
@@ -305,7 +305,7 @@ export default function HomePage() {
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-3 text-white">Roles</h4>
+            <h3 className="font-semibold mb-3 text-white">Roles</h3>
             <ul className="space-y-2 text-slate-400 text-sm">
               <li>دانش‌آموزان</li>
               <li>معلمان</li>
@@ -313,7 +313,7 @@ export default function HomePage() {
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-3 text-white">Company & Legal</h4>
+            <h3 className="font-semibold mb-3 text-white">Company & Legal</h3>
             <ul className="space-y-2 text-slate-400 text-sm">
               <li><Link href="/about">درباره ما</Link></li>
               <li><Link href="/legal/privacy">حریم خصوصی</Link></li>
@@ -321,7 +321,7 @@ export default function HomePage() {
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-3 text-white">اعتماد و گواهی‌ها</h4>
+            <h3 className="font-semibold mb-3 text-white">اعتماد و گواهی‌ها</h3>
             <div className="flex items-center gap-3">
               <a
                 href="https://trustseal.enamad.ir/?id=703130&Code=kNgW7VzcOfCfVGgOr0P8AvQrLKYUF0Yg"
@@ -335,6 +335,8 @@ export default function HomePage() {
                   className="h-16 w-auto object-contain rounded-lg bg-white p-1 shadow ring-1 ring-slate-200"
                   alt="نماد اعتماد الکترونیکی"
                   code="kNgW7VzcOfCfVGgOr0P8AvQrLKYUF0Yg"
+                  width={128}
+                  height={64}
                 />
               </a>
             </div>

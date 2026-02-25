@@ -99,7 +99,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="space-y-4 text-center">
           <div className="flex justify-center">
-            <img src="/logo.png" alt="تست حفظ" className="h-16 object-contain" />
+            <img src="/logo.png" alt="تست حفظ" className="h-16 object-contain" width={64} height={64} />
           </div>
           <CardTitle className="text-3xl font-bold">ورود</CardTitle>
           <CardDescription className="text-base">

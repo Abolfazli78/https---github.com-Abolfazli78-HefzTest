@@ -144,6 +144,8 @@ export function ResultsGallery() {
             <img
               src={activeStep.src}
               alt={activeStep.title}
+              width={1600}
+              height={900}
               className={cn(
                 "w-full h-full max-h-[75vh] md:max-h-[80vh] lg:max-h-[90vh] object-contain transition-all duration-300 ease-in-out",
                 isTransitioning ? "opacity-0 translate-y-1" : "opacity-100 translate-y-0"
@@ -178,6 +180,8 @@ export function ResultsGallery() {
               <img
                 src={activeStep.src}
                 alt={activeStep.title}
+                width={1600}
+                height={900}
                 className="max-h-[88vh] w-full object-contain"
               />
             </div>

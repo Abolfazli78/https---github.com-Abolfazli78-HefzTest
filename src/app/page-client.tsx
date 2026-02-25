@@ -391,7 +391,7 @@ export default function HomePageClient() {
             <p className="text-slate-400 text-sm">نرم‌افزاری سبک، سریع و به‌شدت قدرتمند برای سنجش و ارزیابی هوشمند.</p>
           </div>
           <div>
-            <h4 className="font-semibold mb-3 text-white">Product</h4>
+            <h3 className="font-semibold mb-3 text-white">Product</h3>
             <ul className="space-y-2 text-slate-400 text-sm">
               <li>
                 <Link href="/features">امکانات</Link>
@@ -405,7 +405,7 @@ export default function HomePageClient() {
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-3 text-white">Roles</h4>
+            <h3 className="font-semibold mb-3 text-white">Roles</h3>
             <ul className="space-y-2 text-slate-400 text-sm">
               <li>دانش‌آموزان</li>
               <li>معلمان</li>
@@ -413,7 +413,7 @@ export default function HomePageClient() {
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-3 text-white">Company & Legal</h4>
+            <h3 className="font-semibold mb-3 text-white">Company & Legal</h3>
             <ul className="space-y-2 text-slate-400 text-sm">
               <li>
                 <Link href="/about">درباره ما</Link>
@@ -427,7 +427,7 @@ export default function HomePageClient() {
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-3 text-white">اعتماد و گواهی‌ها</h4>
+            <h3 className="font-semibold mb-3 text-white">اعتماد و گواهی‌ها</h3>
             <div className="flex items-center gap-3">
               <a
                 href="https://trustseal.enamad.ir/?id=703130&Code=kNgW7VzcOfCfVGgOr0P8AvQrLKYUF0Yg"
@@ -441,6 +441,8 @@ export default function HomePageClient() {
                   className="h-16 w-auto object-contain rounded-lg bg-white p-1 shadow ring-1 ring-slate-200"
                   alt="نماد اعتماد الکترونیکی"
                   code="kNgW7VzcOfCfVGgOr0P8AvQrLKYUF0Yg"
+                  width={128}
+                  height={64}
                 />
               </a>
             </div>

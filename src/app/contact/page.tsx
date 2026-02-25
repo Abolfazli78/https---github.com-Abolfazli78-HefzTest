@@ -1,4 +1,5 @@
  "use client";
+ import type { Metadata } from "next";
  
  import { useState } from "react";
  import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,6 +27,14 @@
  } from "lucide-react";
  import { toast } from "sonner";
  import { z } from "zod";
+ 
+ export const metadata: Metadata = {
+   title: "تماس با ما | حفظ تست",
+   description: "راه‌های تماس با تیم حفظ تست: ارسال پیام، پشتیبانی و ارتباط با ما برای پیشنهادها و سوالات.",
+   alternates: {
+     canonical: "https://hefztest.ir/contact",
+   },
+ };
  
  const schema = z.object({
    name: z.string().min(3, "لطفاً نام و نام خانوادگی را وارد کنید"),

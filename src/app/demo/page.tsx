@@ -1,7 +1,16 @@
+import type { Metadata } from "next";
 import { db } from "@/lib/db";
 import DemoExam from "@/components/demo/DemoExam";
 import { CustomExamBuilder } from "@/components/exams/CustomExamBuilder";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
+export const metadata: Metadata = {
+  title: "دمو ساخت آزمون دلخواه | حفظ تست",
+  description: "دموی ساخت آزمون دلخواه برای تمرین حفظ قرآن: انتخاب جزء، سال، تعداد سوال و تجربه نزدیک به آزمون رسمی.",
+  alternates: {
+    canonical: "https://hefztest.ir/demo",
+  },
+};
 
 export default async function DemoUnifiedPage(props: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const searchParams = await props.searchParams;

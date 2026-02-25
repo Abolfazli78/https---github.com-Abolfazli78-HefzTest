@@ -38,7 +38,7 @@ export function Navbar() {
         <div className="flex h-20 items-center justify-between">
           <div className="flex items-center gap-10">
             <Link href="/" className="flex items-center gap-1 p-0 group transition-opacity duration-200 hover:opacity-90">
-              <img src="/logo2.png" alt="حفظ تست" className="h-14 w-auto block object-contain ml-3" />
+              <img src="/logo2.png" alt="حفظ تست" className="h-14 w-auto block object-contain ml-3" width={56} height={56} />
               <span className="flex flex-col mt-3">
                 <span className="text-[20px] md:text-[22px] leading-none font-bold tracking-[-0.3px] text-brand whitespace-nowrap">
                   حفظ تست
@@ -55,6 +55,7 @@ export function Navbar() {
               <NavLink href="/about">درباره ما</NavLink>
               <NavLink href="/faq">سوالات متداول</NavLink>
               <NavLink href="/rahnama-samane-test-hefz">راهنمای سامانه</NavLink>
+              <NavLink href="/blog">مقالات</NavLink>
               <NavLink href="/contact">تماس با ما</NavLink>
             </div>
 

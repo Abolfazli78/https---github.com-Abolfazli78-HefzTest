@@ -1,4 +1,5 @@
 "use client";
+import type { Metadata } from "next";
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
@@ -15,6 +16,14 @@ type FaqSection = {
   id: string;
   title: string;
   items: FaqItem[];
+};
+
+export const metadata: Metadata = {
+  title: "سوالات متداول آزمون حفظ قرآن | حفظ تست",
+  description: "پاسخ به سوالات متداول درباره سامانه تست حفظ: آزمون آنلاین حفظ قرآن، شبیه‌ساز، گزارش پیشرفت، و امکانات معلمان و موسسات.",
+  alternates: {
+    canonical: "https://hefztest.ir/faq",
+  },
 };
 
 const sections: FaqSection[] = [

@@ -43,7 +43,7 @@ export function HomeSeoSections() {
           <p className="leading-8 text-slate-700 dark:text-slate-300">
             مطالعه بیشتر: <Link className="underline" href="/azmoon-online-hifz-quran">آزمون آنلاین حفظ قرآن</Link>
             {" "}و{" "}
-            <Link className="underline" href="/gozaresh-pishرفت-hafizan-quran">گزارش پیشرفت حافظان قرآن</Link>
+            <Link className="underline" href="/gozaresh-pishraft-hafizan-quran">گزارش پیشرفت حافظان قرآن</Link>
           </p>
         </section>
 
@@ -78,7 +78,7 @@ export function HomeSeoSections() {
             برای یک آزمون استاندارد، سطح آزمون را مشخص کنید (جزء/سوره/مقطع)، معیارهای ارزیابی را از قبل ثابت نگه دارید
             (روانخوانی، دقت، وقف و ابتدا) و بعد از آزمون خطاها را دستهبندی کنید تا تمرینها هدفمند شوند.
           </p>
-          <Link className="underline" href="/rahنمای-azmoon-hifz-quran">مطالعه راهنمای کامل آزمون حفظ قرآن</Link>
+          <Link className="underline" href="/rahnama-azmoon-hifz-quran">مطالعه راهنمای کامل آزمون حفظ قرآن</Link>
         </section>
 
         <section className="space-y-3">
