@@ -11,6 +11,7 @@ const publicRoutes = [
   "/rahnama-samane-test-hefz",
   "/faq",
   "/sitemap.xml",
+  "/robots.txt",
 ];
 
 const authPages = [
@@ -53,7 +54,8 @@ export async function middleware(req: NextRequest) {
   }
 
   if (!hasSession) {
-    const loginUrl = new URL("/login", req.url);
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || req.url;
+    const loginUrl = new URL("/login", baseUrl);
     loginUrl.searchParams.set("callbackUrl", req.url);
     return NextResponse.redirect(loginUrl);
   }
@@ -63,6 +65,6 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-"/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+"/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|logo.png|logo2.png).*)",
   ],
 };
