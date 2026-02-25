@@ -6,9 +6,16 @@ import { Toaster } from "sonner";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "سیستم تست حفظ - Online Memorization Test",
-  description: "سیستم پیشرفته تست حفظ با پشتیبانی کامل از زبان فارسی و عربی",
+  title: "سامانه آزمون آنلاین حفظ قرآن | حفظ تست",
+  description: "آزمون آنلاین حفظ قرآن، تحلیل پیشرفت حافظان و گزارش عملکرد کلاس قرآن.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://hefztest.ir"),
+  robots: {
+    index: true,
+    follow: true
+  },
+  alternates: {
+    canonical: "https://hefztest.ir"
+  }
 };
 
 export const viewport: Viewport = {

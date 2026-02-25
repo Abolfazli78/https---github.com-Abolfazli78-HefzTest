@@ -79,7 +79,7 @@ export default function HomePage() {
                 <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
                   <Link href={isLoggedIn ? "/dashboard" : "/register"}>
                     <HefzButton variant="accent" size="lg" className="relative text-base sm:text-lg hover:scale-105 transition-transform duration-300 w-full sm:w-auto">
-                      {isLoggedIn ? "ورود به داشبورد" : "همین حالا ثبت نام کنید"}
+                      {isLoggedIn ? "ورود به داشبورد" : "شروع آزمون آنلاین حفظ قرآن"}
                     </HefzButton>
                   </Link>
 
@@ -89,7 +89,7 @@ export default function HomePage() {
                       size="lg"
                       className="text-base sm:text-lg border-2 border-accent text-accent hover:bg-transparent hover:text-accent focus:ring-accent hover:scale-105 transition-transform duration-300 w-full sm:w-auto"
                     >
-                      پلن های اشتراک
+                      مشاهده پلن های اشتراک آزمون قرآن
                     </HefzButton>
                   </Link>
                 </div>
@@ -300,15 +300,14 @@ export default function HomePage() {
         </div>
       </section>
 
-{/* Footer */}
       <footer className="py-12 sm:py-16 border-t bg-slate-950 text-slate-300">
         <div className="container mx-auto px-4 grid gap-8 sm:gap-10 md:grid-cols-5">
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <img src="/logo.png" alt="تست حفظ" className="h-8 sm:h-10 object-contain" width={32} height={32} />
-              <span className="sr-only">تست حفظ</span>
+              <img src="/logo2.png" alt="Online Quran Memorization Test Platform" className="h-14 w-auto block object-contain ml-3" width={56} height={56} />
+              <span className="sr-only">Quran Memorization Test</span>
             </div>
-            <p className="text-slate-400 text-xs sm:text-sm">نرم‌افزاری سبک، سریع و به‌شدت قدرتمند برای سنجش و ارزیابی هوشمند.</p>
+            <p className="text-slate-400 text-xs sm:text-sm">A lightweight, fast, and powerful software for intelligent assessment and evaluation.</p>
           </div>
           <div>
             <h3 className="font-semibold mb-3 text-white text-sm">Product</h3>
@@ -448,7 +447,7 @@ function TestCardPreview() {
       <div className="px-4 pb-4 pt-3 sm:px-6 sm:pb-6 sm:pt-4 border-t border-slate-200/70 dark:border-slate-800 flex items-center justify-between">
         <span className="text-xs text-slate-500">آماده برای شروع</span>
         <Link href="/demo">
-          <HefzButton size="sm" className="rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm">شروع</HefzButton>
+          <HefzButton size="sm" className="rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm">شروع آزمون نمونه حفظ قرآن</HefzButton>
         </Link>
       </div>
     </div>
