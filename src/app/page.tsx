@@ -51,11 +51,11 @@ export default function HomePage() {
     <div className="min-h-screen bg-white dark:bg-slate-950 overflow-hidden">
       {/* Hero Section */}
       
-      <section className="relative pt-12 pb-24 md:pt-20 md:pb-32">
+      <section className="relative pt-8 pb-16 sm:pt-12 sm:pb-20 md:pt-20 md:pb-32">
         {/* Background Blobs */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full -z-10">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] animate-pulse" />
-          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] animate-pulse delay-700" />
+          <div className="absolute top-0 right-0 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] bg-primary/10 rounded-full blur-[80px] sm:blur-[100px] md:blur-[120px] animate-pulse" />
+          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] bg-accent/10 rounded-full blur-[80px] sm:blur-[100px] md:blur-[120px] animate-pulse delay-700" />
           <div className="absolute inset-0 opacity-20 blur-3xl -z-10" style={{ background: 'radial-gradient(60% 60% at 70% 20%, rgba(30,41,59,0.25), transparent 60%), radial-gradient(50% 50% at 20% 80%, rgba(16,185,129,0.18), transparent 60%)' }} />
         </div>
         {/* Technical grid overlay */}
@@ -67,18 +67,18 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="grid md:grid-cols-2 gap-10 items-start">
-              <div className="text-center md:text-right mb-12">
-                <h1 className="text-[3rem] font-extrabold tracking-tight mb-4 text-primary opacity-100 leading-[1.5] max-w-2xl mx-auto md:mx-0">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-start">
+              <div className="text-center lg:text-right mb-8 lg:mb-12">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[3rem] font-extrabold tracking-tight mb-4 text-primary opacity-100 leading-[1.3] sm:leading-[1.4] lg:leading-[1.5] max-w-2xl mx-auto lg:mx-0">
                   سنجش&#160;محفوظات و موفقیت در آزمون های رسمی حفظ قرآن
                 </h1>
-                <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-12 md:mb-14 max-w-2xl mx-auto md:ml-auto leading-relaxed">
+                <p className="text-sm sm:text-base md:text-lg lg:text-xl text-slate-600 dark:text-slate-400 mb-8 sm:mb-10 lg:mb-14 max-w-2xl mx-auto lg:ml-auto leading-relaxed">
                   ویژه حافظان قرآن برای رشد مستمر، معلمان برای طراحی سریع و تصحیح خودکار، و موسسات برای مدیریت مقیاس‌پذیر با هویت سازمانی.
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+                <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
                   <Link href={isLoggedIn ? "/dashboard" : "/register"}>
-                    <HefzButton variant="accent" size="lg" className="relative text-lg hover:scale-105 transition-transform duration-300">
+                    <HefzButton variant="accent" size="lg" className="relative text-base sm:text-lg hover:scale-105 transition-transform duration-300 w-full sm:w-auto">
                       {isLoggedIn ? "ورود به داشبورد" : "همین حالا ثبت نام کنید"}
                     </HefzButton>
                   </Link>
@@ -87,23 +87,23 @@ export default function HomePage() {
                     <HefzButton
                       variant="ghost"
                       size="lg"
-                      className="text-lg border-2 border-accent text-accent hover:bg-transparent hover:text-accent focus:ring-accent hover:scale-105 transition-transform duration-300"
+                      className="text-base sm:text-lg border-2 border-accent text-accent hover:bg-transparent hover:text-accent focus:ring-accent hover:scale-105 transition-transform duration-300 w-full sm:w-auto"
                     >
                       پلن های اشتراک
                     </HefzButton>
                   </Link>
                 </div>
               </div>
-              <div className="md:pt-2">
+              <div className="lg:pt-2">
                 <DashboardPreview />
               </div>
             </div>
           </motion.div>
 {/* Testimonials */}
-<section className="mt-20 md:mt-24 py-16 md:py-20 overflow-hidden">
-  <div className="container mx-auto px-4 text-center mb-10">
-    <h2 className="text-2xl md:text-3xl font-bold mb-3 tracking-tight">تجربه کاربران</h2>
-    <p className="text-slate-500 text-sm md:text-base leading-relaxed">گفتار کسانی که با این پلتفرم در وقت خود صرفه‌جویی کردند</p>
+<section className="mt-16 sm:mt-20 md:mt-24 py-12 sm:py-16 md:py-20 overflow-hidden">
+  <div className="container mx-auto px-4 text-center mb-8 sm:mb-10">
+    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 tracking-tight">تجربه کاربران</h2>
+    <p className="text-slate-500 text-sm sm:text-base leading-relaxed">گفتار کسانی که با این پلتفرم در وقت خود صرفه‌جویی کردند</p>
   </div>
   
   <div className="relative flex overflow-hidden" dir="rtl">
@@ -113,7 +113,7 @@ export default function HomePage() {
         display: 'flex',
         width: 'max-content',
         animation: 'marquee-final 40s linear infinite',
-        gap: '40px' // فاصله مستقیم و اجباری بین کپسول‌ها
+        gap: '24px sm:gap-40px' // فاصله مستقیم و اجباری بین کپسول‌ها
       }}
     >
       {/* سری اول */}
@@ -137,10 +137,24 @@ export default function HomePage() {
       }
       
       .testimonial-capsule {
-        width: 350px !important;    /* عرض ثابت و استاندارد */
-        min-width: 350px !important; /* اجازه کوچک شدن نمی‌دهد */
+        width: 280px !important;    /* عرض ثابت و استاندارد برای موبایل */
+        min-width: 280px !important; /* اجازه کوچک شدن نمی‌دهد */
         flex-shrink: 0 !important;   /* اجازه مچاله شدن نمی‌دهد */
         display: block !important;
+      }
+
+      @media (min-width: 640px) {
+        .testimonial-capsule {
+          width: 360px !important;    /* عرض بزرگتر برای تبلت */
+          min-width: 360px !important;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .testimonial-capsule {
+          width: 380px !important;    /* عرض بزرگتر برای دسکتاپ */
+          min-width: 380px !important;
+        }
       }
 
       /* اجبار متن به شکستن و دو خطی شدن */
@@ -164,13 +178,13 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-20"
+            className="mt-12 sm:mt-16 lg:mt-20"
           >
-            <div className="text-center mb-10">
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">آمارهای کلیدی پلتفرم</h2>
-              <p className="mt-2 text-sm md:text-base text-slate-500 leading-relaxed">به‌صورت واقعی و به‌روزرسانی‌شده از عملکرد و میزان استفاده</p>
+            <div className="text-center mb-8 sm:mb-10">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">آمارهای کلیدی پلتفرم</h2>
+              <p className="mt-2 text-xs sm:text-sm md:text-base text-slate-500 leading-relaxed">به‌صورت واقعی و به‌روزرسانی‌شده از عملکرد و میزان استفاده</p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 max-w-5xl mx-auto">
               {[
                 { value: "+۱۰,۰۰۰", label: "سوال فعال", tone: "from-secondary/10 to-accent/10" },
                 { value: "+۵,۰۰۰", label: "کاربر فعال", tone: "from-accent/10 to-secondary/10" },
@@ -179,12 +193,12 @@ export default function HomePage() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="group relative overflow-hidden rounded-3xl ring-1 ring-slate-200 dark:ring-slate-800 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 p-6 md:p-7"
+                  className="group relative overflow-hidden rounded-2xl sm:rounded-3xl ring-1 ring-slate-200 dark:ring-slate-800 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 p-4 sm:p-6 md:p-7"
                 >
                   <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${item.tone} opacity-80`} />
                   <div className="relative text-center">
-                    <div className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">{item.value}</div>
-                    <div className="mt-2 text-xs md:text-sm text-slate-500 leading-relaxed">{item.label}</div>
+                    <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">{item.value}</div>
+                    <div className="mt-2 text-xs sm:text-sm text-slate-500 leading-relaxed">{item.label}</div>
                   </div>
                 </div>
               ))}
@@ -194,40 +208,40 @@ export default function HomePage() {
       </section> 
 
       {/* Role-based Features (Bento) */}
-      <section className="relative py-16 md:py-20 bg-slate-50 dark:bg-slate-900/50">
+      <section className="relative py-12 sm:py-16 md:py-20 bg-slate-50 dark:bg-slate-900/50">
         <div className="pointer-events-none absolute -z-10 inset-0">
-          <div className="absolute -top-10 left-10 w-64 h-64 bg-secondary/10 blur-3xl rounded-full" />
-          <div className="absolute bottom-0 right-20 w-72 h-72 bg-secondary/10 blur-3xl rounded-full" />
+          <div className="absolute -top-10 left-10 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 bg-secondary/10 blur-2xl sm:blur-3xl rounded-full" />
+          <div className="absolute bottom-0 right-20 w-36 h-36 sm:w-48 sm:h-48 md:w-72 md:h-72 bg-secondary/10 blur-2xl sm:blur-3xl rounded-full" />
         </div>
         <div className="container mx-auto max-w-7xl px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-slate-900 dark:text-white tracking-tight">طراحی شده برای همه نقش‌ها</h2>
-            <p className="text-sm md:text-base text-slate-500 max-w-2xl mx-auto leading-relaxed">دانش‌آموزان، معلمان و موسسات هر یک تجربه‌ای اختصاصی و حرفه‌ای دریافت می‌کنند.</p>
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-slate-900 dark:text-white tracking-tight">طراحی شده برای همه نقش‌ها</h2>
+            <p className="text-sm sm:text-base text-slate-500 max-w-2xl mx-auto leading-relaxed">دانش‌آموزان، معلمان و موسسات هر یک تجربه‌ای اختصاصی و حرفه‌ای دریافت می‌کنند.</p>
           </div>
           <motion.div
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.25 }}
             variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12 } } }}
-            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            className="grid gap-4 sm:gap-6 lg:grid-cols-3"
           >
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
               <RoleCard
-                icon={<TrendingUp className="h-8 w-8 text-accent" />}
+                icon={<TrendingUp className="h-6 w-6 sm:h-8 sm:w-8 text-accent" />}
                 title="دانش‌آموزان"
                 points={["نمودار پیشرفت", "گزارش نمرات", "محدودیت سوالات"]}
               />
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
               <RoleCard
-                icon={<PenTool className="h-8 w-8 text-secondary" />}
+                icon={<PenTool className="h-6 w-6 sm:h-8 sm:w-8 text-secondary" />}
                 title="معلمان"
                 points={["طراحی آزمون هوشمند", "مدیریت کلاس", "گزارشات گروهی"]}
               />
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
               <RoleCard
-                icon={<Building className="h-8 w-8 text-secondary" />}
+                icon={<Building className="h-6 w-6 sm:h-8 sm:w-8 text-secondary" />}
                 title="موسسات"
                 points={["برندینگ اختصاصی", "مدیریت اساتید", "پنل مانیتورینگ"]}
               />
@@ -237,21 +251,21 @@ export default function HomePage() {
       </section>
 
       {/* Iconic Feature Grid (Detailed Boxes) */}
-      <section id="faq" className="py-16 md:py-20">
+      <section id="faq" className="py-12 sm:py-16 md:py-20">
         <div className="container mx-auto max-w-7xl px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 tracking-tight">امکانات کلیدی پلتفرم</h2>
-            <p className="text-sm md:text-base text-slate-500 leading-relaxed">ترکیبی از سادگی استفاده و قدرت حرفه‌ای</p>
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 tracking-tight">امکانات کلیدی پلتفرم</h2>
+            <p className="text-sm sm:text-base text-slate-500 leading-relaxed">ترکیبی از سادگی استفاده و قدرت حرفه‌ای</p>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <IconFeature icon={<BookOpen className="h-7 w-7 text-primary" />} title="آزمون‌های شخصی‌سازی شده" desc="ایجاد آزمون بر اساس جزء، سوره یا صفحات دلخواه." />
-            <IconFeature icon={<Clock className="h-7 w-7 text-primary" />} title="تحلیل زمان پاسخ" desc="اندازه‌گیری و بهینه‌سازی زمان پاسخگویی." />
-            <IconFeature icon={<Award className="h-7 w-7 text-primary" />} title="گزارش‌های پیشرفته" desc="نمودارها و آمار دقیق برای تصمیم‌گیری بهتر." />
-            <IconFeature icon={<Shield className="h-7 w-7 text-primary" />} title="بانک سوالات استاندارد" desc="دسترسی به هزاران سوال معتبر و به‌روز." />
-            <IconFeature icon={<Users className="h-7 w-7 text-primary" />} title="رده‌بندی و رقابت" desc="جدول برترین‌ها و رقابت سالم بین کاربران." />
-            <IconFeature icon={<CheckCircle className="h-7 w-7 text-accent" />} title="تصحیح خودکار" desc="نتیجه آنی به همراه گزارش دقیق خطاها." />
-            <IconFeature icon={<Star className="h-7 w-7 text-primary" />} title="امنیت و پشتیبان‌گیری" desc="نگهداری امن داده‌ها و نسخه‌های پشتیبان." />
-            <IconFeature icon={<GraduationCap className="h-7 w-7 text-primary" />} title="یکپارچگی آموزشی" desc="هماهنگی با فرایندهای آموزشی موسسات." />
+          <div className="grid gap-4 sm:gap-6 lg:grid-cols-4">
+            <IconFeature icon={<BookOpen className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />} title="آزمون‌های شخصی‌سازی شده" desc="ایجاد آزمون بر اساس جزء، سوره یا صفحات دلخواه." />
+            <IconFeature icon={<Clock className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />} title="تحلیل زمان پاسخ" desc="اندازه‌گیری و بهینه‌سازی زمان پاسخگویی." />
+            <IconFeature icon={<Award className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />} title="گزارش‌های پیشرفته" desc="نمودارها و آمار دقیق برای تصمیم‌گیری بهتر." />
+            <IconFeature icon={<Shield className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />} title="بانک سوالات استاندارد" desc="دسترسی به هزاران سوال معتبر و به‌روز." />
+            <IconFeature icon={<Users className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />} title="رده‌بندی و رقابت" desc="جدول برترین‌ها و رقابت سالم بین کاربران." />
+            <IconFeature icon={<CheckCircle className="h-5 w-5 sm:h-7 sm:w-7 text-accent" />} title="تصحیح خودکار" desc="نتیجه آنی به همراه گزارش دقیق خطاها." />
+            <IconFeature icon={<Star className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />} title="امنیت و پشتیبان‌گیری" desc="نگهداری امن داده‌ها و نسخه‌های پشتیبان." />
+            <IconFeature icon={<GraduationCap className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />} title="یکپارچگی آموزشی" desc="هماهنگی با فرایندهای آموزشی موسسات." />
           </div>
         </div>
       </section>
@@ -259,13 +273,13 @@ export default function HomePage() {
       {/* Trusted By */}
       
       {/* FAQ Section */}
-      <section className="py-16 md:py-20">
+      <section className="py-12 sm:py-16 md:py-20">
         <div className="container mx-auto max-w-7xl px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 tracking-tight">سوالات پرتکرار</h2>
-            <p className="text-sm md:text-base text-slate-500 leading-relaxed">پاسخ به رایج‌ترین سوالات کاربران</p>
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 tracking-tight">سوالات پرتکرار</h2>
+            <p className="text-sm sm:text-base text-slate-500 leading-relaxed">پاسخ به رایج‌ترین سوالات کاربران</p>
           </div>
-          <div className="mx-auto max-w-3xl space-y-4">
+          <div className="mx-auto max-w-3xl space-y-3 sm:space-y-4">
             {[
               { q: "آیا می‌توانم رایگان شروع کنم؟", a: "بله، پلن رایگان برای شروع و آشنایی با امکانات در دسترس است." },
               { q: "آیا امکان ساخت آزمون سفارشی وجود دارد؟", a: "بله، می‌توانید بر اساس جزء، سوره یا صفحات دلخواه تست بسازید." },
@@ -273,13 +287,13 @@ export default function HomePage() {
             ].map((item, i) => (
               <details
                 key={i}
-                className="group rounded-3xl ring-1 ring-slate-200 dark:ring-slate-800 p-6 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm hover:shadow-lg transition-all duration-300"
+                className="group rounded-2xl sm:rounded-3xl ring-1 ring-slate-200 dark:ring-slate-800 p-4 sm:p-6 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
                 <summary className="cursor-pointer list-none flex items-center justify-between">
-                  <span className="font-semibold text-slate-900 dark:text-white text-lg">{item.q}</span>
-                  <HelpCircle className="h-6 w-6 text-slate-400 group-open:rotate-180 transition-transform duration-300" />
+                  <span className="font-semibold text-slate-900 dark:text-white text-base sm:text-lg">{item.q}</span>
+                  <HelpCircle className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-open:rotate-180 transition-transform duration-300" />
                 </summary>
-                <p className="mt-4 text-slate-600 dark:text-slate-400 leading-relaxed">{item.a}</p>
+                <p className="mt-4 text-slate-600 dark:text-slate-400 leading-relaxed text-sm sm:text-base">{item.a}</p>
               </details>
             ))}
           </div>
@@ -287,41 +301,41 @@ export default function HomePage() {
       </section>
 
 {/* Footer */}
-      <footer className="py-16 border-t bg-slate-950 text-slate-300">
-        <div className="container mx-auto px-4 grid gap-10 md:grid-cols-5">
-          <div>
+      <footer className="py-12 sm:py-16 border-t bg-slate-950 text-slate-300">
+        <div className="container mx-auto px-4 grid gap-8 sm:gap-10 md:grid-cols-5">
+          <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <img src="/logo.png" alt="تست حفظ" className="h-10 object-contain" width={40} height={40} />
+              <img src="/logo.png" alt="تست حفظ" className="h-8 sm:h-10 object-contain" width={32} height={32} />
               <span className="sr-only">تست حفظ</span>
             </div>
-            <p className="text-slate-400 text-sm">نرم‌افزاری سبک، سریع و به‌شدت قدرتمند برای سنجش و ارزیابی هوشمند.</p>
+            <p className="text-slate-400 text-xs sm:text-sm">نرم‌افزاری سبک، سریع و به‌شدت قدرتمند برای سنجش و ارزیابی هوشمند.</p>
           </div>
           <div>
-            <h3 className="font-semibold mb-3 text-white">Product</h3>
-            <ul className="space-y-2 text-slate-400 text-sm">
+            <h3 className="font-semibold mb-3 text-white text-sm">Product</h3>
+            <ul className="space-y-2 text-slate-400 text-xs sm:text-sm">
               <li><Link href="/features">امکانات</Link></li>
               <li><Link href="/pricing">قیمت‌گذاری</Link></li>
               <li><Link href="/demo">دمو</Link></li>
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold mb-3 text-white">Roles</h3>
-            <ul className="space-y-2 text-slate-400 text-sm">
+            <h3 className="font-semibold mb-3 text-white text-sm">Roles</h3>
+            <ul className="space-y-2 text-slate-400 text-xs sm:text-sm">
               <li>دانش‌آموزان</li>
               <li>معلمان</li>
               <li>موسسات</li>
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold mb-3 text-white">Company & Legal</h3>
-            <ul className="space-y-2 text-slate-400 text-sm">
+            <h3 className="font-semibold mb-3 text-white text-sm">Company & Legal</h3>
+            <ul className="space-y-2 text-slate-400 text-xs sm:text-sm">
               <li><Link href="/about">درباره ما</Link></li>
               <li><Link href="/legal/privacy">حریم خصوصی</Link></li>
               <li><Link href="/legal/terms">قوانین و شرایط</Link></li>
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold mb-3 text-white">اعتماد و گواهی‌ها</h3>
+            <h3 className="font-semibold mb-3 text-white text-sm">اعتماد و گواهی‌ها</h3>
             <div className="flex items-center gap-3">
               <a
                 href="https://trustseal.enamad.ir/?id=703130&Code=kNgW7VzcOfCfVGgOr0P8AvQrLKYUF0Yg"
@@ -332,25 +346,25 @@ export default function HomePage() {
                 <img
                   src="https://trustseal.enamad.ir/logo.aspx?id=703130&Code=kNgW7VzcOfCfVGgOr0P8AvQrLKYUF0Yg"
                   referrerPolicy="origin"
-                  className="h-16 w-auto object-contain rounded-lg bg-white p-1 shadow ring-1 ring-slate-200"
+                  className="h-12 w-auto sm:h-16 object-contain rounded-lg bg-white p-1 shadow ring-1 ring-slate-200"
                   alt="نماد اعتماد الکترونیکی"
                   code="kNgW7VzcOfCfVGgOr0P8AvQrLKYUF0Yg"
-                  width={128}
-                  height={64}
+                  width={96}
+                  height={48}
                 />
               </a>
             </div>
           </div>
         </div>
-        <div className="container mx-auto px-4 mt-8 text-xs text-slate-500">© {new Date().getFullYear()} تمامی حقوق محفوظ است.</div>
+        <div className="container mx-auto px-4 mt-6 sm:mt-8 text-xs text-slate-500">© {new Date().getFullYear()} تمامی حقوق محفوظ است.</div>
       </footer>
       {/* Floating WhatsApp/Support Button */}
-      <Link href="https://wa.me/989393615821" target="_blank" rel="noopener noreferrer" className="fixed bottom-6 right-6 z-50 group">
-        <span className="relative inline-flex items-center gap-2 px-4 py-3 rounded-full bg-accent text-white shadow-lg hover:bg-accent/90 transition-colors">
+      <Link href="https://wa.me/989393615821" target="_blank" rel="noopener noreferrer" className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 group">
+        <span className="relative inline-flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-3 rounded-full bg-accent text-white shadow-lg hover:bg-accent/90 transition-colors">
           <span className="absolute -z-10 inset-0 rounded-full animate-ping bg-accent/40 group-hover:bg-accent/30" />
-          <MessageCircle className="h-5 w-5" />
-          <span className="text-sm font-semibold">پشتیبانی</span>
-          <span className="pointer-events-none absolute -top-10 right-1/2 translate-x-1/2 whitespace-nowrap rounded-md bg-slate-900 text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity shadow">
+          <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
+          <span className="text-xs sm:text-sm font-semibold hidden sm:inline">پشتیبانی</span>
+          <span className="pointer-events-none absolute -top-8 sm:-top-10 right-1/2 translate-x-1/2 whitespace-nowrap rounded-md bg-slate-900 text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity shadow">
             ارتباط با پشتیبانی در واتس‌اپ
           </span>
         </span>
@@ -361,12 +375,12 @@ export default function HomePage() {
 
 function IconFeature({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
   return (
-    <div className="p-8 rounded-3xl ring-1 ring-slate-200 dark:ring-slate-800 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-      <div className="mb-6 inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-gradient-to-br from-accent/5 to-secondary/5 ring-1 ring-inset ring-secondary/20 shadow-sm">
+    <div className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl ring-1 ring-slate-200 dark:ring-slate-800 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+      <div className="mb-4 sm:mb-6 inline-flex items-center justify-center h-10 w-10 sm:h-14 sm:w-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-accent/5 to-secondary/5 ring-1 ring-inset ring-secondary/20 shadow-sm">
         {icon}
       </div>
-      <h3 className="font-bold mb-3 text-lg tracking-tight">{title}</h3>
-      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{desc}</p>
+      <h3 className="font-bold mb-3 text-base sm:text-lg tracking-tight">{title}</h3>
+      <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{desc}</p>
     </div>
   );
 }
@@ -378,7 +392,7 @@ function DashboardPreview() {
       animate={{ rotateX: [0, 6, 0] }}
       transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       style={{ perspective: 1200 }}
-      className="relative h-[260px] md:h-[340px] w-full"
+      className="relative h-[200px] sm:h-[240px] md:h-[300px] lg:h-[340px] w-full"
     >
       <div
         className="absolute inset-0"
@@ -394,47 +408,47 @@ function DashboardPreview() {
 
 function TestCardPreview() {
   return (
-    <div className="w-full rounded-3xl ring-1 ring-slate-200 dark:ring-slate-800 bg-white/85 dark:bg-white/5 backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
-      <div className="p-6">
-        <div className="flex items-center justify-between mb-5">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-accent/15 to-secondary/10 ring-1 ring-inset ring-secondary/15 flex items-center justify-center">
-              <BookOpen className="h-5 w-5 text-secondary" />
+    <div className="w-full rounded-2xl sm:rounded-3xl ring-1 ring-slate-200 dark:ring-slate-800 bg-white/85 dark:bg-white/5 backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
+      <div className="p-4 sm:p-6">
+        <div className="flex items-center justify-between mb-4 sm:mb-5">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl sm:rounded-2xl bg-gradient-to-br from-accent/15 to-secondary/10 ring-1 ring-inset ring-secondary/15 flex items-center justify-center">
+              <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-secondary" />
             </div>
             <div>
-              <div className="text-sm text-slate-500">نمونه آزمون</div>
-              <div className="font-extrabold text-lg tracking-tight text-slate-900 dark:text-white">آزمون جزء ۳۰</div>
+              <div className="text-xs sm:text-sm text-slate-500">نمونه آزمون</div>
+              <div className="font-bold text-sm sm:text-lg tracking-tight text-slate-900 dark:text-white">آزمون جزء ۳۰</div>
             </div>
           </div>
-          <span className="text-xs px-3 py-1.5 rounded-full bg-accent/10 text-accent font-semibold">فعال</span>
+          <span className="text-xs px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-accent/10 text-accent font-semibold">فعال</span>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 text-xs text-slate-600 dark:text-slate-300 mb-5">
-          <div className="rounded-2xl bg-slate-50/80 dark:bg-white/5 ring-1 ring-slate-200/60 dark:ring-slate-800 px-3 py-2">
+        <div className="grid grid-cols-2 gap-2 sm:gap-3 text-xs text-slate-600 dark:text-slate-300 mb-4 sm:mb-5">
+          <div className="rounded-xl sm:rounded-2xl bg-slate-50/80 dark:bg-white/5 ring-1 ring-slate-200/60 dark:ring-slate-800 px-2 py-2 sm:px-3 sm:py-2">
             <div className="text-slate-500">تعداد سوال</div>
             <div className="font-bold">۲۰ سوال</div>
           </div>
-          <div className="rounded-2xl bg-slate-50/80 dark:bg-white/5 ring-1 ring-slate-200/60 dark:ring-slate-800 px-3 py-2">
+          <div className="rounded-xl sm:rounded-2xl bg-slate-50/80 dark:bg-white/5 ring-1 ring-slate-200/60 dark:ring-slate-800 px-2 py-2 sm:px-3 sm:py-2">
             <div className="text-slate-500">زمان</div>
             <div className="font-bold">۱۵ دقیقه</div>
           </div>
         </div>
 
-        <div className="rounded-2xl bg-slate-50/80 dark:bg-white/5 ring-1 ring-slate-200/60 dark:ring-slate-800 px-4 py-3">
+        <div className="rounded-xl sm:rounded-2xl bg-slate-50/80 dark:bg-white/5 ring-1 ring-slate-200/60 dark:ring-slate-800 px-3 py-2 sm:px-4 sm:py-3">
           <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
             <span>پیشرفت نمونه</span>
             <span className="font-semibold">۶۷٪</span>
           </div>
-          <div className="h-2.5 w-full rounded-full bg-slate-200/80 dark:bg-slate-800 overflow-hidden">
+          <div className="h-2 w-full rounded-full bg-slate-200/80 dark:bg-slate-800 overflow-hidden">
             <div className="h-full w-2/3 bg-gradient-to-r from-accent to-accent/80" />
           </div>
         </div>
       </div>
 
-      <div className="px-6 pb-6 pt-4 border-t border-slate-200/70 dark:border-slate-800 flex items-center justify-between">
+      <div className="px-4 pb-4 pt-3 sm:px-6 sm:pb-6 sm:pt-4 border-t border-slate-200/70 dark:border-slate-800 flex items-center justify-between">
         <span className="text-xs text-slate-500">آماده برای شروع</span>
         <Link href="/demo">
-          <HefzButton size="sm" className="rounded-full shadow-md hover:shadow-lg transition-all duration-300">شروع</HefzButton>
+          <HefzButton size="sm" className="rounded-full shadow-md hover:shadow-lg transition-all duration-300 text-xs sm:text-sm">شروع</HefzButton>
         </Link>
       </div>
     </div>
@@ -497,19 +511,19 @@ function TestimonialCard({ index }: { index: number }) {
   const testimonial = testimonials[index % 6];
   
   return (
-    <div className="min-w-[280px] md:min-w-[360px] p-8 rounded-3xl ring-1 ring-slate-200 dark:ring-slate-800 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-      <div className="flex items-center gap-4 mb-4">
-        <div className="h-12 w-12 rounded-full bg-accent/10 text-accent flex items-center justify-center shadow-sm">
-          <div className="h-6 w-6 rounded-full bg-accent text-white flex items-center justify-center text-xs font-bold">
+    <div className="min-w-[280px] sm:min-w-[360px] md:min-w-[380px] p-6 sm:p-8 rounded-2xl sm:rounded-3xl ring-1 ring-slate-200 dark:ring-slate-800 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+      <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+        <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-accent/10 text-accent flex items-center justify-center shadow-sm">
+          <div className="h-5 w-5 sm:h-6 sm:w-6 rounded-full bg-accent text-white flex items-center justify-center text-xs font-bold">
             {testimonial.name.charAt(0)}
           </div>
         </div>
         <div>
-          <div className="font-semibold text-lg tracking-tight">{testimonial.name}</div>
+          <div className="font-semibold text-sm sm:text-lg tracking-tight">{testimonial.name}</div>
           <div className="text-xs text-slate-500">{testimonial.org}</div>
         </div>
       </div>
-      <blockquote className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+      <blockquote className="text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-300">
         «{testimonial.text}»
       </blockquote>
     </div>
@@ -534,14 +548,14 @@ function RoleCard({ icon, title, points, className }: { icon: React.ReactNode; t
     <div
       ref={cardRef}
       onMouseMove={onMove}
-      className={`relative overflow-hidden group p-8 rounded-3xl ring-1 ring-slate-200 dark:ring-slate-800 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ${className ?? ""}`}
+      className={`relative overflow-hidden group p-6 sm:p-8 rounded-2xl sm:rounded-3xl ring-1 ring-slate-200 dark:ring-slate-800 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ${className ?? ""}`}
       style={{ backgroundImage: `radial-gradient(400px circle at ${spot.x}% ${spot.y}%, rgba(99,102,241,0.08), transparent 40%)` }}
     >
       <div className="flex items-center gap-3 mb-4">
-        <div className="h-12 w-12 rounded-2xl bg-accent/10 text-accent dark:bg-accent/20 dark:text-accent flex items-center justify-center shadow-sm">
+        <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl sm:rounded-2xl bg-accent/10 text-accent dark:bg-accent/20 dark:text-accent flex items-center justify-center shadow-sm">
           {icon}
         </div>
-        <h3 className="text-xl font-bold">{title}</h3>
+        <h3 className="text-lg sm:text-xl font-bold">{title}</h3>
       </div>
       <ul className="space-y-2 text-slate-600 dark:text-slate-400 text-sm">
         {points.map((p, i) => (
