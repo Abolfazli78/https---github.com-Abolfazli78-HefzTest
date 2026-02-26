@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signIn, SignInResponse } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +14,7 @@ import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [mode, setMode] = useState<"password" | "otp">("password");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -21,6 +22,13 @@ export default function LoginPage() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
+
+  useEffect(() => {
+    const cb = searchParams.get("callbackUrl");
+    if (cb && cb.includes("/login")) {
+      router.replace("/login");
+    }
+  }, [searchParams, router]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,7 +70,9 @@ export default function LoginPage() {
         setError("اطلاعات ورود صحیح نیست");
         setIsLoading(false);
       } else {
-        router.push("/dashboard");
+        const cb = searchParams.get("callbackUrl");
+        const target = cb && !cb.includes("/login") ? cb : "/dashboard";
+        router.push(target);
         router.refresh();
       }
     } catch {
