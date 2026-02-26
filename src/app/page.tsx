@@ -172,10 +172,10 @@ export default function HomePage() {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
               {[
-                { value: "+۱۰,۰۰۰", label: "سوال فعال", tone: "from-secondary/10 to-accent/10" },
-                { value: "+۵,۰۰۰", label: "کاربر فعال", tone: "from-accent/10 to-secondary/10" },
-                { value: "+۵۰,۰۰۰", label: "آزمون برگزار شده", tone: "from-secondary/10 to-transparent" },
-                { value: "٪۹۸", label: "رضایت کاربران", tone: "from-accent/10 to-transparent" },
+                { value: stats.questions, label: "سوال فعال", tone: "from-secondary/10 to-accent/10", suffix: "+" },
+                { value: stats.users, label: "کاربر فعال", tone: "from-accent/10 to-secondary/10", suffix: "+" },
+                { value: stats.exams, label: "آزمون برگزار شده", tone: "from-accent/10 to-secondary/10", suffix: "+" },
+                { value: 98, label: "رضایت کاربران", tone: "from-accent/10 to-transparent", prefix: "٪" },
               ].map((item, i) => (
                 <div
                   key={i}
@@ -183,7 +183,9 @@ export default function HomePage() {
                 >
                   <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${item.tone} opacity-80`} />
                   <div className="relative text-center">
-                    <div className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">{item.value}</div>
+                    <div className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                      <AnimatedCounter to={item.value} prefix={item.prefix} suffix={item.suffix} startOnView />
+                    </div>
                     <div className="mt-2 text-xs md:text-sm text-slate-500 leading-relaxed">{item.label}</div>
                   </div>
                 </div>
@@ -244,14 +246,14 @@ export default function HomePage() {
             <p className="text-sm md:text-base text-slate-500 leading-relaxed">ترکیبی از سادگی استفاده و قدرت حرفه‌ای</p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <IconFeature icon={<BookOpen className="h-7 w-7 text-primary" />} title="آزمون‌های شخصی‌سازی شده" desc="ایجاد آزمون بر اساس جزء، سوره یا صفحات دلخواه." />
-            <IconFeature icon={<Clock className="h-7 w-7 text-primary" />} title="تحلیل زمان پاسخ" desc="اندازه‌گیری و بهینه‌سازی زمان پاسخگویی." />
-            <IconFeature icon={<Award className="h-7 w-7 text-primary" />} title="گزارش‌های پیشرفته" desc="نمودارها و آمار دقیق برای تصمیم‌گیری بهتر." />
-            <IconFeature icon={<Shield className="h-7 w-7 text-primary" />} title="بانک سوالات استاندارد" desc="دسترسی به هزاران سوال معتبر و به‌روز." />
-            <IconFeature icon={<Users className="h-7 w-7 text-primary" />} title="رده‌بندی و رقابت" desc="جدول برترین‌ها و رقابت سالم بین کاربران." />
+            <IconFeature icon={<BookOpen className="h-7 w-7 text-accent" />} title="آزمون‌های شخصی‌سازی شده" desc="ایجاد آزمون بر اساس جزء، سوره یا صفحات دلخواه." />
+            <IconFeature icon={<Clock className="h-7 w-7 text-accent" />} title="تحلیل زمان پاسخ" desc="اندازه‌گیری و بهینه‌سازی زمان پاسخگویی." />
+            <IconFeature icon={<Award className="h-7 w-7 text-accent" />} title="گزارش‌های پیشرفته" desc="نمودارها و آمار دقیق برای تصمیم‌گیری بهتر." />
+            <IconFeature icon={<Shield className="h-7 w-7 text-accent" />} title="بانک سوالات استاندارد" desc="دسترسی به هزاران سوال معتبر و به‌روز." />
+            <IconFeature icon={<Users className="h-7 w-7 text-accent" />} title="رده‌بندی و رقابت" desc="جدول برترین‌ها و رقابت سالم بین کاربران." />
             <IconFeature icon={<CheckCircle className="h-7 w-7 text-accent" />} title="تصحیح خودکار" desc="نتیجه آنی به همراه گزارش دقیق خطاها." />
-            <IconFeature icon={<Star className="h-7 w-7 text-primary" />} title="امنیت و پشتیبان‌گیری" desc="نگهداری امن داده‌ها و نسخه‌های پشتیبان." />
-            <IconFeature icon={<GraduationCap className="h-7 w-7 text-primary" />} title="یکپارچگی آموزشی" desc="هماهنگی با فرایندهای آموزشی موسسات." />
+            <IconFeature icon={<Star className="h-7 w-7 text-accent" />} title="امنیت و پشتیبان‌گیری" desc="نگهداری امن داده‌ها و نسخه‌های پشتیبان." />
+            <IconFeature icon={<GraduationCap className="h-7 w-7 text-accent" />} title="یکپارچگی آموزشی" desc="هماهنگی با فرایندهای آموزشی موسسات." />
           </div>
         </div>
       </section>
@@ -537,9 +539,47 @@ function CounterItem({ label, value, suffix = "" }: { label: string; value: numb
   );
 }
 
-function AnimatedCounter({ to, duration = 1200 }: { to: number; duration?: number }) {
+function AnimatedCounter({
+  to,
+  duration = 1200,
+  prefix = "",
+  suffix = "",
+  startOnView = false,
+}: {
+  to: number;
+  duration?: number;
+  prefix?: string;
+  suffix?: string;
+  startOnView?: boolean;
+}) {
+  const elRef = React.useRef<HTMLSpanElement | null>(null);
   const [val, setVal] = React.useState(0);
+  const [started, setStarted] = React.useState(!startOnView);
+
   React.useEffect(() => {
+    if (!startOnView) return;
+    if (started) return;
+
+    const el = elRef.current;
+    if (!el) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry?.isIntersecting) {
+          setStarted(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.35 }
+    );
+
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [startOnView, started]);
+
+  React.useEffect(() => {
+    if (!started) return;
     let start: number | null = null;
     const from = 0;
     const step = (ts: number) => {
@@ -551,8 +591,14 @@ function AnimatedCounter({ to, duration = 1200 }: { to: number; duration?: numbe
     };
     const id = requestAnimationFrame(step);
     return () => cancelAnimationFrame(id);
-  }, [to, duration]);
-  return <span dir="ltr">{val.toLocaleString("fa-IR")}</span>;
+  }, [to, duration, started]);
+  return (
+    <span ref={elRef}>
+      {prefix}
+      <span dir="ltr">{val.toLocaleString("fa-IR")}</span>
+      {suffix}
+    </span>
+  );
 }
 
 
