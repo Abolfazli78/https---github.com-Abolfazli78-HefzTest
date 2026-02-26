@@ -10,6 +10,17 @@ const publicRoutes = [
   "/",
   "/rahnama-samane-test-hefz",
   "/faq",
+    // ✅ Blog
+  "/blog",
+
+  // ✅ SEO Files
+  "/sitemap.xml",
+  "/robots.txt",
+  "/manifest.json",
+  "/favicon.ico",
+
+  // ✅ Logo or public assets
+  "/logo.png",
 ];
 
 const authPages = [
