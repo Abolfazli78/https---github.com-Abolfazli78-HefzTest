@@ -20,7 +20,9 @@ const publicRoutes = [
   "/favicon.ico",
 
   // ✅ Logo or public assets
-  "/logo.png",
+  "/logo2.png",
+  "/logo.png"
+
 ];
 
 const authPages = [
