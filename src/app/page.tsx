@@ -16,6 +16,13 @@ import {
   PenTool,
   TrendingUp,
   Star,
+  Database,
+  BarChart3,
+  Timer,
+  Sliders,
+  ShieldCheck,
+  FileCheck,
+  Trophy,
   HelpCircle,
   MessageCircle,
   CheckCircle2,
@@ -246,13 +253,13 @@ export default function HomePage() {
             <p className="text-sm md:text-base text-slate-500 leading-relaxed">ترکیبی از سادگی استفاده و قدرت حرفه‌ای</p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <IconFeature icon={<BookOpen className="h-7 w-7 text-accent" />} title="آزمون‌های شخصی‌سازی شده" desc="ایجاد آزمون بر اساس جزء، سوره یا صفحات دلخواه." />
-            <IconFeature icon={<Clock className="h-7 w-7 text-accent" />} title="تحلیل زمان پاسخ" desc="اندازه‌گیری و بهینه‌سازی زمان پاسخگویی." />
-            <IconFeature icon={<Award className="h-7 w-7 text-accent" />} title="گزارش‌های پیشرفته" desc="نمودارها و آمار دقیق برای تصمیم‌گیری بهتر." />
-            <IconFeature icon={<Shield className="h-7 w-7 text-accent" />} title="بانک سوالات استاندارد" desc="دسترسی به هزاران سوال معتبر و به‌روز." />
-            <IconFeature icon={<Users className="h-7 w-7 text-accent" />} title="رده‌بندی و رقابت" desc="جدول برترین‌ها و رقابت سالم بین کاربران." />
-            <IconFeature icon={<CheckCircle className="h-7 w-7 text-accent" />} title="تصحیح خودکار" desc="نتیجه آنی به همراه گزارش دقیق خطاها." />
-            <IconFeature icon={<Star className="h-7 w-7 text-accent" />} title="امنیت و پشتیبان‌گیری" desc="نگهداری امن داده‌ها و نسخه‌های پشتیبان." />
+            <IconFeature icon={<Sliders className="h-7 w-7 text-accent" />} title="آزمون‌های شخصی‌سازی شده" desc="ایجاد آزمون بر اساس جزء، سوره یا صفحات دلخواه." />
+            <IconFeature icon={<Timer className="h-7 w-7 text-accent" />} title="تحلیل زمان پاسخ" desc="اندازه‌گیری و بهینه‌سازی زمان پاسخگویی." />
+            <IconFeature icon={<BarChart3 className="h-7 w-7 text-accent" />} title="گزارش‌های پیشرفته" desc="نمودارها و آمار دقیق برای تصمیم‌گیری بهتر." />
+            <IconFeature icon={<Database className="h-7 w-7 text-accent" />} title="بانک سوالات استاندارد" desc="دسترسی به هزاران سوال معتبر و به‌روز." />
+            <IconFeature icon={<Trophy className="h-7 w-7 text-accent" />} title="رده‌بندی و رقابت" desc="جدول برترین‌ها و رقابت سالم بین کاربران." />
+            <IconFeature icon={<FileCheck className="h-7 w-7 text-accent" />} title="تصحیح خودکار" desc="نتیجه آنی به همراه گزارش دقیق خطاها." />
+            <IconFeature icon={<ShieldCheck className="h-7 w-7 text-accent" />} title="امنیت و پشتیبان‌گیری" desc="نگهداری امن داده‌ها و نسخه‌های پشتیبان." />
             <IconFeature icon={<GraduationCap className="h-7 w-7 text-accent" />} title="یکپارچگی آموزشی" desc="هماهنگی با فرایندهای آموزشی موسسات." />
           </div>
         </div>
