@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>نتیجه آزمون</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    @page { size: A4; margin: 20mm; }
+    html, body { height: 100%; }
+    body {
+      direction: rtl;
+      text-align: right;
+      unicode-bidi: embed;
+      margin: 0;
+      font-family: "Vazirmatn", "IRANSans", "DejaVu Sans", "Tahoma", sans-serif;
+      font-size: 12.5pt;
+      line-height: 1.85;
+      color: #1f2937;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: "liga" 1, "calt" 1, "kern" 1;
+    }
+    .card { page-break-inside: avoid; }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+    }
+    .title {
+      font-weight: 700;
+      font-size: 20pt;
+      color: #111827;
+    }
+    .subtle {
+      color: #6b7280;
+      font-size: 10.5pt;
+    }
+    h2 {
+      font-size: 14.5pt;
+      font-weight: 700;
+      margin: 18px 0 10px;
+      color: #111827;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 16px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+      page-break-inside: avoid;
+    }
+    .summary .item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .label { font-weight: 700; color: #111827; }
+    .value { color: #111827; }
+    .meta {
+      display: flex;
+      gap: 18px;
+      margin-top: 6px;
+      color: #374151;
+    }
+    .divider {
+      height: 1px;
+      background: #e5e7eb;
+      margin: 18px 0;
+    }
+    .qa {
+      border: 1px solid #e5e7eb;
+      border-inline-start: 4px solid #10b981;
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      page-break-inside: avoid;
+    }
+    .qa.wrong { border-inline-start-color: #ef4444; }
+    .qa-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 10pt;
+      font-weight: 700;
+      color: #065f46;
+      background: #d1fae5;
+    }
+    .badge.wrong { color: #7f1d1d; background: #fee2e2; }
+    .question, .answer, .explain {
+      margin: 6px 0;
+      color: #111827;
+    }
+    .muted { color: #6b7280; }
+    .section-sep {
+      border: none;
+      border-top: 1px dashed #d1d5db;
+      margin: 14px 0;
+    }
+    .small { font-size: 10.5pt; color: #4b5563; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title">نتیجه آزمون</div>
+      <div class="subtle">گزارش PDF</div>
+    </div>
+
+    <h2>نتیجه آزمون</h2>
+    <div class="summary">
+      <div class="item"><span class="label">نتیجه:</span><span class="value">2</span></div>
+      <div class="item"><span class="label">صحیح:</span><span class="value">3</span></div>
+      <div class="item"><span class="label">غلط:</span><span class="value">3</span></div>
+      <div class="item"><span class="label">درصد:</span><span class="value">40%</span></div>
+      <div class="item"><span class="label">پاسخ‌های صحیح:</span><span class="value">2</span></div>
+      <div class="item"><span class="label">پاسخ‌های غلط:</span><span class="value">3</span></div>
+      <div class="item"><span class="label">بدون پاسخ:</span><span class="value">0</span></div>
+    </div>
+    <div class="meta small">
+      <div>تاریخ ارسال: ۱۴۰۴/۱۲/۴، ۷:۴۶:۳۴</div>
+      <div>زمان صرف شده: 9669 دقیقه</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>جزئیات پاسخ‌ها</h2>
+
+    <div class="qa card">
+      <div class="qa-header">
+        <div class="label">سوال 1</div>
+        <span class="badge">صحیح</span>
+      </div>
+      <div class="question muted">سوال:</div>
+      <div class="question">پس از سوره حاقه کدام سوره قرار دارد؟</div>
+      <div class="answer">پاسخ شما: ج) معارج</div>
+      <div class="explain">توضیح: شماره آیه 1</div>
+    </div>
+
+    <div class="qa card">
+      <div class="qa-header">
+        <div class="label">سوال 2</div>
+        <span class="badge">صحیح</span>
+      </div>
+      <div class="question muted">سوال:</div>
+      <div class="question">پس از سوره حاقه کدام سوره قرار دارد؟</div>
+      <div class="answer">پاسخ شما: ج) معارج</div>
+      <div class="explain">توضیح: شماره آیه 1</div>
+    </div>
+
+    <div class="qa wrong card">
+      <div class="qa-header">
+        <div class="label">سوال 3</div>
+        <span class="badge wrong">غلط</span>
+      </div>
+      <div class="question muted">سوال:</div>
+      <div class="question">پس از آیه « وَ الَّذِینَ هُمْ لِأَمَانَاتِهِمْ وَ عَهْدِهِمْ رَاعُونَ » در سوره معارج کدام آیه قرار دارد؟</div>
+      <div class="answer">پاسخ شما: ج) وَ الَّذِینَ هُم مِّنْ عَذَابِ رَبِّهِم مُّشْفِقُونَ</div>
+      <div class="answer">پاسخ صحیح: أ) وَ الَّذِینَ هُم بِشَهَادَاتِهِمْ قَائِمُونَ</div>
+      <div class="explain">توضیح: شماره آیه 32</div>
+    </div>
+  </div>
+</body>
+</html>

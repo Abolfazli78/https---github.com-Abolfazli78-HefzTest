@@ -158,7 +158,7 @@ export function TeacherAddStudentGallery() {
           </div>
         </div>
 
-        <div className="order-1 lg:order-2 w-full h-[75vh] md:h-[80vh] lg:h-[90vh] bg-white flex items-center justify-center p-0 md:p-2">
+        <div className="order-1 lg:order-2 w-full h-[58vh] sm:h-[64vh] md:h-[72vh] lg:h-[82vh] bg-white flex items-center justify-center p-0 md:p-2">
           <button
             type="button"
             onClick={() => setIsOpen(true)}
@@ -171,14 +171,14 @@ export function TeacherAddStudentGallery() {
               width={1600}
               height={900}
               className={cn(
-                "w-full h-full max-h-[75vh] md:max-h-[80vh] lg:max-h-[90vh] object-contain transition-all duration-300 ease-in-out",
+                "w-full h-full max-h-[58vh] sm:max-h-[64vh] md:max-h-[72vh] lg:max-h-[82vh] object-contain transition-all duration-300 ease-in-out",
                 isTransitioning ? "opacity-0 translate-y-1" : "opacity-100 translate-y-0"
               )}
             />
           </button>
         </div>
 
-        <div className="sticky bottom-0 z-10 -mx-4 border-t bg-white px-6 py-4 dark:bg-slate-950/95 lg:hidden">
+        <div className="sticky bottom-0 z-10 mx-[-1rem] sm:mx-0 border-t bg-white px-4 sm:px-6 py-4 dark:bg-slate-950/95 lg:hidden">
           <div className="flex items-center justify-between gap-3">
             <Button type="button" variant="outline" className="w-full" onClick={goPrev}>
               <ChevronRight className="h-4 w-4" />

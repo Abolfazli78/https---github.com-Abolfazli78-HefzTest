@@ -3,6 +3,8 @@ import { getServerSession } from "@/lib/session";
 import { db } from "@/lib/db";
 import { generateExamReportPDF } from "@/lib/pdf-generator";
 
+export const runtime = "nodejs";
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -50,7 +52,8 @@ export async function GET(
       return NextResponse.json({ error: "آزمون یافت نشد" }, { status: 404 });
     }
 
-    const pdfBlob = await generateExamReportPDF(attempt);
+    const pdfBytes = await generateExamReportPDF(attempt);
+    const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
 
     return new NextResponse(pdfBlob, {
       headers: {
