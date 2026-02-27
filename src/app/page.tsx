@@ -26,6 +26,8 @@ import {
   HelpCircle,
   MessageCircle,
   CheckCircle2,
+  Instagram,
+  Send,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
@@ -33,6 +35,7 @@ import { useSession } from "next-auth/react";
 export default function HomePage() {
   const { data: session } = useSession();
   const isLoggedIn = !!session?.user;
+  const [isTestimonialsPaused, setIsTestimonialsPaused] = React.useState(false);
   const [stats, setStats] = React.useState<{ users: number; exams: number; questions: number }>({ users: 5000, exams: 50000, questions: 10000 });
   React.useEffect(() => {
     let cancelled = false;
@@ -120,18 +123,29 @@ export default function HomePage() {
         display: 'flex',
         width: 'max-content',
         animation: 'marquee-final 40s linear infinite',
+        animationPlayState: isTestimonialsPaused ? 'paused' : 'running',
         gap: '40px' // فاصله مستقیم و اجباری بین کپسول‌ها
       }}
     >
       {/* سری اول */}
       {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((i, index) => (
-        <div key={`original-${index}`} className="testimonial-capsule">
+        <div
+          key={`original-${index}`}
+          className="testimonial-capsule"
+          onMouseEnter={() => setIsTestimonialsPaused(true)}
+          onMouseLeave={() => setIsTestimonialsPaused(false)}
+        >
           <TestimonialCard index={i} />
         </div>
       ))}
       {/* سری دوم */}
       {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((i, index) => (
-        <div key={`duplicate-${index}`} className="testimonial-capsule">
+        <div
+          key={`duplicate-${index}`}
+          className="testimonial-capsule"
+          onMouseEnter={() => setIsTestimonialsPaused(true)}
+          onMouseLeave={() => setIsTestimonialsPaused(false)}
+        >
           <TestimonialCard index={i} />
         </div>
       ))}
@@ -222,21 +236,21 @@ export default function HomePage() {
           >
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
               <RoleCard
-                icon={<TrendingUp className="h-8 w-8 text-accent" />}
+                icon={<GraduationCap className="h-8 w-8" />}
                 title="دانش‌آموزان"
                 points={["نمودار پیشرفت", "گزارش نمرات", "محدودیت سوالات"]}
               />
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
               <RoleCard
-                icon={<PenTool className="h-8 w-8 text-secondary" />}
+                icon={<PenTool className="h-8 w-8" />}
                 title="معلمان"
                 points={["طراحی آزمون هوشمند", "مدیریت کلاس", "گزارشات گروهی"]}
               />
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
               <RoleCard
-                icon={<Building className="h-8 w-8 text-secondary" />}
+                icon={<Building className="h-8 w-8" />}
                 title="موسسات"
                 points={["برندینگ اختصاصی", "مدیریت اساتید", "پنل مانیتورینگ"]}
               />
@@ -296,41 +310,95 @@ export default function HomePage() {
       </section>
 
 {/* Footer */}
-      <footer className="py-16 border-t bg-slate-950 text-slate-300">
-        <div className="container mx-auto px-4 grid gap-10 md:grid-cols-4">
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <img src="/logo.png" alt="تست حفظ" className="h-10 object-contain" />
-              <span className="sr-only">تست حفظ</span>
+      <footer
+        className="bg-[#0D3D38] text-white"
+        dir="rtl"
+        style={{ fontFamily: "Vazirmatn, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" }}
+      >
+        <div className="container mx-auto px-4 py-14">
+          <div className="grid gap-10 md:grid-cols-4">
+            <div className="space-y-5 text-right">
+              <img src="/logo.png" alt="لوگو تست حفظ" className="h-10 w-auto" />
+              <p className="text-sm leading-7 text-white/70">
+                پلتفرم تست حفظ برای برگزاری آزمون آنلاین، بانک سوالات و گزارش‌های پیشرفته؛ مناسب حافظان، معلمان و موسسات قرآنی.
+              </p>
+              <div className="flex items-center justify-end gap-3">
+                <Link
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 text-white/80 hover:text-white hover:border-white/25 transition-colors"
+                  aria-label="اینستاگرام"
+                >
+                  <Instagram className="h-5 w-5" />
+                </Link>
+                <Link
+                  href="https://t.me"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 text-white/80 hover:text-white hover:border-white/25 transition-colors"
+                  aria-label="تلگرام"
+                >
+                  <Send className="h-5 w-5" />
+                </Link>
+              </div>
             </div>
-            <p className="text-slate-400 text-sm">نرم‌افزاری سبک، سریع و به‌شدت قدرتمند برای سنجش و ارزیابی هوشمند.</p>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-3 text-white">Product</h4>
-            <ul className="space-y-2 text-slate-400 text-sm">
-              <li><Link href="/features">امکانات</Link></li>
-              <li><Link href="/pricing">قیمت‌گذاری</Link></li>
-              <li><Link href="/demo">دمو</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-3 text-white">Roles</h4>
-            <ul className="space-y-2 text-slate-400 text-sm">
-              <li>دانش‌آموزان</li>
-              <li>معلمان</li>
-              <li>موسسات</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-3 text-white">Company & Legal</h4>
-            <ul className="space-y-2 text-slate-400 text-sm">
-              <li><Link href="/about">درباره ما</Link></li>
-              <li><Link href="/legal/privacy">حریم خصوصی</Link></li>
-              <li><Link href="/legal/terms">قوانین و شرایط</Link></li>
-            </ul>
+
+            <div className="text-right">
+              <h4 className="font-semibold mb-4 text-white">دسترسی سریع</h4>
+              <ul className="space-y-3 text-sm">
+                <li>
+                  <Link className="text-white/70 hover:text-white transition-colors" href="/">
+                    صفحه اصلی
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-white/70 hover:text-white transition-colors" href="/about">
+                    درباره ما
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-white/70 hover:text-white transition-colors" href="/contact">
+                    تماس با ما
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div className="text-right">
+              <h4 className="font-semibold mb-4 text-white">خدمات</h4>
+              <ul className="space-y-3 text-sm">
+                <li>
+                  <span className="text-white/70">بانک سوالات</span>
+                </li>
+                <li>
+                  <span className="text-white/70">آزمون آنلاین</span>
+                </li>
+                <li>
+                  <span className="text-white/70">گزارش پیشرفته</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="text-right">
+              <h4 className="font-semibold mb-4 text-white">ارتباط با ما</h4>
+              <ul className="space-y-3 text-sm text-white/70">
+                <li>
+                  <span className="text-white">تلفن:</span> ۰۲۱-۱۲۳۴۵۶۷۸
+                </li>
+                <li>
+                  <span className="text-white">ایمیل:</span> info@hefztest.ir
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div className="container mx-auto px-4 mt-8 text-xs text-slate-500">© {new Date().getFullYear()} تمامی حقوق محفوظ است.</div>
+
+        <div className="border-t border-white/15">
+          <div className="container mx-auto px-4 py-5 text-xs text-white/70 text-center">
+            © ۲۰۲۶ تمامی حقوق برای تست حفظ محفوظ است
+          </div>
+        </div>
       </footer>
       {/* Floating WhatsApp/Support Button */}
       <Link href="https://wa.me/989393615821" target="_blank" rel="noopener noreferrer" className="fixed bottom-6 right-6 z-50 group">
@@ -480,7 +548,7 @@ function TestimonialCard({ index }: { index: number }) {
   const testimonial = testimonials[index % 6];
   
   return (
-    <div className="min-w-[280px] md:min-w-[360px] p-8 rounded-3xl ring-1 ring-slate-200 dark:ring-slate-800 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+    <div className="min-w-[280px] md:min-w-[360px] p-8 rounded-3xl ring-1 ring-highlight/25 dark:ring-highlight/20 bg-white/80 dark:bg-white/5 backdrop-blur-md shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
       <div className="flex items-center gap-4 mb-4">
         <div className="h-12 w-12 rounded-full bg-accent/10 text-accent flex items-center justify-center shadow-sm">
           <div className="h-6 w-6 rounded-full bg-accent text-white flex items-center justify-center text-xs font-bold">
@@ -521,14 +589,14 @@ function RoleCard({ icon, title, points, className }: { icon: React.ReactNode; t
       style={{ backgroundImage: `radial-gradient(400px circle at ${spot.x}% ${spot.y}%, rgba(99,102,241,0.08), transparent 40%)` }}
     >
       <div className="flex items-center gap-3 mb-4">
-        <div className="h-12 w-12 rounded-2xl bg-accent/10 text-accent dark:bg-accent/20 dark:text-accent flex items-center justify-center shadow-sm">
+        <div className="h-12 w-12 rounded-2xl bg-highlight/15 text-highlight ring-1 ring-inset ring-highlight/25 flex items-center justify-center shadow-sm">
           {icon}
         </div>
         <h3 className="text-xl font-bold">{title}</h3>
       </div>
       <ul className="space-y-2 text-slate-600 dark:text-slate-400 text-sm">
         {points.map((p, i) => (
-          <li key={i} className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-accent" />{p}</li>
+          <li key={i} className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-highlight" />{p}</li>
         ))}
       </ul>
     </div>
