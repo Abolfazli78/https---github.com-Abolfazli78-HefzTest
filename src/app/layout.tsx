@@ -4,6 +4,7 @@ import { Navbar } from "@/components/common/navbar";
 import { InvitationBanner } from "@/components/organization/invitation-banner";
 import { Toaster } from "sonner";
 import "./globals.css";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "سامانه آزمون آنلاین حفظ قرآن | حفظ تست",
@@ -61,6 +62,11 @@ export default function RootLayout({
           {children}
           <InvitationBanner />
           <Toaster position="top-center" richColors />
+          <Script
+              id="tawk-widget"
+              strategy="afterInteractive"
+               src="https://embed.tawk.to/69a16195730f651c3613fee7/1jif6ac72"
+          />
         </Providers>
       </body>
     </html>

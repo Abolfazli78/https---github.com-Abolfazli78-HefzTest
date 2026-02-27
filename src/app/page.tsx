@@ -17,7 +17,6 @@ import {
   TrendingUp,
   Star,
   HelpCircle,
-  MessageCircle,
   CheckCircle2,
 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -357,17 +356,6 @@ export default function HomePage() {
         </div>
         <div className="container mx-auto px-4 mt-6 sm:mt-8 text-xs text-slate-500">© {new Date().getFullYear()} تمامی حقوق محفوظ است.</div>
       </footer>
-      {/* Floating WhatsApp/Support Button */}
-      <Link href="https://wa.me/989393615821" target="_blank" rel="noopener noreferrer" className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 group">
-        <span className="relative inline-flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-3 rounded-full bg-accent text-white shadow-lg hover:bg-accent/90 transition-colors">
-          <span className="absolute -z-10 inset-0 rounded-full animate-ping bg-accent/40 group-hover:bg-accent/30" />
-          <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
-          <span className="text-xs sm:text-sm font-semibold hidden sm:inline">پشتیبانی</span>
-          <span className="pointer-events-none absolute -top-8 sm:-top-10 right-1/2 translate-x-1/2 whitespace-nowrap rounded-md bg-slate-900 text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity shadow">
-            ارتباط با پشتیبانی در واتس‌اپ
-          </span>
-        </span>
-      </Link>
     </div>
   );
 }

@@ -6,6 +6,8 @@ import { SimulatorGallery } from "@/components/guide/simulator-gallery";
 import { RegisterGallery } from "@/components/guide/register-gallery";
 import { LoginGallery } from "@/components/guide/login-gallery";
 import { ResultsGallery } from "@/components/guide/results-gallery";
+import { TeacherAddStudentGallery } from "@/components/guide/teacher-add-student-gallery";
+import { TeacherReportGallery } from "@/components/guide/teacher-report-gallery";
 import {
   Info,
   UserPlus,
@@ -117,9 +119,6 @@ export default function Page() {
                 <GraduationCap className="h-5 w-5 text-slate-700 dark:text-slate-300" />
                 <h3 className="text-lg font-semibold">پنل معلمان</h3>
               </div>
-              <div className="mt-4 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50/80 dark:bg-slate-900/40 h-48 md:h-64 flex items-center justify-center text-sm text-slate-400">
-                محل درج تصویر پنل معلم
-              </div>
               <ul className="mt-5 space-y-2 text-slate-700 dark:text-slate-300">
                 <li>ایجاد کلاس</li>
                 <li>افزودن قرآن‌آموز</li>
@@ -144,6 +143,22 @@ export default function Page() {
               </ul>
             </div>
           </div>
+        </section>
+
+        <section className="mt-12 space-y-6">
+          <div className="flex items-center gap-3">
+            <GraduationCap className="h-6 w-6 text-indigo-600" />
+            <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">راهنمای پنل معلمان: افزودن قرآن‌آموز</h2>
+          </div>
+          <TeacherAddStudentGallery />
+        </section>
+
+        <section className="mt-12 space-y-6">
+          <div className="flex items-center gap-3">
+            <ListChecks className="h-6 w-6 text-indigo-600" />
+            <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">گزارش عملکرد دانش‌آموزان برای معلم</h2>
+          </div>
+          <TeacherReportGallery />
         </section>
 
         <section className="mt-12 space-y-6">
