@@ -55,10 +55,11 @@ export function Navbar() {
 
               <div className="hidden md:flex items-center gap-8">
                 <NavLink href="/">صفحه اصلی</NavLink>
-                <NavLink href="/about">درباره ما</NavLink>
+                <NavLink href="/blog">مقالات</NavLink>
+                
                 <NavLink href="/faq">سوالات متداول</NavLink>
                 <NavLink href="/rahnama-samane-test-hefz">راهنمای سامانه</NavLink>
-                <NavLink href="/blog">مقالات</NavLink>
+                 <NavLink href="/about">درباره ما</NavLink>
                 <NavLink href="/contact">تماس با ما</NavLink>
               </div>
 
