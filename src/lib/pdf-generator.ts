@@ -302,7 +302,7 @@ function renderExamReportHtml(attempt: ExamAttemptWithDetails) {
     <section class="summary">
       <div class="row"><div class="k">عنوان:</div><div class="v">${escapeHtml(attempt.exam.title)}</div></div>
       <div class="row"><div class="k">نام:</div><div class="v">${escapeHtml(attempt.user.name)}</div></div>
-      <div class="row"><div class="k">نتیجه:</div><div class="v">${nf.format(attempt.score)}</div></div>
+      <div class="row"><div class="k">نتیجه:</div><div class="v">${nf.format(attempt.score ?? 0)}</div></div>
       <div class="row"><div class="k">صحیح:</div><div class="v">${nf.format(attempt.correctAnswers)}</div></div>
       <div class="row"><div class="k">غلط:</div><div class="v">${nf.format(attempt.wrongAnswers)}</div></div>
       <div class="row"><div class="k">درصد:</div><div class="v">${nf.format(percentage)}%</div></div>

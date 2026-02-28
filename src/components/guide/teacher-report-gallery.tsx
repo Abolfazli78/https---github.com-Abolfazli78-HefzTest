@@ -148,7 +148,7 @@ export function TeacherReportGallery() {
           </button>
         </div>
 
-        <div className="sticky bottom-0 z-10 mx-[-1rem] sm:mx-0 border-t bg-white px-4 sm:px-6 py-4 dark:bg-slate-950/95 lg:hidden">
+        <div className="sticky bottom-0 z-10 border-t bg-white px-4 sm:px-6 py-4 dark:bg-slate-950/95 lg:hidden">
           <div className="flex items-center justify-between gap-3">
             <Button type="button" variant="outline" className="w-full" onClick={goPrev}>
               <ChevronRight className="h-4 w-4" />

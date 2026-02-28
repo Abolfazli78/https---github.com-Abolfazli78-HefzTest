@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="bg-slate-50 dark:bg-slate-950">
+    <main className="bg-slate-50 dark:bg-slate-950 overflow-x-hidden">
       <div className="container mx-auto px-4 py-10 md:py-14">
         <header className="max-w-3xl">
           <h1 className="text-3xl md:text-4xl font-bold leading-relaxed text-slate-900 dark:text-white">

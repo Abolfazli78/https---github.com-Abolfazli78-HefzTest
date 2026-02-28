@@ -53,12 +53,14 @@ export async function GET(
     }
 
     const pdfBytes = await generateExamReportPDF(attempt);
-    const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
-
-    return new NextResponse(pdfBlob, {
+    const ab = new ArrayBuffer(pdfBytes.byteLength);
+    const view = new Uint8Array(ab);
+    view.set(pdfBytes);
+    return new NextResponse(ab, {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": `attachment; filename="exam-report-${attempt.id}.pdf"`,
+        "Content-Length": String(pdfBytes.byteLength),
       },
     });
   } catch (error) {
