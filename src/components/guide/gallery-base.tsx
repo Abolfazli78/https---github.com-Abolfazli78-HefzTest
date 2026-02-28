@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 
 export type GalleryItem = {
   src: string;
@@ -114,11 +113,13 @@ export function GalleryBase({ images }: GalleryBaseProps) {
           aria-label="بزرگ‌نمایی تصویر این مرحله"
           className="w-full h-full"
         >
-          <Image
+          <img
             src={active.src}
             alt={active.title}
             width={1600}
             height={900}
+            loading="lazy"
+            decoding="async"
             className="w-full h-auto max-h-[58vh] sm:max-h-[64vh] md:max-h-[72vh] lg:max-h-[82vh] object-contain"
           />
         </button>
@@ -139,11 +140,13 @@ export function GalleryBase({ images }: GalleryBaseProps) {
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="max-w-[95vw] w-[1100px] p-0">
-          <Image
+          <img
             src={active.src}
             alt={active.title}
             width={1600}
             height={900}
+            loading="lazy"
+            decoding="async"
             className="max-h-[88vh] w-full object-contain"
           />
         </DialogContent>
