@@ -56,9 +56,9 @@ export function Navbar() {
               <div className="hidden md:flex items-center gap-8">
                 <NavLink href="/">صفحه اصلی</NavLink>
                 <NavLink href="/blog">مقالات</NavLink>
-                
+                 <NavLink href="/rahnama-samane-test-hefz">راهنمای سامانه</NavLink>
                 <NavLink href="/faq">سوالات متداول</NavLink>
-                <NavLink href="/rahnama-samane-test-hefz">راهنمای سامانه</NavLink>
+               
                  <NavLink href="/about">درباره ما</NavLink>
                 <NavLink href="/contact">تماس با ما</NavLink>
               </div>
@@ -66,9 +66,8 @@ export function Navbar() {
               {session && (
                 <div className="hidden md:flex items-center gap-8">
                   <NavLink href="/dashboard">داشبورد</NavLink>
-                  <NavLink href="/history">تاریخچه</NavLink>
-                  <NavLink href="/leaderboard">رده‌بندی</NavLink>
-                  <NavLink href="/subscriptions">اشتراک‌ها</NavLink>
+                  <NavLink href="/history">تاریخچه آزمون ها</NavLink>
+
                 </div>
               )}
             </div>
