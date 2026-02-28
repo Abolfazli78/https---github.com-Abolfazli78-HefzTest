@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-// import Image from "next/image";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -117,7 +117,7 @@ export function AdminSidebar() {
 
             <div className="flex h-20 items-center border-b border-white/10 px-6 relative z-10">
                 <Link href="/" className="flex items-center gap-3 font-bold text-xl tracking-tight">
-                    <img src="/logo.png" alt="تست حفظ" className="h-16 object-contain" width={64} height={64} />
+                    <Image src="/logo.png" alt="تست حفظ" className="h-16 object-contain" width={64} height={64} />
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
                         پنل مدیریت
                     </span>
@@ -172,7 +172,7 @@ export function AdminSidebar() {
                     <div className="absolute inset-y-0 right-0 w-72 bg-sidebar/90 backdrop-blur-xl text-sidebar-foreground border-l border-white/10 shadow-2xl flex flex-col">
                         <div className="flex h-16 items-center justify-between border-b border-white/10 px-4">
                             <Link href="/" className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
-                                <img src="/logo.png" alt="تست حفظ" className="h-16 object-contain" width={64} height={64} />
+                                <Image src="/logo.png" alt="تست حفظ" className="h-16 object-contain" width={64} height={64} />
                                 <span className="font-bold">پنل مدیریت</span>
                             </Link>
                             <button

@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-// import Image from "next/image";
+import Image from "next/image";
 import { HefzButton } from "@/components/ui/hefz-button";
 import {
   BookOpen,
@@ -26,6 +26,7 @@ export default function HomePage() {
   const { data: session } = useSession();
   const isLoggedIn = !!session?.user;
   const [stats, setStats] = React.useState<{ users: number; exams: number; questions: number }>({ users: 5000, exams: 50000, questions: 10000 });
+  const currentYear = React.useMemo(() => new Date().getFullYear(), []);
   React.useEffect(() => {
     let cancelled = false;
     const load = async () => {
@@ -303,7 +304,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 grid gap-8 sm:gap-10 md:grid-cols-5">
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <img src="/logo2.png" alt="Online Quran Memorization Test Platform" className="h-14 w-auto block object-contain ml-3" width={56} height={56} />
+              <Image src="/logo2.png" alt="Online Quran Memorization Test Platform" className="h-14 w-auto block object-contain ml-3" width={56} height={56} />
               <span className="sr-only">Quran Memorization Test</span>
             </div>
             <p className="text-slate-400 text-xs sm:text-sm">A lightweight, fast, and powerful software for intelligent assessment and evaluation.</p>
@@ -341,20 +342,12 @@ export default function HomePage() {
                 referrerPolicy="origin"
                 aria-label="نماد اعتماد الکترونیکی"
               >
-                <img
-                  src="https://trustseal.enamad.ir/logo.aspx?id=703130&Code=kNgW7VzcOfCfVGgOr0P8AvQrLKYUF0Yg"
-                  referrerPolicy="origin"
-                  className="h-12 w-auto sm:h-16 object-contain rounded-lg bg-white p-1 shadow ring-1 ring-slate-200"
-                  alt="نماد اعتماد الکترونیکی"
-                  code="kNgW7VzcOfCfVGgOr0P8AvQrLKYUF0Yg"
-                  width={96}
-                  height={48}
-                />
+                <Image src="https://trustseal.enamad.ir/logo.aspx?id=703130&Code=kNgW7VzcOfCfVGgOr0P8AvQrLKYUF0Yg" referrerPolicy="origin" className="h-12 w-auto sm:h-16 object-contain rounded-lg bg-white p-1 shadow ring-1 ring-slate-200" alt="نماد اعتماد الکترونیکی" width={96} height={48} unoptimized />
               </a>
             </div>
           </div>
         </div>
-        <div className="container mx-auto px-4 mt-6 sm:mt-8 text-xs text-slate-500">© {new Date().getFullYear()} تمامی حقوق محفوظ است.</div>
+        <div className="container mx-auto px-4 mt-6 sm:mt-8 text-xs text-slate-500">© {currentYear} تمامی حقوق محفوظ است.</div>
       </footer>
     </div>
   );
@@ -584,7 +577,11 @@ function AnimatedCounter({ to, duration = 1200 }: { to: number; duration?: numbe
 
 
 function GraphPreview() {
-  const points = Array.from({ length: 24 }).map((_, i) => 30 + Math.round(20 * Math.sin(i / 2) + Math.random() * 8));
+  const [points] = React.useState(() =>
+    Array.from({ length: 24 }).map(
+      (_, i) => 30 + Math.round(20 * Math.sin(i / 2) + Math.random() * 8)
+    )
+  );
   return (
     <svg viewBox="0 0 240 100" className="w-full h-32">
       <defs>

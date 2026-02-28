@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { PhoneInputSimple } from "@/components/ui/phone-input-simple";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import Link from "next/link";
-// import Image from "next/image";
+import Image from "next/image";
 
 export default function LoginPage() {
   return (
@@ -117,7 +117,7 @@ function LoginPageInner() {
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="space-y-4 text-center">
           <div className="flex justify-center">
-            <img src="/logo.png" alt="تست حفظ" className="h-16 object-contain" width={64} height={64} />
+            <Image src="/logo.png" alt="تست حفظ" className="h-16 object-contain" width={64} height={64} />
           </div>
           <CardTitle className="text-3xl font-bold">ورود</CardTitle>
           <CardDescription className="text-base">

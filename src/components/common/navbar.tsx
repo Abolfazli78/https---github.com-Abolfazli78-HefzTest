@@ -2,7 +2,7 @@
 
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
-// import Image from "next/image";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -41,7 +41,7 @@ export function Navbar() {
           <div className="flex h-20 items-center justify-between">
             <div className="flex items-center gap-10">
               <Link href="/" className="flex items-center gap-1 p-0 group transition-opacity duration-200 hover:opacity-90">
-                <img src="/logo2.png" alt="سامانه آزمون آنلاین حفظ قرآن حفظ تست" className="h-14 w-auto block object-contain ml-3" width={56} height={56} />
+                <Image src="/logo2.png" alt="سامانه آزمون آنلاین حفظ قرآن حفظ تست" className="h-14 w-auto block object-contain ml-3" width={56} height={56} />
                 <span className="flex flex-col mt-3">
                   <span className="text-[20px] md:text-[22px] leading-none font-bold tracking-[-0.3px] text-brand whitespace-nowrap">
                     حفظ تست
@@ -173,7 +173,7 @@ export function Navbar() {
             {/* Header */}
             <div className="flex items-center justify-between mb-8">
               <Link href="/" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
-                <img src="/logo2.png" alt="سامانه آزمون آنلاین حفظ قرآن حفظ تست" className="h-10 w-auto" width={40} height={40} />
+                    <Image src="/logo2.png" alt="سامانه آزمون آنلاین حفظ قرآن حفظ تست" className="h-10 w-auto" width={40} height={40} />
                 <span className="text-lg font-bold text-brand">حفظ تست</span>
               </Link>
               <Button
